@@ -1,13 +1,13 @@
-﻿namespace SmartPos
+﻿namespace SmartPos.Ui.Components
 {
-    partial class Form1
+    partial class AnimationDrawer
     {
         /// <summary>
         /// Required designer variable.
         /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-        /// <summary>
+        /// <summary> 
         /// Clean up any resources being used.
         /// </summary>
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
@@ -20,7 +20,7 @@
             base.Dispose(disposing);
         }
 
-        #region Windows Form Designer generated code
+        #region Component Designer generated code
 
         /// <summary>
         /// Required method for Designer support - do not modify
@@ -29,11 +29,16 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Text = "Form1";
+            this.tmrGfx = new System.Windows.Forms.Timer(this.components);
+            // 
+            // tmrGfx
+            // 
+            this.tmrGfx.Tick += new System.EventHandler(this.tmrGfx_Tick);
+
         }
 
         #endregion
+
+        private System.Windows.Forms.Timer tmrGfx;
     }
 }
-

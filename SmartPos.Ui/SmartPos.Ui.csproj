@@ -1,0 +1,134 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{643D01D7-0EBD-405D-814E-35ED2BA7B6A0}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SmartPos.Ui</RootNamespace>
+    <AssemblyName>SmartPos.Ui</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BaseControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="BaseControl.Designer.cs">
+      <DependentUpon>BaseControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BaseForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BaseForm.Designer.cs">
+      <DependentUpon>BaseForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Components\AnimationDrawer.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Components\AnimationDrawer.Designer.cs">
+      <DependentUpon>AnimationDrawer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\SpButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\Specific\SpCancelButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\Specific\SpConfirmButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\SpLabel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\SpTextbox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="FormBuilder.cs" />
+    <Compile Include="Handlers\ContinuityDelegate.cs" />
+    <Compile Include="Handlers\UiHandlers.cs" />
+    <Compile Include="IFormResult.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Security\AuthenticationManager.cs" />
+    <Compile Include="Security\AuthorisationAttribute.cs" />
+    <Compile Include="Security\AuthorizationHandler.cs" />
+    <Compile Include="Security\NotAuthorizedException.cs" />
+    <Compile Include="Theming\ColorEx.cs" />
+    <Compile Include="Theming\ITheme.cs" />
+    <Compile Include="Theming\IThemeable.cs" />
+    <Compile Include="Theming\MaterialColors.cs" />
+    <Compile Include="Theming\ThemeEx.cs" />
+    <Compile Include="Theming\ThemeManager.cs" />
+    <Compile Include="Theming\ThemeNameAttribute.cs" />
+    <Compile Include="Theming\ThemeNotFoundException.cs" />
+    <Compile Include="Theming\Themes\DefaultTheme.cs" />
+    <Compile Include="Utils\FormBuilderEx.cs" />
+    <Compile Include="Utils\WinApi.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="BaseControl.resx">
+      <DependentUpon>BaseControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BaseForm.resx">
+      <DependentUpon>BaseForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Components\AnimationDrawer.resx">
+      <DependentUpon>AnimationDrawer.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SmartPos.DomainModel\SmartPos.DomainModel.csproj">
+      <Project>{48C08034-8787-4500-AF4D-6CD84A57B1DB}</Project>
+      <Name>SmartPos.DomainModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SmartPos.GeneralLibrary\SmartPos.GeneralLibrary.csproj">
+      <Project>{A9CCF0D3-BBF0-42CD-B858-E17F3AEA50A5}</Project>
+      <Name>SmartPos.GeneralLibrary</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

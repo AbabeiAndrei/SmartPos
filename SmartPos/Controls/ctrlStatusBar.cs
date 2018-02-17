@@ -1,18 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Drawing;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using SmartPos.Ui;
+using SmartPos.Desktop.Security;
 
-namespace SmartPos
+namespace SmartPos.Desktop.Controls
 {
-    public partial class Form1 : Form
+    [PosAuthorisation]
+    public partial class ctrlStatusBar : BaseControl
     {
-        public Form1()
+        public ctrlStatusBar()
         {
             InitializeComponent();
         }

@@ -110,13 +110,8 @@ namespace SmartPos.Ui
 
         public void Show(CloseFormResult result = null)
         {
-            if (result != null)
-            {
-                var dresult = _form.ShowDialog(_parent);
-                result(dresult);
-            }
-            else
-                _form.Show(_parent);
+            var dresult = _form.ShowDialog(_parent);
+            result?.Invoke(dresult);
         }
 
         #endregion

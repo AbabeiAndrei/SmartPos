@@ -100,7 +100,7 @@ namespace SmartPos.Ui
         public BaseForm()
         {
             InitializeComponent();
-            lblTitle.Text = Application.ProductName;
+            lblTitle.Text = base.Text = Application.ProductName;
             tmrAnimationTimer.Interval = SHOW_MESSAGE_FPS;
         }
 

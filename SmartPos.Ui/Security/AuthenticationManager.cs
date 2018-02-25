@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SmartPos.DomainModel;
+using SmartPos.DomainModel.Entities;
 
 namespace SmartPos.Ui.Security
 {

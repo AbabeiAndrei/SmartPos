@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Linq;
 using System.Reflection;
 
-namespace SmartPos.Api.Areas.HelpPage.ModelDescriptions
+namespace Smartpos.Api.Areas.HelpPage.ModelDescriptions
 {
     internal static class ModelNameHelper
     {

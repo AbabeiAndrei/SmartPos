@@ -2,9 +2,9 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Net.Http.Headers;
 using System.Web.Http.Description;
-using SmartPos.Api.Areas.HelpPage.ModelDescriptions;
+using Smartpos.Api.Areas.HelpPage.ModelDescriptions;
 
-namespace SmartPos.Api.Areas.HelpPage.Models
+namespace Smartpos.Api.Areas.HelpPage.Models
 {
     /// <summary>
     /// The model that represents an API displayed on the help page.

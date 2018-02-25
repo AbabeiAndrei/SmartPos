@@ -1,7 +1,7 @@
 using System;
 using System.Reflection;
 
-namespace SmartPos.Api.Areas.HelpPage.ModelDescriptions
+namespace Smartpos.Api.Areas.HelpPage.ModelDescriptions
 {
     public interface IModelDocumentationProvider
     {

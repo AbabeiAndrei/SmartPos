@@ -1,10 +1,10 @@
 using System;
 using System.Web.Http;
 using System.Web.Mvc;
-using SmartPos.Api.Areas.HelpPage.ModelDescriptions;
-using SmartPos.Api.Areas.HelpPage.Models;
+using Smartpos.Api.Areas.HelpPage.ModelDescriptions;
+using Smartpos.Api.Areas.HelpPage.Models;
 
-namespace SmartPos.Api.Areas.HelpPage.Controllers
+namespace Smartpos.Api.Areas.HelpPage.Controllers
 {
     /// <summary>
     /// The controller that will handle requests for the help page.

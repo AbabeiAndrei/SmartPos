@@ -1,4 +1,4 @@
-namespace SmartPos.Api.Areas.HelpPage.ModelDescriptions
+namespace Smartpos.Api.Areas.HelpPage.ModelDescriptions
 {
     public class KeyValuePairModelDescription : ModelDescription
     {

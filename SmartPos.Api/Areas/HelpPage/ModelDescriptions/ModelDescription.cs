@@ -1,6 +1,6 @@
 using System;
 
-namespace SmartPos.Api.Areas.HelpPage.ModelDescriptions
+namespace Smartpos.Api.Areas.HelpPage.ModelDescriptions
 {
     /// <summary>
     /// Describes a type model.

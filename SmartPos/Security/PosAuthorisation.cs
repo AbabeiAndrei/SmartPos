@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using SmartPos.DomainModel;
+using SmartPos.DomainModel.Entities;
 using SmartPos.Ui.Security;
 
 namespace SmartPos.Desktop.Security
@@ -29,7 +30,7 @@ namespace SmartPos.Desktop.Security
 
         public override bool IsAuthorized()
         {
-            return base.IsAuthorized() && Application.User.Rank >= _rank;
+            return base.IsAuthorized() && Application.User.Access >= _rank;
         }
     }
 
@@ -57,7 +58,7 @@ namespace SmartPos.Desktop.Security
 
         public override bool IsAuthorized()
         {
-            return base.IsAuthorized() && (_rank == null || Application.User.Rank == _rank.Value) &&
+            return base.IsAuthorized() && (_rank == null || Application.User.Access == _rank.Value) &&
                    Application.User.Rights.Any(r => r.Right.Name == _right);
         }
     }

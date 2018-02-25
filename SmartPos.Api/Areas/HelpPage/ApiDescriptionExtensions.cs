@@ -3,7 +3,7 @@ using System.Text;
 using System.Web;
 using System.Web.Http.Description;
 
-namespace SmartPos.Api.Areas.HelpPage
+namespace Smartpos.Api.Areas.HelpPage
 {
     public static class ApiDescriptionExtensions
     {

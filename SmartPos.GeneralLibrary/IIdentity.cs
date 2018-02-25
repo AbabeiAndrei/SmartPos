@@ -2,6 +2,6 @@
 {
     public interface IIdentity
     {
-        string Name { get; }
+        string FullName { get; }
     }
 }

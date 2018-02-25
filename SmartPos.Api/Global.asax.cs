@@ -7,7 +7,7 @@ using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 
-namespace SmartPos.Api
+namespace Smartpos.Api
 {
     public class WebApiApplication : System.Web.HttpApplication
     {
@@ -18,6 +18,7 @@ namespace SmartPos.Api
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+            DbConfig.Config();
         }
     }
 }

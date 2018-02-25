@@ -1,7 +1,7 @@
 using System.Web.Http;
 using System.Web.Mvc;
 
-namespace SmartPos.Api.Areas.HelpPage
+namespace Smartpos.Api.Areas.HelpPage
 {
     public class HelpPageAreaRegistration : AreaRegistration
     {

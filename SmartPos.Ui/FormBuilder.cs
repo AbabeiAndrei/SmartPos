@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace SmartPos.Ui
@@ -20,8 +21,8 @@ namespace SmartPos.Ui
         where TForm : BaseForm
         where TControl : BaseControl
     {
-        IFormBuilder<TForm, TControl> OnConfirm(ConfirmFormHandler action);
-        IFormBuilder<TForm, TControl> OnClose(CloseFormHandler action);
+        new IFormBuilder<TForm, TControl> OnConfirm(ConfirmFormHandler action);
+        new IFormBuilder<TForm, TControl> OnClose(CloseFormHandler action);
         IFormBuilder<TForm, TControl> ConfigureForm(Action<TForm> form);
     }
 
@@ -56,10 +57,7 @@ namespace SmartPos.Ui
 
         public FormBuilder(TForm form)
         {
-            if (form == null)
-                throw new ArgumentNullException(nameof(form));
-
-            _form = form;
+            _form = form ?? throw new ArgumentNullException(nameof(form));
         }
 
         #endregion
@@ -141,7 +139,7 @@ namespace SmartPos.Ui
         #endregion
     }
 
-    public class FormBuilder : FormBuilder<BaseForm, BaseControl>, IFormBuilder
+    public class FormBuilder : FormBuilder<BaseForm, BaseControl>
     {
         #region Constructors
 

@@ -1,4 +1,5 @@
 ﻿using SmartPos.DomainModel;
+using SmartPos.DomainModel.Entities;
 using SmartPos.Ui.Security;
 
 namespace SmartPos.Desktop

@@ -11,10 +11,10 @@ using System.Net.Http.Headers;
 using System.Web.Http;
 using System.Web.Http.Controllers;
 using System.Web.Http.Description;
-using SmartPos.Api.Areas.HelpPage.ModelDescriptions;
-using SmartPos.Api.Areas.HelpPage.Models;
+using Smartpos.Api.Areas.HelpPage.ModelDescriptions;
+using Smartpos.Api.Areas.HelpPage.Models;
 
-namespace SmartPos.Api.Areas.HelpPage
+namespace Smartpos.Api.Areas.HelpPage
 {
     public static class HelpPageConfigurationExtensions
     {

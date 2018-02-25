@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("SmartPos.Api")]
+[assembly: AssemblyTitle("Smartpos.Api")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("SmartPos.Api")]
+[assembly: AssemblyProduct("Smartpos.Api")]
 [assembly: AssemblyCopyright("Copyright ©  2018")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("23a4d8c5-e4fe-461a-991b-a4411298ec6c")]
+[assembly: Guid("c7d25b73-8f4b-4105-8f34-04ba7e5cfea1")]
 
 // Version information for an assembly consists of the following four values:
 //

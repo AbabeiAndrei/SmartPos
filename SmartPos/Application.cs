@@ -1,4 +1,6 @@
-﻿using SmartPos.Ui.Security;
+﻿using System;
+using System.Globalization;
+using SmartPos.Ui.Security;
 using SmartPos.Ui.Components;
 using SmartPos.DomainModel.Entities;
 using SmartPos.Desktop.Communication;
@@ -16,5 +18,7 @@ namespace SmartPos.Desktop
         public static ApiClient Api() => _apiClient ?? (_apiClient = new ApiClient());
 
         public static ApiClient Api(ILoadingToken token) => new ApiClient(token);
+
+        public static IFormatProvider UiFormat => _uiFormatProvider ?? (_uiFormatProvider = new CultureInfo("ro-RO"));
     }
 }

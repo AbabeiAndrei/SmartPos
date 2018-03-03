@@ -46,5 +46,17 @@ namespace SmartPos.Desktop.Properties {
                 this["ThemeName"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool ShowTimeInStatusbar {
+            get {
+                return ((bool)(this["ShowTimeInStatusbar"]));
+            }
+            set {
+                this["ShowTimeInStatusbar"] = value;
+            }
+        }
     }
 }

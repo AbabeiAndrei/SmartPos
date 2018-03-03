@@ -59,6 +59,7 @@ namespace SmartPos.Ui
         }
 
         [DefaultValue(false)]
+        [Category("Appearance")]
         public virtual bool Drawer
         {
             get => lblTitle?.Visible ?? false;
@@ -96,7 +97,6 @@ namespace SmartPos.Ui
         protected virtual UnauthorizedFormResult UnauthorizedResult => UnauthorizedFormResult.Exception;
 
         protected virtual bool ShowWindowBorder => true;
-
 
         #endregion
 
@@ -196,9 +196,9 @@ namespace SmartPos.Ui
 
         private void tmrAnimationTimer_Tick(object sender, EventArgs e)
         {
-            if (_message == null || _message.Hiding && lblErrors.Height <= 0)
+            if (_message == null || _message.Hiding && lblMessage.Height <= 0)
             {
-                lblErrors.Height = 0;
+                lblMessage.Height = 0;
                 tmrAnimationTimer.Interval = SHOW_MESSAGE_FPS;
                 tmrAnimationTimer.Stop();
                 _message = null;
@@ -208,9 +208,9 @@ namespace SmartPos.Ui
             if (tmrAnimationTimer.Interval == (_message.Duration ?? PAUSE_SHOW_MESSAGE))
                 tmrAnimationTimer.Interval = SHOW_MESSAGE_FPS;
 
-            if (!_message.Hiding && lblErrors.Height < _message.Height)
+            if (!_message.Hiding && lblMessage.Height < _message.Height)
             {
-                lblErrors.Height += SHOW_MESSAGE_SPEED;
+                lblMessage.Height += SHOW_MESSAGE_SPEED;
                 return;
             }
 
@@ -219,7 +219,7 @@ namespace SmartPos.Ui
 
             if (_message.Hiding)
             {
-                lblErrors.Height-= SHOW_MESSAGE_SPEED;
+                lblMessage.Height-= SHOW_MESSAGE_SPEED;
                 return;
             }
             _message.Hiding = true;
@@ -332,7 +332,7 @@ namespace SmartPos.Ui
         {
             using (var gfx = CreateGraphics())
             {
-                var height = gfx.MeasureString(message, lblErrors.Font, new Size(lblErrors.Width, Height));
+                var height = gfx.MeasureString(message, lblMessage.Font, new Size(lblMessage.Width, Height));
                 _message = new MessageAnimation(message, messageType, (int) height.Height + 10)
                            {
                                Duration = duration
@@ -340,20 +340,20 @@ namespace SmartPos.Ui
                 switch (messageType)
                 {
                     case MessageType.Info:
-                        lblErrors.BackColor = _theme.InfoBackColor;
+                        lblMessage.BackColor = _theme.InfoBackColor;
                         break;
                     case MessageType.Warning:
-                        lblErrors.BackColor = _theme.WarningBackColor;
+                        lblMessage.BackColor = _theme.WarningBackColor;
                         break;
                     case MessageType.Error:
-                        lblErrors.BackColor = _theme.ErrorBackColor;
+                        lblMessage.BackColor = _theme.ErrorBackColor;
                         break;
                     default:
                         throw new ArgumentOutOfRangeException(nameof(messageType), messageType, null);
                 }
             }
-            lblErrors.Text = _message.Message;
-            lblErrors.BringToFront();
+            lblMessage.Text = _message.Message;
+            lblMessage.BringToFront();
             tmrAnimationTimer.Start();
         }
         

@@ -32,7 +32,7 @@
             this.components = new System.ComponentModel.Container();
             this.tmrAnimationTimer = new System.Windows.Forms.Timer(this.components);
             this.lblTitle = new SmartPos.Ui.Controls.SpLabel();
-            this.lblErrors = new SmartPos.Ui.Controls.SpLabel();
+            this.lblMessage = new SmartPos.Ui.Controls.SpLabel();
             this.tmrLoader = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
@@ -54,17 +54,17 @@
             this.lblTitle.Paint += new System.Windows.Forms.PaintEventHandler(this.pnlLoading_Paint);
             this.lblTitle.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lblTitle_MouseDown);
             // 
-            // lblErrors
+            // lblMessage
             // 
-            this.lblErrors.Dock = System.Windows.Forms.DockStyle.Top;
-            this.lblErrors.Location = new System.Drawing.Point(0, 40);
-            this.lblErrors.Name = "lblErrors";
-            this.lblErrors.Size = new System.Drawing.Size(382, 0);
-            this.lblErrors.TabIndex = 2;
-            this.lblErrors.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.lblErrors.Click += new System.EventHandler(this.lblErrors_Click);
-            this.lblErrors.MouseEnter += new System.EventHandler(this.lblErrors_MouseEnter);
-            this.lblErrors.MouseLeave += new System.EventHandler(this.lblErrors_MouseLeave);
+            this.lblMessage.Dock = System.Windows.Forms.DockStyle.Top;
+            this.lblMessage.Location = new System.Drawing.Point(0, 40);
+            this.lblMessage.Name = "lblMessage";
+            this.lblMessage.Size = new System.Drawing.Size(382, 0);
+            this.lblMessage.TabIndex = 2;
+            this.lblMessage.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lblMessage.Click += new System.EventHandler(this.lblErrors_Click);
+            this.lblMessage.MouseEnter += new System.EventHandler(this.lblErrors_MouseEnter);
+            this.lblMessage.MouseLeave += new System.EventHandler(this.lblErrors_MouseLeave);
             // 
             // tmrLoader
             // 
@@ -74,7 +74,7 @@
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.ClientSize = new System.Drawing.Size(382, 353);
-            this.Controls.Add(this.lblErrors);
+            this.Controls.Add(this.lblMessage);
             this.Controls.Add(this.lblTitle);
             this.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
@@ -90,7 +90,7 @@
         #endregion
         private System.Windows.Forms.Timer tmrAnimationTimer;
         private Controls.SpLabel lblTitle;
-        private Controls.SpLabel lblErrors;
+        private Controls.SpLabel lblMessage;
         private System.Windows.Forms.Timer tmrLoader;
     }
 }

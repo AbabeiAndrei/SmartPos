@@ -82,6 +82,7 @@
       <DependentUpon>CtrlToolBar.cs</DependentUpon>
     </Compile>
     <Compile Include="Data\Application.cs" />
+    <Compile Include="Data\PosClient.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>

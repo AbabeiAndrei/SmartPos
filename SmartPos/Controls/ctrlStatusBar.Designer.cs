@@ -28,19 +28,29 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
+            this.tmrTime = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
-            // ctrlStatusBar
+            // tmrTime
+            // 
+            this.tmrTime.Enabled = true;
+            this.tmrTime.Interval = 1000;
+            this.tmrTime.Tick += new System.EventHandler(this.tmrTime_Tick);
+            // 
+            // CtrlStatusBar
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            this.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.DoubleBuffered = true;
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.Name = "ctrlStatusBar";
-            this.Size = new System.Drawing.Size(1522, 91);
+            this.Name = "CtrlStatusBar";
+            this.Size = new System.Drawing.Size(1258, 36);
             this.ResumeLayout(false);
 
         }
 
         #endregion
+
+        private System.Windows.Forms.Timer tmrTime;
     }
 }

@@ -113,6 +113,11 @@ namespace SmartPos.Ui
 
         }
 
+        protected virtual void DisposeComponents()
+        {
+
+        }
+
         #endregion
 
         #region Private methods

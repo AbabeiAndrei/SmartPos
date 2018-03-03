@@ -27,9 +27,7 @@ namespace Smartpos.Api.Controllers
         {
             if (string.IsNullOrWhiteSpace(pin))
                 return BadRequest("No pin provided");
-
-            Thread.Sleep(5000);
-
+            
             var user = _context.FirstOrDefault<User>(u => u.Pin == pin);
 
             if (user == null)

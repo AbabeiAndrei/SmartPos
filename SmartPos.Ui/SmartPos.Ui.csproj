@@ -77,6 +77,9 @@
     <Compile Include="Controls\Specific\SpConfirmButton.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Controls\SpFloatinPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Controls\SpLabel.cs">
       <SubType>Component</SubType>
     </Compile>

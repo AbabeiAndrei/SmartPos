@@ -81,6 +81,24 @@
     <Compile Include="Controls\CtrlToolBar.Designer.cs">
       <DependentUpon>CtrlToolBar.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Workspace\CtrlTable.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Workspace\CtrlTable.Designer.cs">
+      <DependentUpon>CtrlTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Workspace\CtrlWorkspace.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Workspace\CtrlWorkspace.Designer.cs">
+      <DependentUpon>CtrlWorkspace.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Workspace\CtrlWorkspaceZone.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Workspace\CtrlWorkspaceZone.Designer.cs">
+      <DependentUpon>CtrlWorkspaceZone.cs</DependentUpon>
+    </Compile>
     <Compile Include="Data\Application.cs" />
     <Compile Include="Data\PosClient.cs" />
     <Compile Include="MainForm.cs">
@@ -101,6 +119,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\CtrlToolBar.resx">
       <DependentUpon>CtrlToolBar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Workspace\CtrlWorkspace.resx">
+      <DependentUpon>CtrlWorkspace.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Workspace\CtrlWorkspaceZone.resx">
+      <DependentUpon>CtrlWorkspaceZone.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>

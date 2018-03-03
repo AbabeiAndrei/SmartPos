@@ -23,13 +23,15 @@ namespace SmartPos.Desktop
 
         #endregion
 
+        #region Properties
+
 #if DEBUG
-        #region Overrieds
-
         protected override bool ShowWindowBorder => false;
-
-        #endregion
 #endif
+
+        protected override int MessageLineTop => ctrlStatusBar?.Bottom ?? base.MessageLineTop;
+        
+        #endregion
 
         #region Constructors
 

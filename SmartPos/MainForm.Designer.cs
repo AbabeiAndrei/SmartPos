@@ -30,19 +30,10 @@ namespace SmartPos.Desktop
         /// </summary>
         private void InitializeComponent()
         {
-            this.ctrlToolBar = new SmartPos.Desktop.Controls.CtrlToolBar();
             this.ctrlStatusBar = new SmartPos.Desktop.Controls.CtrlStatusBar();
+            this.ctrlToolBar = new SmartPos.Desktop.Controls.CtrlToolBar();
+            this.ctrlWorkspace = new SmartPos.Desktop.Controls.Workspace.CtrlWorkspace();
             this.SuspendLayout();
-            // 
-            // ctrlToolBar
-            // 
-            this.ctrlToolBar.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.ctrlToolBar.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ctrlToolBar.Location = new System.Drawing.Point(0, 650);
-            this.ctrlToolBar.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.ctrlToolBar.Name = "ctrlToolBar";
-            this.ctrlToolBar.Size = new System.Drawing.Size(1166, 49);
-            this.ctrlToolBar.TabIndex = 0;
             // 
             // ctrlStatusBar
             // 
@@ -54,11 +45,31 @@ namespace SmartPos.Desktop
             this.ctrlStatusBar.Size = new System.Drawing.Size(1166, 31);
             this.ctrlStatusBar.TabIndex = 0;
             // 
+            // ctrlToolBar
+            // 
+            this.ctrlToolBar.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.ctrlToolBar.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ctrlToolBar.Location = new System.Drawing.Point(0, 610);
+            this.ctrlToolBar.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.ctrlToolBar.Name = "ctrlToolBar";
+            this.ctrlToolBar.Size = new System.Drawing.Size(1166, 49);
+            this.ctrlToolBar.TabIndex = 0;
+            // 
+            // ctrlWorkspace
+            // 
+            this.ctrlWorkspace.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ctrlWorkspace.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ctrlWorkspace.Location = new System.Drawing.Point(0, 31);
+            this.ctrlWorkspace.Name = "ctrlWorkspace";
+            this.ctrlWorkspace.Size = new System.Drawing.Size(1166, 579);
+            this.ctrlWorkspace.TabIndex = 3;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 28F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1166, 699);
+            this.ClientSize = new System.Drawing.Size(1166, 659);
+            this.Controls.Add(this.ctrlWorkspace);
             this.Controls.Add(this.ctrlStatusBar);
             this.Controls.Add(this.ctrlToolBar);
             this.MaximizeBox = false;
@@ -67,6 +78,7 @@ namespace SmartPos.Desktop
             this.Text = "SmartPos";
             this.Controls.SetChildIndex(this.ctrlToolBar, 0);
             this.Controls.SetChildIndex(this.ctrlStatusBar, 0);
+            this.Controls.SetChildIndex(this.ctrlWorkspace, 0);
             this.ResumeLayout(false);
 
         }
@@ -75,6 +87,7 @@ namespace SmartPos.Desktop
 
         private Controls.CtrlToolBar ctrlToolBar;
         private CtrlStatusBar ctrlStatusBar;
+        private Controls.Workspace.CtrlWorkspace ctrlWorkspace;
     }
 }
 

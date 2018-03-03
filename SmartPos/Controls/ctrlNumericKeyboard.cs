@@ -141,8 +141,6 @@ namespace SmartPos.Desktop.Controls
             }
         }
 
-        protected override UnauthorizedControlResult UnauthorizedResult => UnauthorizedControlResult.Hide;
-
         #endregion
 
         #region Events

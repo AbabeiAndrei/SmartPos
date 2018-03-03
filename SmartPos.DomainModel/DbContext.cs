@@ -1,6 +1,8 @@
 ﻿using System.Data;
+
 using ServiceStack.OrmLite;
 using ServiceStack.OrmLite.MySql;
+
 using SmartPos.DomainModel.Interfaces;
 
 namespace SmartPos.DomainModel
@@ -8,6 +10,7 @@ namespace SmartPos.DomainModel
     public class DbContext : IDbContext
     {
         public static string DefaultConnectionString { get; set; }
+        public static IOrmLiteDialectProvider DialectProvider { get; set; }
 
         public IDbConnection Connection { get; }
 
@@ -18,7 +21,7 @@ namespace SmartPos.DomainModel
         
         public DbContext(string connectionString)
         {
-            var factory = new OrmLiteConnectionFactory(connectionString, new MySqlDialectProvider());
+            var factory = new OrmLiteConnectionFactory(connectionString, DialectProvider ?? new MySqlDialectProvider());
             Connection = factory.Open();
         }
 

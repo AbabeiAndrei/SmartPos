@@ -1,5 +1,7 @@
 ﻿using ServiceStack.DataAnnotations;
 
+using SmartPos.DomainModel.Base;
+
 namespace SmartPos.DomainModel.Entities
 {
     public enum Access : short
@@ -9,13 +11,11 @@ namespace SmartPos.DomainModel.Entities
         OnlyHis = 2
     }
     
-    public class UserAccessRight
+    public class UserAccessRight : Entity
     {
-        [PrimaryKey]
         [References(typeof(AccessRight))]
         public int AccessRightId { get; set; }
-
-        [PrimaryKey]
+        
         [References(typeof(User))]
         public int UserId { get; set; }
         

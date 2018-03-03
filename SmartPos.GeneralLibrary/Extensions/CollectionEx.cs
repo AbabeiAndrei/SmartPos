@@ -1,9 +1,7 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SmartPos.GeneralLibrary.Extensions
 {
@@ -23,6 +21,35 @@ namespace SmartPos.GeneralLibrary.Extensions
         public static IReadOnlyList<T> ToReadOnly<T>(this IList<T> list)
         {
             return new List<T>(list);
+        }
+
+        public static IEnumerable<T> CreateEnumerable<T>(this IEnumerator<T> source)
+        {
+            if (source == null)
+                throw new ArgumentNullException(nameof(source));
+
+            source.Reset();
+            while (source.MoveNext())
+                yield return source.Current;
+        }
+    }
+
+    public class FakeEnumerable<T> : IEnumerable<T> 
+    {
+        private readonly IEnumerator<T> _enumerator;
+
+        public FakeEnumerable(IEnumerator<T> e) 
+        {
+            _enumerator = e;
+        }
+
+        public IEnumerator<T> GetEnumerator() { 
+            return _enumerator;
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
         }
     }
 }

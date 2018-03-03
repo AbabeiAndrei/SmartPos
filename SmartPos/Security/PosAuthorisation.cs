@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Linq;
-using SmartPos.DomainModel;
-using SmartPos.DomainModel.Entities;
+
 using SmartPos.Ui.Security;
+using SmartPos.DomainModel.Entities;
 
 namespace SmartPos.Desktop.Security
 {

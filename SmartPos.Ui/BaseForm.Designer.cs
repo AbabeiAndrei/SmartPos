@@ -33,10 +33,12 @@
             this.tmrAnimationTimer = new System.Windows.Forms.Timer(this.components);
             this.lblTitle = new SmartPos.Ui.Controls.SpLabel();
             this.lblErrors = new SmartPos.Ui.Controls.SpLabel();
+            this.tmrLoader = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
             // tmrAnimationTimer
             // 
+            this.tmrAnimationTimer.Interval = 10;
             this.tmrAnimationTimer.Tick += new System.EventHandler(this.tmrAnimationTimer_Tick);
             // 
             // lblTitle
@@ -49,6 +51,7 @@
             this.lblTitle.Text = "Title";
             this.lblTitle.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.lblTitle.Visible = false;
+            this.lblTitle.Paint += new System.Windows.Forms.PaintEventHandler(this.pnlLoading_Paint);
             this.lblTitle.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lblTitle_MouseDown);
             // 
             // lblErrors
@@ -63,6 +66,10 @@
             this.lblErrors.MouseEnter += new System.EventHandler(this.lblErrors_MouseEnter);
             this.lblErrors.MouseLeave += new System.EventHandler(this.lblErrors_MouseLeave);
             // 
+            // tmrLoader
+            // 
+            this.tmrLoader.Tick += new System.EventHandler(this.tmrLoader_Tick);
+            // 
             // BaseForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -75,6 +82,7 @@
             this.Name = "BaseForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "BaseForm";
+            this.Paint += new System.Windows.Forms.PaintEventHandler(this.pnlLoading_Paint);
             this.ResumeLayout(false);
 
         }
@@ -83,5 +91,6 @@
         private System.Windows.Forms.Timer tmrAnimationTimer;
         private Controls.SpLabel lblTitle;
         private Controls.SpLabel lblErrors;
+        private System.Windows.Forms.Timer tmrLoader;
     }
 }

@@ -39,8 +39,16 @@
     <StartupObject>SmartPos.Desktop.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="RestSharp, Version=106.2.1.0, Culture=neutral, PublicKeyToken=598062e77f915f75, processorArchitecture=MSIL">
+      <HintPath>..\packages\RestSharp.106.2.1\lib\net452\RestSharp.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.ValueTuple">
+      <HintPath>..\packages\System.ValueTuple.4.4.0\lib\net47\System.ValueTuple.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -53,24 +61,27 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Application.cs" />
-    <Compile Include="Controls\ctrlNumericKeyboard.cs">
+    <Compile Include="Communication\ApiClient.cs" />
+    <Compile Include="Communication\RequestException.cs" />
+    <Compile Include="Controls\CtrlNumericKeyboard.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\ctrlNumericKeyboard.Designer.cs">
-      <DependentUpon>ctrlNumericKeyboard.cs</DependentUpon>
+    <Compile Include="Controls\CtrlNumericKeyboard.Designer.cs">
+      <DependentUpon>CtrlNumericKeyboard.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ctrlStatusBar.cs">
+    <Compile Include="Controls\CtrlStatusBar.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\ctrlStatusBar.Designer.cs">
-      <DependentUpon>ctrlStatusBar.cs</DependentUpon>
+    <Compile Include="Controls\CtrlStatusBar.Designer.cs">
+      <DependentUpon>CtrlStatusBar.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ctrlToolBar.cs">
+    <Compile Include="Controls\CtrlToolBar.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\ctrlToolBar.Designer.cs">
-      <DependentUpon>ctrlToolBar.cs</DependentUpon>
+    <Compile Include="Controls\CtrlToolBar.Designer.cs">
+      <DependentUpon>CtrlToolBar.cs</DependentUpon>
     </Compile>
+    <Compile Include="Data\Application.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -81,14 +92,14 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Security\PosAuthorisation.cs" />
     <Compile Include="Utils\UiHelper.cs" />
-    <EmbeddedResource Include="Controls\ctrlNumericKeyboard.resx">
-      <DependentUpon>ctrlNumericKeyboard.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\CtrlNumericKeyboard.resx">
+      <DependentUpon>CtrlNumericKeyboard.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\ctrlStatusBar.resx">
-      <DependentUpon>ctrlStatusBar.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\CtrlStatusBar.resx">
+      <DependentUpon>CtrlStatusBar.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\ctrlToolBar.resx">
-      <DependentUpon>ctrlToolBar.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\CtrlToolBar.resx">
+      <DependentUpon>CtrlToolBar.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
@@ -103,6 +114,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

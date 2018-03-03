@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+
 using ServiceStack.DataAnnotations;
 using ServiceStack.OrmLite;
+
+using SmartPos.GeneralLibrary;
 using SmartPos.DomainModel.Base;
 using SmartPos.DomainModel.Metadata;
-using SmartPos.GeneralLibrary;
 
 namespace SmartPos.DomainModel.Entities
 {

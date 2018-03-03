@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
+
 using ServiceStack.OrmLite;
+
 using SmartPos.DomainModel.Interfaces;
 
 namespace SmartPos.DomainModel.Extensions

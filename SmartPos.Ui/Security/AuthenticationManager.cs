@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using SmartPos.DomainModel;
-using SmartPos.DomainModel.Entities;
+﻿using SmartPos.DomainModel.Entities;
 
 namespace SmartPos.Ui.Security
 {
@@ -14,10 +8,7 @@ namespace SmartPos.Ui.Security
 
         public static User User
         {
-            get
-            {
-                return _user;
-            }
+            get => _user;
             set
             {
                 _user = value;

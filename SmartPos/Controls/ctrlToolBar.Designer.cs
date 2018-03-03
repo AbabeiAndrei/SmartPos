@@ -1,6 +1,6 @@
 ﻿namespace SmartPos.Desktop.Controls
 {
-    partial class ctrlToolBar
+    partial class CtrlToolBar
     {
         /// <summary> 
         /// Required designer variable.

@@ -1,13 +1,20 @@
 ﻿using System;
-using System.Linq;
 using System.Windows.Forms;
+
+using SmartPos.Ui.Handlers;
 
 namespace SmartPos.Ui
 {
+    #region IFormBuilder
+
     public interface IFormBuilder
     {
         void Show(CloseFormResult result = null);
     }
+
+    #endregion
+
+    #region IFormBuilder<out TControl> 
 
     public interface IFormBuilder<out TControl> : IFormBuilder
         where TControl : BaseControl
@@ -17,6 +24,10 @@ namespace SmartPos.Ui
         IFormBuilder<TControl> Configure(Action<TControl> control);
     }
 
+    #endregion
+
+    #region IFormBuilder<out TForm, out TControl>
+
     public interface IFormBuilder<out TForm, out TControl> : IFormBuilder<TControl>
         where TForm : BaseForm
         where TControl : BaseControl
@@ -25,6 +36,8 @@ namespace SmartPos.Ui
         new IFormBuilder<TForm, TControl> OnClose(CloseFormHandler action);
         IFormBuilder<TForm, TControl> ConfigureForm(Action<TForm> form);
     }
+
+    #endregion
 
     public class FormBuilder<TForm, TControl> : IFormBuilder<TForm, TControl>
         where TForm : BaseForm, new()
@@ -49,7 +62,8 @@ namespace SmartPos.Ui
 
             _form = new TForm
                     {
-                        Size = control.Size
+                        Size = control.Size,
+                        ShowInTaskbar = false
                     };
 
             AddControl(control);

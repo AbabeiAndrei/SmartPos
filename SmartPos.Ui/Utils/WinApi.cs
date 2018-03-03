@@ -1,21 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Runtime.InteropServices;
 
 namespace SmartPos.Ui.Utils
 {
     public static class WinApi
     {
+        #region Constants
+
         public const int WM_SETREDRAW = 11;
 
         public const int EM_SETMARGINS = 0xD3;
         public const int EM_SETCUEBANNER = 0x1501;
         public const int WM_NCLBUTTONDOWN = 0xA1;
         public const int HT_CAPTION = 0x2;
+
+        #endregion
 
         [DllImport("user32.dll")]
         public static extern int SendMessage(IntPtr hWnd, int wMsg, IntPtr wParam, IntPtr lParam);

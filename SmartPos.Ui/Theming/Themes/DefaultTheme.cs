@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Drawing;
 
 namespace SmartPos.Ui.Theming.Themes
 {
@@ -31,6 +26,7 @@ namespace SmartPos.Ui.Theming.Themes
         public Color InfoBackColor { get; }
         public Color WarningBackColor { get; }
         public Color ErrorBackColor { get; }
+        public Color[] LoadingColors { get; }
 
         public DefaultTheme()
         {
@@ -61,6 +57,18 @@ namespace SmartPos.Ui.Theming.Themes
             InfoBackColor = MaterialColors.Green();
             WarningBackColor = MaterialColors.Amber();
             ErrorBackColor = MaterialColors.Red();
+
+            LoadingColors = new[]
+                            {
+                                MaterialColors.Red(),
+                                MaterialColors.Amber(),
+                                MaterialColors.Green(),
+                                MaterialColors.Pink(),
+                                MaterialColors.Purple(),
+                                MaterialColors.DeepOrange(),
+                                MaterialColors.Blue(),
+                                MaterialColors.Amber()
+                            };
         }
     }
 }

@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Concurrent;
+﻿using System.Drawing;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 using SmartPos.GeneralLibrary.Extensions;
 
 namespace SmartPos.Ui.Theming
@@ -32,6 +28,8 @@ namespace SmartPos.Ui.Theming
 
     public static class MaterialColors
     {
+        #region Enums
+
         private enum MaterialColor : short
         {
             Red = 0,
@@ -51,16 +49,29 @@ namespace SmartPos.Ui.Theming
             Orange = 14,
             DeepOrange = 15,
             Brown = 16,
-            Grey = 17
+            Grey = 17,
+            BlueGray = 18
         }
 
+        #endregion
+
+        #region Fields
+
         private static readonly IReadOnlyDictionary<MaterialColor, IReadOnlyDictionary<ColorDepth, Color>> _table;
+
+        #endregion
+
+        #region Properties
 
         public static Color Black => Color.Black;
         public static Color White => Color.White;
         public static Color Transparent => Color.Transparent;
 
         private static Color Default => Black;
+
+        #endregion
+
+        #region Constructors
 
         static MaterialColors()
         {
@@ -133,6 +144,138 @@ namespace SmartPos.Ui.Theming
                                 }.ToReadOnly()
                             },
                             #endregion
+                            #region DeepPurple
+                            {
+                                MaterialColor.DeepPurple,
+                                new Dictionary<ColorDepth, Color>
+                                {
+                                    {ColorDepth.C50, 0xEDE7F6.ToColor() },
+                                    {ColorDepth.C100, 0xD1C4E9.ToColor() },
+                                    {ColorDepth.C200, 0xB39DDB.ToColor() },
+                                    {ColorDepth.C300, 0x9575CD.ToColor() },
+                                    {ColorDepth.C400, 0x7E57C2.ToColor() },
+                                    {ColorDepth.C500, 0x673AB7.ToColor() },
+                                    {ColorDepth.C600, 0x5E35B1.ToColor() },
+                                    {ColorDepth.C700, 0x512DA8.ToColor() },
+                                    {ColorDepth.C800, 0x4527A0.ToColor() },
+                                    {ColorDepth.C900, 0x311B92.ToColor() },
+                                    {ColorDepth.A100, 0xB388FF.ToColor() },
+                                    {ColorDepth.A200, 0x7C4DFF.ToColor() },
+                                    {ColorDepth.A400, 0x651FFF.ToColor() },
+                                    {ColorDepth.A700, 0x6200EA.ToColor() }
+                                }.ToReadOnly()
+                            },
+                            #endregion
+                            #region Indigo
+                            {
+                                MaterialColor.Indigo,
+                                new Dictionary<ColorDepth, Color>
+                                {
+                                    {ColorDepth.C50, 0xE8EAF6.ToColor() },
+                                    {ColorDepth.C100, 0xC5CAE9.ToColor() },
+                                    {ColorDepth.C200, 0x9FA8DA.ToColor() },
+                                    {ColorDepth.C300, 0x7986CB.ToColor() },
+                                    {ColorDepth.C400, 0x5C6BC0.ToColor() },
+                                    {ColorDepth.C500, 0x3F51B5.ToColor() },
+                                    {ColorDepth.C600, 0x3949AB.ToColor() },
+                                    {ColorDepth.C700, 0x303F9F.ToColor() },
+                                    {ColorDepth.C800, 0x283593.ToColor() },
+                                    {ColorDepth.C900, 0x1A237E.ToColor() },
+                                    {ColorDepth.A100, 0x8C9EFF.ToColor() },
+                                    {ColorDepth.A200, 0x536DFE.ToColor() },
+                                    {ColorDepth.A400, 0x3D5AFE.ToColor() },
+                                    {ColorDepth.A700, 0x304FFE.ToColor() }
+                                }.ToReadOnly()
+                            },
+                            #endregion
+                            #region Blue
+                            {
+                                MaterialColor.Blue,
+                                new Dictionary<ColorDepth, Color>
+                                {
+                                    {ColorDepth.C50, 0xE3F2FD.ToColor() },
+                                    {ColorDepth.C100, 0xBBDEFB.ToColor() },
+                                    {ColorDepth.C200, 0x90CAF9.ToColor() },
+                                    {ColorDepth.C300, 0x64B5F6.ToColor() },
+                                    {ColorDepth.C400, 0x42A5F5.ToColor() },
+                                    {ColorDepth.C500, 0x2196F3.ToColor() },
+                                    {ColorDepth.C600, 0x1E88E5.ToColor() },
+                                    {ColorDepth.C700, 0x1976D2.ToColor() },
+                                    {ColorDepth.C800, 0x1565C0.ToColor() },
+                                    {ColorDepth.C900, 0x0D47A1.ToColor() },
+                                    {ColorDepth.A100, 0x82B1FF.ToColor() },
+                                    {ColorDepth.A200, 0x448AFF.ToColor() },
+                                    {ColorDepth.A400, 0x2979FF.ToColor() },
+                                    {ColorDepth.A700, 0x2962FF.ToColor() }
+                                }.ToReadOnly()
+                            },
+                            #endregion
+                            #region LightBlue
+                            {
+                                MaterialColor.LightBlue,
+                                new Dictionary<ColorDepth, Color>
+                                {
+                                    {ColorDepth.C50, 0xE1F5FE.ToColor() },
+                                    {ColorDepth.C100, 0xB3E5FC.ToColor() },
+                                    {ColorDepth.C200, 0x81D4FA.ToColor() },
+                                    {ColorDepth.C300, 0x4FC3F7.ToColor() },
+                                    {ColorDepth.C400, 0x29B6F6.ToColor() },
+                                    {ColorDepth.C500, 0x03A9F4.ToColor() },
+                                    {ColorDepth.C600, 0x039BE5.ToColor() },
+                                    {ColorDepth.C700, 0x0288D1.ToColor() },
+                                    {ColorDepth.C800, 0x0277BD.ToColor() },
+                                    {ColorDepth.C900, 0x01579B.ToColor() },
+                                    {ColorDepth.A100, 0x80D8FF.ToColor() },
+                                    {ColorDepth.A200, 0x40C4FF.ToColor() },
+                                    {ColorDepth.A400, 0x00B0FF.ToColor() },
+                                    {ColorDepth.A700, 0x0091EA.ToColor() }
+                                }.ToReadOnly()
+                            },
+                            #endregion
+                            #region Cyan
+                            {
+                                MaterialColor.Cyan,
+                                new Dictionary<ColorDepth, Color>
+                                {
+                                    {ColorDepth.C50, 0xE0F7FA.ToColor() },
+                                    {ColorDepth.C100, 0xB2EBF2.ToColor() },
+                                    {ColorDepth.C200, 0x80DEEA.ToColor() },
+                                    {ColorDepth.C300, 0x4DD0E1.ToColor() },
+                                    {ColorDepth.C400, 0x26C6DA.ToColor() },
+                                    {ColorDepth.C500, 0x00BCD4.ToColor() },
+                                    {ColorDepth.C600, 0x00ACC1.ToColor() },
+                                    {ColorDepth.C700, 0x0097A7.ToColor() },
+                                    {ColorDepth.C800, 0x00838F.ToColor() },
+                                    {ColorDepth.C900, 0x006064.ToColor() },
+                                    {ColorDepth.A100, 0x84FFFF.ToColor() },
+                                    {ColorDepth.A200, 0x18FFFF.ToColor() },
+                                    {ColorDepth.A400, 0x00E5FF.ToColor() },
+                                    {ColorDepth.A700, 0x00B8D4.ToColor() }
+                                }.ToReadOnly()
+                            },
+                            #endregion
+                            #region Teal
+                            {
+                                MaterialColor.Teal,
+                                new Dictionary<ColorDepth, Color>
+                                {
+                                    {ColorDepth.C50, 0xE0F2F1.ToColor() },
+                                    {ColorDepth.C100, 0xB2DFDB.ToColor() },
+                                    {ColorDepth.C200, 0x80CBC4.ToColor() },
+                                    {ColorDepth.C300, 0x4DB6AC.ToColor() },
+                                    {ColorDepth.C400, 0x26A69A.ToColor() },
+                                    {ColorDepth.C500, 0x009688.ToColor() },
+                                    {ColorDepth.C600, 0x00897B.ToColor() },
+                                    {ColorDepth.C700, 0x00796B.ToColor() },
+                                    {ColorDepth.C800, 0x00695C.ToColor() },
+                                    {ColorDepth.C900, 0x004D40.ToColor() },
+                                    {ColorDepth.A100, 0xA7FFEB.ToColor() },
+                                    {ColorDepth.A200, 0x64FFDA.ToColor() },
+                                    {ColorDepth.A400, 0x1DE9B6.ToColor() },
+                                    {ColorDepth.A700, 0x00BFA5.ToColor() }
+                                }.ToReadOnly()
+                            },
+                            #endregion
                             #region Green
                             {
                                 MaterialColor.Green,
@@ -155,12 +298,77 @@ namespace SmartPos.Ui.Theming
                                 }.ToReadOnly()
                             },
                             #endregion
+                            #region LightGreen
+                            {
+                                MaterialColor.LightGreen,
+                                new Dictionary<ColorDepth, Color>
+                                {
+                                    {ColorDepth.C50, 0xF1F8E9.ToColor() },
+                                    {ColorDepth.C100, 0xDCEDC8.ToColor() },
+                                    {ColorDepth.C200, 0xC5E1A5.ToColor() },
+                                    {ColorDepth.C300, 0xAED581.ToColor() },
+                                    {ColorDepth.C400, 0x9CCC65.ToColor() },
+                                    {ColorDepth.C500, 0x8BC34A.ToColor() },
+                                    {ColorDepth.C600, 0x7CB342.ToColor() },
+                                    {ColorDepth.C700, 0x689F38.ToColor() },
+                                    {ColorDepth.C800, 0x558B2F.ToColor() },
+                                    {ColorDepth.C900, 0x33691E.ToColor() },
+                                    {ColorDepth.A100, 0xCCFF90.ToColor() },
+                                    {ColorDepth.A200, 0xB2FF59.ToColor() },
+                                    {ColorDepth.A400, 0x76FF03.ToColor() },
+                                    {ColorDepth.A700, 0x64DD17.ToColor() }
+                                }.ToReadOnly()
+                            },
+                            #endregion
+                            #region Lime
+                            {
+                                MaterialColor.Lime,
+                                new Dictionary<ColorDepth, Color>
+                                {
+                                    {ColorDepth.C50, 0xF9FBE7.ToColor() },
+                                    {ColorDepth.C100, 0xF0F4C3.ToColor() },
+                                    {ColorDepth.C200, 0xE6EE9C.ToColor() },
+                                    {ColorDepth.C300, 0xDCE775.ToColor() },
+                                    {ColorDepth.C400, 0xD4E157.ToColor() },
+                                    {ColorDepth.C500, 0xCDDC39.ToColor() },
+                                    {ColorDepth.C600, 0xC0CA33.ToColor() },
+                                    {ColorDepth.C700, 0xAFB42B.ToColor() },
+                                    {ColorDepth.C800, 0x9E9D24.ToColor() },
+                                    {ColorDepth.C900, 0x827717.ToColor() },
+                                    {ColorDepth.A100, 0xF4FF81.ToColor() },
+                                    {ColorDepth.A200, 0xEEFF41.ToColor() },
+                                    {ColorDepth.A400, 0xC6FF00.ToColor() },
+                                    {ColorDepth.A700, 0xAEEA00.ToColor() }
+                                }.ToReadOnly()
+                            },
+                            #endregion
+                            #region Yellow
+                            {
+                                MaterialColor.Yellow,
+                                new Dictionary<ColorDepth, Color>
+                                {
+                                    {ColorDepth.C50, 0xFFFDE7.ToColor() },
+                                    {ColorDepth.C100, 0xFFF9C4.ToColor() },
+                                    {ColorDepth.C200, 0xFFF59D.ToColor() },
+                                    {ColorDepth.C300, 0xFFF176.ToColor() },
+                                    {ColorDepth.C400, 0xFFEE58.ToColor() },
+                                    {ColorDepth.C500, 0xFFEB3B.ToColor() },
+                                    {ColorDepth.C600, 0xFDD835.ToColor() },
+                                    {ColorDepth.C700, 0xFBC02D.ToColor() },
+                                    {ColorDepth.C800, 0xF9A825.ToColor() },
+                                    {ColorDepth.C900, 0xF57F17.ToColor() },
+                                    {ColorDepth.A100, 0xFFFF8D.ToColor() },
+                                    {ColorDepth.A200, 0xFFFF00.ToColor() },
+                                    {ColorDepth.A400, 0xFFEA00.ToColor() },
+                                    {ColorDepth.A700, 0xFFD600.ToColor() }
+                                }.ToReadOnly()
+                            },
+                            #endregion
                             #region Amber
                             {
                                 MaterialColor.Amber,
                                 new Dictionary<ColorDepth, Color>
                                 {
-                                    //nothing done
                                     {ColorDepth.C50, 0xFFF8E1.ToColor() },
                                     {ColorDepth.C100, 0xFFECB3.ToColor() },
                                     {ColorDepth.C200, 0xFFE082.ToColor() },
@@ -178,12 +386,73 @@ namespace SmartPos.Ui.Theming
                                 }.ToReadOnly()
                             },
                             #endregion
+                            #region Orange
+                            {
+                                MaterialColor.Orange,
+                                new Dictionary<ColorDepth, Color>
+                                {
+                                    {ColorDepth.C50, 0xFFF3E0.ToColor() },
+                                    {ColorDepth.C100, 0xFFE0B2.ToColor() },
+                                    {ColorDepth.C200, 0xFFCC80.ToColor() },
+                                    {ColorDepth.C300, 0xFFB74D.ToColor() },
+                                    {ColorDepth.C400, 0xFFA726.ToColor() },
+                                    {ColorDepth.C500, 0xFF9800.ToColor() },
+                                    {ColorDepth.C600, 0xFB8C00.ToColor() },
+                                    {ColorDepth.C700, 0xF57C00.ToColor() },
+                                    {ColorDepth.C800, 0xEF6C00.ToColor() },
+                                    {ColorDepth.C900, 0xE65100.ToColor() },
+                                    {ColorDepth.A100, 0xFFD180.ToColor() },
+                                    {ColorDepth.A200, 0xFFAB40.ToColor() },
+                                    {ColorDepth.A400, 0xFF9100.ToColor() },
+                                    {ColorDepth.A700, 0xFF6D00.ToColor() }
+                                }.ToReadOnly()
+                            },
+                            #endregion
+                            #region DeepOrange
+                            {
+                                MaterialColor.DeepOrange,
+                                new Dictionary<ColorDepth, Color>
+                                {
+                                    {ColorDepth.C50, 0xFBE9E7.ToColor() },
+                                    {ColorDepth.C100, 0xFFCCBC.ToColor() },
+                                    {ColorDepth.C200, 0xFFAB91.ToColor() },
+                                    {ColorDepth.C300, 0xFF8A65.ToColor() },
+                                    {ColorDepth.C400, 0xFF7043.ToColor() },
+                                    {ColorDepth.C500, 0xFF5722.ToColor() },
+                                    {ColorDepth.C600, 0xF4511E.ToColor() },
+                                    {ColorDepth.C700, 0xE64A19.ToColor() },
+                                    {ColorDepth.C800, 0xD84315.ToColor() },
+                                    {ColorDepth.C900, 0xBF360C.ToColor() },
+                                    {ColorDepth.A100, 0xFF9E80.ToColor() },
+                                    {ColorDepth.A200, 0xFF6E40.ToColor() },
+                                    {ColorDepth.A400, 0xFF3D00.ToColor() },
+                                    {ColorDepth.A700, 0xDD2C00.ToColor() }
+                                }.ToReadOnly()
+                            },
+                            #endregion
+                            #region Brown
+                            {
+                                MaterialColor.Brown,
+                                new Dictionary<ColorDepth, Color>
+                                {
+                                    {ColorDepth.C50, 0xEFEBE9.ToColor() },
+                                    {ColorDepth.C100, 0xD7CCC8.ToColor() },
+                                    {ColorDepth.C200, 0xBCAAA4.ToColor() },
+                                    {ColorDepth.C300, 0xA1887F.ToColor() },
+                                    {ColorDepth.C400, 0x8D6E63.ToColor() },
+                                    {ColorDepth.C500, 0x795548.ToColor() },
+                                    {ColorDepth.C600, 0x6D4C41.ToColor() },
+                                    {ColorDepth.C700, 0x5D4037.ToColor() },
+                                    {ColorDepth.C800, 0x4E342E.ToColor() },
+                                    {ColorDepth.C900, 0x3E2723.ToColor() }
+                                }.ToReadOnly()
+                            },
+                            #endregion
                             #region Grey
                             {
                                 MaterialColor.Grey,
                                 new Dictionary<ColorDepth, Color>
                                 {
-                                    //nothing done
                                     {ColorDepth.C50, 0xFAFAFA.ToColor() },
                                     {ColorDepth.C100, 0xF5F5F5.ToColor() },
                                     {ColorDepth.C200, 0xEEEEEE.ToColor() },
@@ -195,12 +464,34 @@ namespace SmartPos.Ui.Theming
                                     {ColorDepth.C800, 0x424242.ToColor() },
                                     {ColorDepth.C900, 0x212121.ToColor() }
                                 }.ToReadOnly()
+                            },
+                            #endregion
+                            #region BlueGray
+                            {
+                                MaterialColor.BlueGray,
+                                new Dictionary<ColorDepth, Color>
+                                {
+                                    {ColorDepth.C50, 0xECEFF1.ToColor() },
+                                    {ColorDepth.C100, 0xCFD8DC.ToColor() },
+                                    {ColorDepth.C200, 0xB0BEC5.ToColor() },
+                                    {ColorDepth.C300, 0x90A4AE.ToColor() },
+                                    {ColorDepth.C400, 0x78909C.ToColor() },
+                                    {ColorDepth.C500, 0x607D8B.ToColor() },
+                                    {ColorDepth.C600, 0x546E7A.ToColor() },
+                                    {ColorDepth.C700, 0x455A64.ToColor() },
+                                    {ColorDepth.C800, 0x37474F.ToColor() },
+                                    {ColorDepth.C900, 0x263238.ToColor() }
+                                }.ToReadOnly()
                             }
                             #endregion
                         };
 
             _table = new ReadOnlyDictionary<MaterialColor, IReadOnlyDictionary<ColorDepth, Color>>(table);
         }
+
+        #endregion
+
+        #region Public methods
 
         public static Color Red(ColorDepth depth = ColorDepth.Default)
         {
@@ -292,6 +583,15 @@ namespace SmartPos.Ui.Theming
             return GetColorImpl(MaterialColor.Grey, depth);
         }
 
+        public static Color BlueGray(ColorDepth depth = ColorDepth.Default)
+        {
+            return GetColorImpl(MaterialColor.BlueGray, depth);
+        }
+
+        #endregion
+
+        #region Private methods
+
         private static Color GetColorImpl(MaterialColor color, ColorDepth depth)
         {
             if (!_table.ContainsKey(color))
@@ -303,5 +603,7 @@ namespace SmartPos.Ui.Theming
                        ? colorRange[depth]
                        : colorRange[ColorDepth.Default];
         }
+
+        #endregion
     }
 }

@@ -1,4 +1,5 @@
 ﻿using ServiceStack.DataAnnotations;
+
 using SmartPos.DomainModel.Base;
 
 namespace SmartPos.DomainModel.Entities

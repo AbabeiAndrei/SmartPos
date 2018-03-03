@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Data;
+
 using ServiceStack.OrmLite;
+
+using SmartPos.GeneralLibrary;
+using SmartPos.DomainModel.Security;
 using SmartPos.DomainModel.Entities;
 using SmartPos.DomainModel.Interfaces;
-using SmartPos.GeneralLibrary;
 using SmartPos.GeneralLibrary.Extensions;
-using SmartPos.DomainModel.Security;
 
 namespace SmartPos.DomainModel
 {

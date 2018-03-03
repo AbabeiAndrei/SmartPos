@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Windows.Forms;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Forms;
-using SmartPos.Ui.Handlers;
-using SmartPos.Utils;
 
-namespace SmartPos.Ui
+namespace SmartPos.Ui.Handlers
 {
     public enum MessageType
     {
@@ -17,9 +11,9 @@ namespace SmartPos.Ui
         Error
     }
 
-    public delegate void ConfirmFormHandler(IFormResult result, IContinuityDelegate after);
+    public delegate Task ConfirmFormHandler(IFormSender sender, IContinuityDelegate after);
 
-    public delegate void CloseFormHandler(IFormResult result, CancelEventArgs args);
+    public delegate Task CloseFormHandler(IFormSender sender, CancelEventArgs args);
 
     public delegate void CloseFormResult(DialogResult result);
 

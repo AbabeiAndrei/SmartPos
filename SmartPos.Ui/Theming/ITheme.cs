@@ -1,5 +1,4 @@
-﻿using System;
-using System.Drawing;
+﻿using System.Drawing;
 
 namespace SmartPos.Ui.Theming
 {
@@ -32,5 +31,6 @@ namespace SmartPos.Ui.Theming
         Color InfoBackColor { get; }
         Color WarningBackColor { get; }
         Color ErrorBackColor { get; }
+        Color[] LoadingColors { get; }
     }
 }

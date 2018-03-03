@@ -1,13 +1,13 @@
-﻿using SmartPos.Desktop.Security;
-using SmartPos.Ui;
+﻿using SmartPos.Ui;
 using SmartPos.Ui.Theming;
+using SmartPos.Desktop.Security;
 
 namespace SmartPos.Desktop.Controls
 {
     [PosAuthorisation]
-    public partial class ctrlToolBar : BaseControl
+    public partial class CtrlToolBar : BaseControl
     {
-        public ctrlToolBar()
+        public CtrlToolBar()
         {
             InitializeComponent();
         }

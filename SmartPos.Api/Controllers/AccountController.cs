@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Web.Http;
+﻿using System.Web.Http;
+using System.Threading;
+
+using SmartPos.DomainModel;
 using SmartPos.DomainModel.Entities;
 using SmartPos.DomainModel.Extensions;
 using SmartPos.DomainModel.Interfaces;
@@ -13,6 +11,11 @@ namespace Smartpos.Api.Controllers
     public class AccountController : ApiController
     {
         private readonly IDbContext _context;
+
+        public AccountController()
+            : this(new DbContext()) 
+        {
+        }
 
         public AccountController(IDbContext context)
         {
@@ -24,6 +27,8 @@ namespace Smartpos.Api.Controllers
         {
             if (string.IsNullOrWhiteSpace(pin))
                 return BadRequest("No pin provided");
+
+            Thread.Sleep(5000);
 
             var user = _context.FirstOrDefault<User>(u => u.Pin == pin);
 

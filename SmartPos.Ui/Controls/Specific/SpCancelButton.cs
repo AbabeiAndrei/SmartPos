@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using SmartPos.Ui.Theming;
+﻿using SmartPos.Ui.Theming;
 
 namespace SmartPos.Ui.Controls.Specific
 {

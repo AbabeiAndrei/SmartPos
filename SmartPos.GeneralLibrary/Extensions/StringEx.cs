@@ -7,10 +7,9 @@
             if (string.IsNullOrEmpty(str))
                 return str;
 
-            if (str.Length == 1)
-                return string.Empty;
-
-            return str.Substring(0, str.Length - 1);
+            return str.Length != 1
+                       ? str.Substring(0, str.Length - 1)
+                       : string.Empty;
         }
     }
 }

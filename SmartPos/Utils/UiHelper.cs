@@ -1,4 +1,5 @@
 ﻿using System.Windows.Forms;
+
 using SmartPos.Ui;
 
 namespace SmartPos.Desktop.Utils

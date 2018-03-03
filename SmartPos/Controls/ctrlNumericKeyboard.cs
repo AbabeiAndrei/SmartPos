@@ -1,13 +1,14 @@
 ﻿using System;
-using System.ComponentModel;
-using System.Drawing;
 using System.Linq;
+using System.Drawing;
+using System.ComponentModel;
 using System.Windows.Forms;
-using SmartPos.Desktop.Security;
-using SmartPos.GeneralLibrary.Extensions;
+
 using SmartPos.Ui;
-using SmartPos.Ui.Controls;
 using SmartPos.Ui.Theming;
+using SmartPos.Ui.Controls;
+using SmartPos.Ui.Handlers;
+using SmartPos.GeneralLibrary.Extensions;
 
 namespace SmartPos.Desktop.Controls
 {
@@ -20,7 +21,7 @@ namespace SmartPos.Desktop.Controls
     }
 
     [DefaultEvent("UserChangeText")]
-    public partial class ctrlNumericKeyboard : BaseControl
+    public partial class CtrlNumericKeyboard : BaseControl
     {
         #region Fields
 
@@ -40,10 +41,7 @@ namespace SmartPos.Desktop.Controls
         [Description("Gets or sets layout of the numeric keyboard")]
         public virtual NumericKeyboardLayout KeyboardLayout
         {
-            get
-            {
-                return _keyboardLayout;
-            }
+            get => _keyboardLayout;
             set
             {
                 var invokeEvent = _keyboardLayout != value;
@@ -63,10 +61,7 @@ namespace SmartPos.Desktop.Controls
         [Description("Gets or sets whether the display is visible or not")]
         public virtual bool ShowDisplay
         {
-            get
-            {
-                return txtDisplay.Visible;
-            }
+            get => txtDisplay.Visible;
             set
             {
                 var invokeEvent = ShowDisplay != value;
@@ -95,10 +90,7 @@ namespace SmartPos.Desktop.Controls
         [Description("Gets or sets if the keys presed will be shown in display")]
         public virtual bool EchoInDisplay
         {
-            get
-            {
-                return ShowDisplay && _echoInDisplay;
-            }
+            get => ShowDisplay && _echoInDisplay;
             set
             {
                 var invokeEvent = _echoInDisplay != value;
@@ -113,6 +105,7 @@ namespace SmartPos.Desktop.Controls
             }
         }
 
+        /// <inheritdoc />
         /// <summary>
         /// Gets or sets the text from dispaly
         /// </summary>
@@ -120,24 +113,15 @@ namespace SmartPos.Desktop.Controls
         [Description("Gets or sets the text from dispaly")]
         public override string Text
         {
-            get
-            {
-                return txtDisplay.Text;
-            }
-            set
-            {
-                txtDisplay.Text = value;
-            }
+            get => txtDisplay.Text;
+            set => txtDisplay.Text = value;
         }
 
         [Category("Appearance")]
         [Description("Gets or sets the font of the buttons")]
         public Font ButtonsFont
         {
-            get
-            {
-                return _buttonsFont;
-            }
+            get => _buttonsFont;
             set
             {
                 _buttonsFont = value;
@@ -205,7 +189,7 @@ namespace SmartPos.Desktop.Controls
         /// <summary>
         /// Crete a new default instance of ctrlNumericKeyboard
         /// </summary>
-        public ctrlNumericKeyboard()
+        public CtrlNumericKeyboard()
         {
             InitializeComponent();
 
@@ -213,11 +197,12 @@ namespace SmartPos.Desktop.Controls
             _echoInDisplay = true;
         }
 
+        /// <inheritdoc />
         /// <summary>
         /// Crete a new explicit instance of ctrlNumericKeyboard
         /// </summary>
         /// <param name="keyboardLayout">Keyboard layout of control</param>
-        public ctrlNumericKeyboard(NumericKeyboardLayout keyboardLayout)
+        public CtrlNumericKeyboard(NumericKeyboardLayout keyboardLayout)
             : this()
         {
             _keyboardLayout = keyboardLayout;
@@ -225,7 +210,7 @@ namespace SmartPos.Desktop.Controls
 
         #endregion
 
-        #region Overriedes
+        #region Overrides
 
         protected override void OnLoad(EventArgs e)
         {
@@ -252,15 +237,25 @@ namespace SmartPos.Desktop.Controls
             btnConfirm.ApplyTheme(theme);
         }
 
+        protected override void OnParentFormStartLoading(EventArgs e)
+        {
+            btnConfirm.Enabled = false;
+            txtDisplay.EnableBackspace = false;
+        }
+
+        protected override void OnParentFormEndLoading(LoadingEndEventArgs e)
+        {
+            btnConfirm.Enabled = true;
+            txtDisplay.EnableBackspace = true;
+        }
+
         #endregion
 
         #region Event handlers
 
         private void ButtonPressed(object sender, EventArgs e)
         {
-            var btn = sender as SpButton;
-
-            if(btn == null)
+            if(!(sender is SpButton btn))
                 return;
 
             var text = btn.Tag?.ToString();
@@ -281,7 +276,7 @@ namespace SmartPos.Desktop.Controls
                 UserChangeText?.Invoke(this, text);
         }
 
-        private void btnConfirm_Click(object sender, EventArgs e)
+        private async void btnConfirm_ClickAsync(object sender, EventArgs e)
         {
             if (EchoInDisplay &&
                 _keyboardLayout == NumericKeyboardLayout.Decimal &&
@@ -292,7 +287,9 @@ namespace SmartPos.Desktop.Controls
             }
 
             UserConfirm?.Invoke(this, EventArgs.Empty);
-            ParentForm?.PerformConfirm(() => Text);
+
+            if (ParentForm != null)
+                await ParentForm.PerformConfirm(() => Text, this);
         }
 
         private void txtDisplay_ClearButtonPressed(object sender, HandledEventArgs e)
@@ -358,13 +355,11 @@ namespace SmartPos.Desktop.Controls
             switch (_keyboardLayout)
             {
                 case NumericKeyboardLayout.Numeric:
-                    int valInt;
-                    if (!txtDisplay.IsEmpty && int.TryParse(txtDisplay.Text, out valInt))
+                    if (!txtDisplay.IsEmpty && int.TryParse(txtDisplay.Text, out var valInt))
                         return valInt;
                     return 0;
                 case NumericKeyboardLayout.Decimal:
-                    decimal valDec;
-                    if (!txtDisplay.IsEmpty && decimal.TryParse(txtDisplay.Text, out valDec))
+                    if (!txtDisplay.IsEmpty && decimal.TryParse(txtDisplay.Text, out var valDec))
                         return valDec;
                     return decimal.Zero;
                 case NumericKeyboardLayout.Pin:

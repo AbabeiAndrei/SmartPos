@@ -30,7 +30,7 @@ namespace SmartPos.Desktop
         /// </summary>
         private void InitializeComponent()
         {
-            this.ctrlToolBar = new SmartPos.Desktop.Controls.ctrlToolBar();
+            this.ctrlToolBar = new SmartPos.Desktop.Controls.CtrlToolBar();
             this.SuspendLayout();
             // 
             // ctrlToolBar
@@ -59,7 +59,7 @@ namespace SmartPos.Desktop
 
         #endregion
 
-        private Controls.ctrlToolBar ctrlToolBar;
+        private Controls.CtrlToolBar ctrlToolBar;
     }
 }
 

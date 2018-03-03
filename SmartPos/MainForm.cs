@@ -1,34 +1,37 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Diagnostics;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
+using System.Net;
 using System.Windows.Forms;
-using System.Windows.Forms.VisualStyles;
-using SmartPos.Desktop.Controls;
-using SmartPos.Desktop.Utils;
-using SmartPos.DomainModel;
+using System.Threading.Tasks;
+
 using SmartPos.Ui;
-using SmartPos.Ui.Handlers;
-using SmartPos.Ui.Security;
-using SmartPos.Ui.Theming;
 using SmartPos.Ui.Utils;
-using SmartPos.Utils;
+using SmartPos.Ui.Theming;
+using SmartPos.Ui.Handlers;
+using SmartPos.Desktop.Utils;
+using SmartPos.Desktop.Controls;
+using SmartPos.Desktop.Communication;
+
+using AuthenticationManager = SmartPos.Ui.Security.AuthenticationManager;
 
 namespace SmartPos.Desktop
 {
     public partial class MainForm : BaseForm
     {
+        #region Fields
+
         private ITheme _theme;
 
+        #endregion
+
 #if DEBUG
+        #region Overrieds
+
         protected override bool ShowWindowBorder => false;
+
+        #endregion
 #endif
+
+        #region Constructors
 
         public MainForm()
         {
@@ -36,15 +39,11 @@ namespace SmartPos.Desktop
 #if DEBUG
             FormBorderStyle = FormBorderStyle.FixedSingle;
 #endif
-    }
-
-        public void ExceptionHandler(object sender, UnhandledExceptionEventArgs e)
-        {
-            var authException = e.ExceptionObject as NotAuthorizedException;
-            if (authException != null)
-                MessageBox.Show(this, "Cannot access requested resource.\n" + authException.RequestedType.FullName, 
-                                Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
+
+        #endregion
+
+        #region Implementation of IThemeable
 
         public override void ApplyTheme(ITheme theme)
         {
@@ -52,19 +51,23 @@ namespace SmartPos.Desktop
 
             _theme = theme;
 
-            if (theme != null)
-            {
-                BackColor = theme.WindowBackColor;
-                ForeColor = theme.WindowForeColor;
-            }
+            if (theme == null)
+                return;
+
+            BackColor = theme.WindowBackColor;
+            ForeColor = theme.WindowForeColor;
         }
+
+        #endregion
+
+        #region Overrides
 
         protected override void OnShown(EventArgs e)
         {
             base.OnShown(e);
 
             if (!AuthenticationManager.IsLoggedIn)
-                UiHelper.ShowForm<ctrlNumericKeyboard>(UiHelper.Title("Login"), this)
+                UiHelper.ShowForm<CtrlNumericKeyboard>(UiHelper.Title("Login"), this)
                         .Configure(control => control.KeyboardLayout = NumericKeyboardLayout.Pin)
                         .OnConfirm(PerformLogin)
                         .AddDrawer()
@@ -72,9 +75,13 @@ namespace SmartPos.Desktop
                         .Show();
         }
 
-        private void PerformLogin(IFormResult result, IContinuityDelegate after)
+        #endregion
+
+        #region Public methods
+
+        private async Task PerformLogin(IFormSender sender, IContinuityDelegate after)
         {
-            var pin = result.Result?.ToString() ?? string.Empty;
+            var pin = sender.Result?.ToString() ?? string.Empty;
 
             if (string.IsNullOrEmpty(pin))
             {
@@ -82,8 +89,32 @@ namespace SmartPos.Desktop
                 return;
             }
 
+            try
+            {
+                var loaderToken = sender.Form.LoadingState;
+                var user = await Application.Api(loaderToken).Login(pin);
+                AuthenticationManager.User = user;
+            }
+            catch (RequestException ex)
+                when (ex.StatusCode == HttpStatusCode.NotFound)
+            {
+                after.PresentMessage("Incorect PIN!", MessageType.Error);
+                return;
+            }
+            catch (Exception ex)
+            {
+                after.PresentMessage(ex.Message, MessageType.Error);
+                return;
+            }
+            finally
+            {
+                sender.Control.Text = string.Empty;
+            }
+            
             ShowMessage("Login successful", MessageType.Info, 1000);
             after.Close = true;
         }
+
+        #endregion
     }
 }

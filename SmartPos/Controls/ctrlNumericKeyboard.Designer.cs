@@ -1,6 +1,6 @@
 ﻿namespace SmartPos.Desktop.Controls
 {
-    partial class ctrlNumericKeyboard
+    partial class CtrlNumericKeyboard
     {
         /// <summary> 
         /// Required designer variable.
@@ -202,7 +202,7 @@
             this.btnConfirm.TabIndex = 12;
             this.btnConfirm.Text = "OK";
             this.btnConfirm.UseVisualStyleBackColor = true;
-            this.btnConfirm.Click += new System.EventHandler(this.btnConfirm_Click);
+            this.btnConfirm.Click += new System.EventHandler(this.btnConfirm_ClickAsync);
             // 
             // pnlMain
             // 

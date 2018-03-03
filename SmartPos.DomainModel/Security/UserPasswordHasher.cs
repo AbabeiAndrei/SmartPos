@@ -7,7 +7,7 @@ namespace SmartPos.DomainModel.Security
     {
         public string Hash(string password, User salt)
         {
-            return Hasher.CreateMd5(password + salt.CreatedAt.Ticks);
+            return Hasher.CreateMd5(password /*+ salt.CreatedAt.Ticks*/);
         }
     }
 }

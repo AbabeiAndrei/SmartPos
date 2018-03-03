@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.ComponentModel;
+
+using SmartPos.Ui.Handlers;
 using SmartPos.Ui.Security;
 using SmartPos.Ui.Theming;
 using SmartPos.Ui.Utils;
@@ -22,6 +19,12 @@ namespace SmartPos.Ui
 
     public partial class BaseControl : UserControl, IThemeable
     {
+        #region Fields
+
+        private BaseForm _curentParent;
+
+        #endregion
+
         #region Properties
 
         protected static Type AuthorisationType { get; }
@@ -72,13 +75,42 @@ namespace SmartPos.Ui
             CheckAuthorisation();
         }
 
+        protected override void OnParentChanged(EventArgs e)
+        {
+            base.OnParentChanged(e);
+
+            if (_curentParent != null)
+            {
+                _curentParent.OnStartLoading -= OnParentFormStartLoadingWrap;
+                _curentParent.OnEndLoading -= OnParentOnOnEndLoadingWrap;
+            }
+
+            _curentParent = ParentForm;
+
+            if (_curentParent != null)
+            {
+                _curentParent.OnStartLoading += OnParentFormStartLoadingWrap;
+                _curentParent.OnEndLoading += OnParentOnOnEndLoadingWrap;
+            }
+        }
+
         #endregion
 
         #region Protected methods
 
-        protected void OnAuthorisationFailed(NotAuthorizedException exception, HandledEventArgs args)
+        protected virtual void OnAuthorisationFailed(NotAuthorizedException exception, HandledEventArgs args)
         {
             args.Handled = false;
+        }
+
+        protected virtual void OnParentFormStartLoading(EventArgs e)
+        {
+
+        }
+
+        protected virtual void OnParentFormEndLoading(LoadingEndEventArgs e)
+        {
+
         }
 
         #endregion
@@ -123,6 +155,16 @@ namespace SmartPos.Ui
 
         }
 
+        private void OnParentFormStartLoadingWrap(object sender, EventArgs e)
+        {
+            OnParentFormStartLoading(e);
+        }
+        
+        private void OnParentOnOnEndLoadingWrap(object sender, LoadingEndEventArgs e)
+        {
+            OnParentFormEndLoading(e);
+        }
+        
         #endregion
     }
 }

@@ -25,7 +25,7 @@ namespace SmartPos.Desktop.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("http:\\\\api.smartapp.local")]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://api.smarppos.local/api")]
         public string ApiUrl {
             get {
                 return ((string)(this["ApiUrl"]));

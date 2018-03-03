@@ -465,7 +465,7 @@ namespace SmartPos.Ui
                                .All(a => a.IsAuthorized());
 
             
-            if (IsAuthorized)
+            if (!IsAuthorized)
                 switch (UnauthorizedResult)
                 {
                     case UnauthorizedFormResult.Nothing:

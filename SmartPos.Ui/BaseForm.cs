@@ -98,6 +98,12 @@ namespace SmartPos.Ui
 
         protected virtual bool ShowWindowBorder => true;
 
+        protected virtual int MessageLineTop => Drawer
+                                                    ? lblTitle.Bottom
+                                                    : 0;
+
+        protected bool IsAuthorized { get; private set; }
+
         #endregion
 
         #region Events
@@ -120,6 +126,8 @@ namespace SmartPos.Ui
             lblTitle.Text = base.Text = Application.ProductName;
             tmrAnimationTimer.Interval = SHOW_MESSAGE_FPS;
             _loadingState = new LoadingAnimationHandler(this);
+
+            lblTitle.VisibleChanged += (sender, args) => SetLabelMessageLayout();
         }
 
         static BaseForm()
@@ -153,6 +161,12 @@ namespace SmartPos.Ui
             {
                 base.OnPaint(e);
             }
+        }
+
+        protected override void OnSizeChanged(EventArgs e)
+        {
+            base.OnSizeChanged(e);
+            SetLabelMessageLayout();
         }
 
         #endregion
@@ -428,6 +442,12 @@ namespace SmartPos.Ui
             }
         }
 
+        protected virtual void SetLabelMessageLayout()
+        {
+            lblMessage.Width = ClientSize.Width;
+            lblMessage.Top = MessageLineTop;
+        }
+
         #endregion
         
         #region Private methods
@@ -438,41 +458,44 @@ namespace SmartPos.Ui
                 return;
 
             var type = GetType();
-            var attributes = type.GetCustomAttributes(AuthorisationType, true)
-                                 .OfType<AuthorisationAttribute>();
+            
 
-            foreach (var attribute in attributes)
-                if (!attribute.IsAuthorized())
-                    switch (UnauthorizedResult)
-                    {
-                        case UnauthorizedFormResult.Nothing:
-                            break;
-                        case UnauthorizedFormResult.Disable:
-                            Enabled = false;
-                            break;
-                        case UnauthorizedFormResult.Hide:
-                            Visible = false;
-                            WinApi.SuspendDrawing(this);
-                            break;
-                        case UnauthorizedFormResult.Exception:
-                            var exception = new NotAuthorizedException(type);
-                            var args = new HandledEventArgs();
-                            OnAuthorisationFailed(exception, args);
-                            if (!args.Handled)
-                                throw exception;
-                            break;
-                        default:
-                            throw new ArgumentOutOfRangeException();
-                    }
-                else if (UnauthorizedResult == UnauthorizedFormResult.Hide)
+            IsAuthorized = type.GetCustomAttributes(AuthorisationType, true)
+                               .OfType<AuthorisationAttribute>()
+                               .All(a => a.IsAuthorized());
+
+            
+            if (IsAuthorized)
+                switch (UnauthorizedResult)
                 {
-                    Visible = true;
-                    WinApi.ResumeDrawing(this);
+                    case UnauthorizedFormResult.Nothing:
+                        break;
+                    case UnauthorizedFormResult.Disable:
+                        Enabled = false;
+                        break;
+                    case UnauthorizedFormResult.Hide:
+                        Visible = false;
+                        WinApi.SuspendDrawing(this);
+                        break;
+                    case UnauthorizedFormResult.Exception:
+                        var exception = new NotAuthorizedException(type);
+                        var args = new HandledEventArgs();
+                        OnAuthorisationFailed(exception, args);
+                        if (!args.Handled)
+                            throw exception;
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
                 }
-                else if (UnauthorizedResult == UnauthorizedFormResult.Disable)
-                {
-                    Enabled = true;
-                }
+            else if (UnauthorizedResult == UnauthorizedFormResult.Hide)
+            {
+                Visible = true;
+                WinApi.ResumeDrawing(this);
+            }
+            else if (UnauthorizedResult == UnauthorizedFormResult.Disable)
+            {
+                Enabled = true;
+            }
         }
 
         #endregion

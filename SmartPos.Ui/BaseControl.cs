@@ -35,6 +35,8 @@ namespace SmartPos.Ui
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public new BaseForm ParentForm => base.ParentForm as BaseForm;
 
+        protected bool IsAuthorized { get; private set; }
+
         #endregion
 
         #region Constructors
@@ -128,36 +130,35 @@ namespace SmartPos.Ui
                 return;
 
             var type = GetType();
-            var attributes = type.GetCustomAttributes(AuthorisationType, true)
-                                 .OfType<AuthorisationAttribute>();
 
-            foreach (var attribute in attributes)
-                if (!attribute.IsAuthorized())
-                    switch (UnauthorizedResult)
-                    {
-                        case UnauthorizedControlResult.Nothing:
-                            break;
-                        case UnauthorizedControlResult.Hide:
-                            Visible = false;
-                            WinApi.SuspendDrawing(this);
-                            break;
-                        case UnauthorizedControlResult.Exception:
-                            var exception = new NotAuthorizedException(type);
-                            var args = new HandledEventArgs();
-                            OnAuthorisationFailed(exception, args);
-                            if (!args.Handled)
-                                throw exception;
-                            break;
-                        default:
-                            throw new ArgumentOutOfRangeException();
-                    }
-                else if (UnauthorizedResult == UnauthorizedControlResult.Hide)
+            IsAuthorized = type.GetCustomAttributes(AuthorisationType, true)
+                               .OfType<AuthorisationAttribute>()
+                               .All(a => a.IsAuthorized());
+
+            if (!IsAuthorized)
+                switch (UnauthorizedResult)
                 {
-                    Visible = true;
-                    WinApi.ResumeDrawing(this);
+                    case UnauthorizedControlResult.Nothing:
+                        break;
+                    case UnauthorizedControlResult.Hide:
+                        Visible = false;
+                        WinApi.SuspendDrawing(this);
+                        break;
+                    case UnauthorizedControlResult.Exception:
+                        var exception = new NotAuthorizedException(type);
+                        var args = new HandledEventArgs();
+                        OnAuthorisationFailed(exception, args);
+                        if (!args.Handled)
+                            throw exception;
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
                 }
-
-
+            else if (UnauthorizedResult == UnauthorizedControlResult.Hide)
+            {
+                Visible = true;
+                WinApi.ResumeDrawing(this);
+            }
         }
 
         private void OnParentFormStartLoadingWrap(object sender, EventArgs e)

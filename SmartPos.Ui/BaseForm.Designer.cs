@@ -56,7 +56,8 @@
             // 
             // lblMessage
             // 
-            this.lblMessage.Dock = System.Windows.Forms.DockStyle.Top;
+            this.lblMessage.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.lblMessage.Location = new System.Drawing.Point(0, 40);
             this.lblMessage.Name = "lblMessage";
             this.lblMessage.Size = new System.Drawing.Size(382, 0);

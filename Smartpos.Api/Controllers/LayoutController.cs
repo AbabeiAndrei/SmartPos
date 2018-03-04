@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Razor.Generator;
 using SmartPos.DomainModel;
 using SmartPos.DomainModel.Entities;
 using SmartPos.DomainModel.Extensions;
@@ -28,7 +29,12 @@ namespace Smartpos.Api.Controllers
         [HttpGet]
         public IHttpActionResult GetAll()
         {
-            return Ok(_context.Select<Zone>());
+            var zones = _context.Select<Zone>().ToList();
+
+            foreach (var zone in zones)
+                zone.Tables = _context.Where<Table>(t => t.ZoneId == zone.Id);
+
+            return Ok(zones);
         }
 
         protected override void Dispose(bool disposing)

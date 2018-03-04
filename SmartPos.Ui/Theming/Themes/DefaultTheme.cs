@@ -28,6 +28,10 @@ namespace SmartPos.Ui.Theming.Themes
         public Color ErrorBackColor { get; }
         public Color[] LoadingColors { get; }
 
+        public Color FreeTableColor { get; }
+        public Color OpenedTableColor { get; }
+        public Color OcupiedTableColor { get; }
+
         public DefaultTheme()
         {
             WindowBackColor = MaterialColors.Black;
@@ -57,6 +61,10 @@ namespace SmartPos.Ui.Theming.Themes
             InfoBackColor = MaterialColors.Green();
             WarningBackColor = MaterialColors.Amber();
             ErrorBackColor = MaterialColors.Red();
+
+            FreeTableColor = MaterialColors.Green();
+            OpenedTableColor = MaterialColors.Amber();
+            OcupiedTableColor = MaterialColors.Red();
 
             LoadingColors = new[]
                             {

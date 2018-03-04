@@ -51,16 +51,20 @@ namespace SmartPos.Desktop.Controls.Workspace
 
                 var zones = await client.Layout.GetAllZones();
                 var lzones = zones.OrderBy(z => z.Order).ThenBy(z => z.Name).ThenBy(z => z.Id).ToList();
+                var czones = lzones.Select(CreateZoneControl).Cast<Control>().ToArray();
 
-                pnlZones.Controls.AddRange(lzones.Select(CreateZoneControl).Cast<Control>().ToArray());
+                pnlZones.Controls.AddRange(czones);
 
                 foreach (var zone in lzones)
                 {
                     if(!_zones.ContainsKey(zone.Id))
                         _zones.Add(zone.Id, new List<CtrlTable>());
 
-                    _zones[zone.Id].AddRange(zone.Tables.Select(CreateTableControl));
+                    _zones[zone.Id].AddRange(zone.Tables?.Select(CreateTableControl) ?? new CtrlTable[0]);
                 }
+
+                if(czones.Length >= 1)
+                    SelectZone((CtrlWorkspaceZone) czones[0]);
             }
             catch (Exception ex)
             {
@@ -82,7 +86,13 @@ namespace SmartPos.Desktop.Controls.Workspace
 
         private CtrlTable CreateTableControl(Table table)
         {
-            var tbl = new CtrlTable(table);
+            var tbl = new CtrlTable(table)
+            {
+                Left = table.Left,
+                Top = table.Top,
+                Width = table.Width,
+                Height = table.Height
+            };
             tbl.ApplyTheme(_theme);
             tbl.Click += WorkspaceZone_Click;
             return tbl;
@@ -92,20 +102,24 @@ namespace SmartPos.Desktop.Controls.Workspace
         {
             if(!(sender is CtrlWorkspaceZone ctrl))
                 return;
-            
+
+            SelectZone(ctrl);
+        }
+
+        private void SelectZone(CtrlWorkspaceZone zone)
+        {
             try
             {
                 pnlZones.SuspendLayout();
 
                 pnlZones.Controls.OfType<CtrlWorkspaceZone>().Foreach(z => z.Selected = false);
-                ctrl.Selected = true;
-                ShowTablesForZone(ctrl.Zone.Id);
+                zone.Selected = true;
+                ShowTablesForZone(zone.Zone.Id);
             }
             finally
             {
                 pnlZones.ResumeLayout();
             }
-
         }
 
         private void ShowTablesForZone(int zoneId)

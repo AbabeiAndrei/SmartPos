@@ -28,8 +28,16 @@
         /// </summary>
         private void InitializeComponent()
         {
-            components = new System.ComponentModel.Container();
+            this.SuspendLayout();
+            // 
+            // CtrlTable
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 28F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.DoubleBuffered = true;
+            this.Name = "CtrlTable";
+            this.ResumeLayout(false);
+
         }
 
         #endregion

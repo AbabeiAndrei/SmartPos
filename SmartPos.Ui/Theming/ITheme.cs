@@ -32,5 +32,9 @@ namespace SmartPos.Ui.Theming
         Color WarningBackColor { get; }
         Color ErrorBackColor { get; }
         Color[] LoadingColors { get; }
+
+        Color FreeTableColor { get; }
+        Color OpenedTableColor { get; }
+        Color OcupiedTableColor { get; }
     }
 }

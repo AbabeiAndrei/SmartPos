@@ -23,7 +23,21 @@ namespace SmartPos.DomainModel.Extensions
 
         public static IEnumerable<T> Select<T>(this IDbContext context)
         {
+            if (context == null)
+                throw new ArgumentNullException(nameof(context));
+
             return context.Connection.Select<T>();
+        }
+
+        public static IEnumerable<T> Where<T>(this IDbContext context, Expression<Func<T, bool>> predicate)
+        {
+            if (context == null)
+                throw new ArgumentNullException(nameof(context));
+
+            if(predicate == null)
+                throw new ArgumentNullException(nameof(predicate));
+
+            return context.Connection.Select(predicate);
         }
     }
 }

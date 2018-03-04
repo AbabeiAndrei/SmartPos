@@ -127,6 +127,9 @@
     <EmbeddedResource Include="Controls\CtrlToolBar.resx">
       <DependentUpon>CtrlToolBar.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Workspace\CtrlTable.resx">
+      <DependentUpon>CtrlTable.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\Workspace\CtrlWorkspace.resx">
       <DependentUpon>CtrlWorkspace.cs</DependentUpon>
     </EmbeddedResource>

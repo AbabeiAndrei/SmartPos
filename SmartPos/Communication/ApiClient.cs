@@ -1,16 +1,20 @@
 ﻿using System.Threading.Tasks;
+
 using RestSharp;
-using SmartPos.DomainModel.Entities;
-using SmartPos.DomainModel.Security;
-using SmartPos.GeneralLibrary.Extensions;
+
 using SmartPos.Ui.Components;
+using SmartPos.GeneralLibrary.Extensions;
+using SmartPos.Desktop.Communication.Controllers;
+using SmartPos.Desktop.Communication.Controllers.Interfaces;
 
 namespace SmartPos.Desktop.Communication
 {
-    public class ApiClient
+    public class ApiClient : IApiClient
     {
         private readonly RestClient _client;
         private ILoadingToken _loadingToken;
+        private IAccountController _account;
+        private ILayoutController _layout;
 
         public virtual ILoadingToken LoadingToken
         {
@@ -18,9 +22,24 @@ namespace SmartPos.Desktop.Communication
             set => _loadingToken = value;
         }
 
+        public virtual IAccountController Account
+        {
+            get => _account;
+            protected set => _account = value;
+        }
+
+        public virtual ILayoutController Layout
+        {
+            get => _layout;
+            protected set => _layout = value;
+        }
+
         public ApiClient()
         {
             _client = new RestClient(Properties.Settings.Default.ApiUrl);
+
+            _account = new AccountController(this);
+            _layout = new LayoutController(this);
         }
         
         public ApiClient(ILoadingToken loadingToken = null)
@@ -29,17 +48,7 @@ namespace SmartPos.Desktop.Communication
             _loadingToken = loadingToken;
         }
 
-        public async Task<User> Login(string pin)
-        {
-            const string controller = "Account";
-
-            var hasher = new UserPasswordHasher();
-
-            return await ExecuteAsync<User>(controller, Method.GET, new { pin = hasher.Hash(pin, null) });
-        }
-
-        protected async Task<T> ExecuteAsync<T>(string resource, Method method, object queryStringParameters, object body = null) 
-            where T : new()
+        public async Task<T> ExecuteAsync<T>(string resource, Method method, object queryStringParameters, object body = null) 
         {
             try
             {
@@ -48,8 +57,9 @@ namespace SmartPos.Desktop.Communication
 
                 var request = new RestRequest(resource, method);
 
-                foreach (var (name, value) in queryStringParameters.GetProperties())
-                    request.AddParameter(name, value);
+                if (queryStringParameters != null)
+                    foreach (var (name, value) in queryStringParameters.GetProperties())
+                        request.AddParameter(name, value);
 
                 if (body != null)
                     request.AddBody(body);

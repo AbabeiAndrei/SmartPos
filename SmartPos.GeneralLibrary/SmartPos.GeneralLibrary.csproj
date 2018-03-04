@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Exceptions\PosException.cs" />
     <Compile Include="Extensions\CollectionEx.cs" />
     <Compile Include="Extensions\ReflexionEx.cs" />
     <Compile Include="Extensions\StringEx.cs" />

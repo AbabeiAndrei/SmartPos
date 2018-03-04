@@ -2,9 +2,11 @@
 using System.Net;
 using System.Runtime.Serialization;
 
+using SmartPos.GeneralLibrary.Exceptions;
+
 namespace SmartPos.Desktop.Communication
 {
-    public class RequestException : Exception
+    public class RequestException : PosException
     {
         public HttpStatusCode StatusCode { get; }
 

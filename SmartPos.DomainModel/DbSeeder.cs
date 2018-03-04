@@ -37,6 +37,8 @@ namespace SmartPos.DomainModel
             _connection.CreateTableIfNotExists<User>();
             _connection.CreateTableIfNotExists<AccessRight>();
             _connection.CreateTableIfNotExists<UserAccessRight>();
+            _connection.CreateTableIfNotExists<Zone>();
+            _connection.CreateTableIfNotExists<Table>();
         }
 
         #endregion

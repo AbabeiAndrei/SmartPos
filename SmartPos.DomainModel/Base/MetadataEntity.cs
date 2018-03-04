@@ -3,6 +3,7 @@
 namespace SmartPos.DomainModel.Base
 {
     public abstract class MetadataEntity<T> : Entity
+        where T : IMetadata
     {
         private T _metadata;
 

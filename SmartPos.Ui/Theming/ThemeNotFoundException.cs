@@ -1,9 +1,11 @@
 using System;
 using System.Runtime.Serialization;
 
+using SmartPos.GeneralLibrary.Exceptions;
+
 namespace SmartPos.Ui.Theming
 {
-    public class ThemeNotFoundException : Exception
+    public class ThemeNotFoundException : PosException
     {
         public string ThemeName { get; }
 

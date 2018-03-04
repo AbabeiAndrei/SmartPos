@@ -62,6 +62,12 @@
   <ItemGroup>
     <Compile Include="Application.cs" />
     <Compile Include="Communication\ApiClient.cs" />
+    <Compile Include="Communication\Controllers\AccountController.cs" />
+    <Compile Include="Communication\Controllers\Interfaces\IAccountController.cs" />
+    <Compile Include="Communication\Controllers\Interfaces\IController.cs" />
+    <Compile Include="Communication\Controllers\Interfaces\ILayoutController.cs" />
+    <Compile Include="Communication\Controllers\LayoutController.cs" />
+    <Compile Include="Communication\IApiClient.cs" />
     <Compile Include="Communication\RequestException.cs" />
     <Compile Include="Controls\CtrlNumericKeyboard.cs">
       <SubType>UserControl</SubType>
@@ -100,6 +106,7 @@
       <DependentUpon>CtrlWorkspaceZone.cs</DependentUpon>
     </Compile>
     <Compile Include="Data\Application.cs" />
+    <Compile Include="Data\GlobalHandler.cs" />
     <Compile Include="Data\PosClient.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>

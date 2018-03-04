@@ -72,12 +72,16 @@
     <Compile Include="DbContext.cs" />
     <Compile Include="DbSeeder.cs" />
     <Compile Include="Entities\AccessRight.cs" />
+    <Compile Include="Entities\Table.cs" />
+    <Compile Include="Entities\Zone.cs" />
     <Compile Include="Extensions\DbExtensions.cs" />
     <Compile Include="Interfaces\IModelBuilder.cs" />
     <Compile Include="Interfaces\ISeeder.cs" />
     <Compile Include="Interfaces\IDbContext.cs" />
+    <Compile Include="Metadata\TableMetadata.cs" />
     <Compile Include="Metadata\UserMetadata.cs" />
     <Compile Include="Entities\UserAccessRight.cs" />
+    <Compile Include="Metadata\ZoneMetadata.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Entities\User.cs" />
     <Compile Include="Security\Crypto\Hasher.cs" />

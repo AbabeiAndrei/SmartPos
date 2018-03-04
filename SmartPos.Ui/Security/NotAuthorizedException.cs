@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
+using SmartPos.GeneralLibrary.Exceptions;
+
 namespace SmartPos.Ui.Security
 {
-    public class NotAuthorizedException : Exception
+    public class NotAuthorizedException : PosException
     {
         public Type RequestedType { get; protected set; }
 

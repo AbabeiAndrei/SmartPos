@@ -15,10 +15,11 @@ using AuthenticationManager = SmartPos.Ui.Security.AuthenticationManager;
 
 namespace SmartPos.Desktop
 {
-    public partial class MainForm : BaseForm
+    public sealed partial class MainForm : BaseForm
     {
         #region Fields
 
+        private readonly ApiClient _apiClient;
         private ITheme _theme;
 
         #endregion
@@ -41,6 +42,7 @@ namespace SmartPos.Desktop
 #if DEBUG
             FormBorderStyle = FormBorderStyle.FixedSingle;
 #endif
+            _apiClient = new ApiClient(LoadingState);
         }
 
         #endregion
@@ -94,7 +96,8 @@ namespace SmartPos.Desktop
             try
             {
                 var loaderToken = sender.Form.LoadingState;
-                var user = await Application.Api(loaderToken).Login(pin);
+                var apiClient = Application.Api(loaderToken);
+                var user = await apiClient.Account.Login(pin);
                 AuthenticationManager.User = user;
             }
             catch (RequestException ex)
@@ -115,6 +118,12 @@ namespace SmartPos.Desktop
             
             ShowMessage("Login successful", MessageType.Info, 1000);
             after.Close = true;
+            await InitializePos();
+        }
+
+        private async Task InitializePos()
+        {
+            await ctrlWorkspace.Initialize(_apiClient);
         }
 
         #endregion

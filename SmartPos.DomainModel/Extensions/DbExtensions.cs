@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq.Expressions;
 
 using ServiceStack.OrmLite;
@@ -18,6 +19,11 @@ namespace SmartPos.DomainModel.Extensions
                 throw new ArgumentNullException(nameof(predicate));
 
             return context.Connection.Single(predicate);
+        }
+
+        public static IEnumerable<T> Select<T>(this IDbContext context)
+        {
+            return context.Connection.Select<T>();
         }
     }
 }

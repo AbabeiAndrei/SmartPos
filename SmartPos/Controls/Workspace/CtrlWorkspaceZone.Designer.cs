@@ -32,8 +32,9 @@
             // 
             // CtrlWorkspaceZone
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 28F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.DoubleBuffered = true;
             this.Name = "CtrlWorkspaceZone";
             this.Size = new System.Drawing.Size(164, 61);
             this.ResumeLayout(false);

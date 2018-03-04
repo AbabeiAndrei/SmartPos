@@ -11,8 +11,7 @@ namespace SmartPos.GeneralLibrary.Extensions
         {
             return new ReadOnlyDictionary<TKey, TValue>(dictionary);
         }
-
-
+        
         public static IReadOnlyCollection<T> ToReadOnly<T>(this IEnumerable<T> collection)
         {
             return new ReadOnlyCollection<T>(new List<T>(collection));
@@ -31,6 +30,33 @@ namespace SmartPos.GeneralLibrary.Extensions
             source.Reset();
             while (source.MoveNext())
                 yield return source.Current;
+        }
+
+        public static void Foreach<T>(this IEnumerable<T> source, Action<T> action)
+        {
+            if (source == null)
+                throw new ArgumentNullException(nameof(source));
+
+            if (action == null)
+                throw new ArgumentNullException(nameof(action));
+
+            foreach (var item in source)
+                action(item);
+        }
+
+        public static void AddRange<T>(this IList<T> source, IEnumerable<T> items)
+        {
+            if (source == null)
+                throw new ArgumentNullException(nameof(source));
+
+            if (items == null)
+                throw new ArgumentNullException(nameof(items));
+
+            if(source is List<T> list)
+                list.AddRange(items);
+            else
+                foreach (var item in items)
+                    source.Add(item);
         }
     }
 

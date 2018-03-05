@@ -68,6 +68,9 @@
     </Compile>
     <Compile Include="Components\ILoadingToken.cs" />
     <Compile Include="Components\LoadingAnimationHandler.cs" />
+    <Compile Include="Controls\BaseControlWrapper.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Controls\SpButton.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -77,7 +80,7 @@
     <Compile Include="Controls\Specific\SpConfirmButton.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Controls\SpFloatinPanel.cs">
+    <Compile Include="Controls\SpFlowPanel.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\SpLabel.cs">
@@ -109,6 +112,7 @@
     <Compile Include="Theming\ThemeNameAttribute.cs" />
     <Compile Include="Theming\ThemeNotFoundException.cs" />
     <Compile Include="Theming\Themes\DefaultTheme.cs" />
+    <Compile Include="UiConfigure.cs" />
     <Compile Include="Utils\FormBuilderEx.cs" />
     <Compile Include="Utils\WinApi.cs" />
   </ItemGroup>

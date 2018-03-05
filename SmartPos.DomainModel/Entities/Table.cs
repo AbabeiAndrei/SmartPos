@@ -12,6 +12,7 @@ namespace SmartPos.DomainModel.Entities
         public string Name { get; set; }
         
         [Required]
+        [References(typeof(Zone))]
         public int ZoneId { get; set; }
         
         [Required]
@@ -31,5 +32,8 @@ namespace SmartPos.DomainModel.Entities
         
         [Default(typeof(bool), "0")]
         public bool Deleted { get; set; }
+
+        [Reference]
+        public Zone Zone{ get; set; }
     }
 }

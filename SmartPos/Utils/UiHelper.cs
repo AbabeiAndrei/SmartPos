@@ -1,6 +1,9 @@
-﻿using System.Windows.Forms;
+﻿using System;
+using System.Threading.Tasks;
+using System.Windows.Forms;
 
 using SmartPos.Ui;
+using SmartPos.Ui.Handlers;
 
 namespace SmartPos.Desktop.Utils
 {
@@ -56,6 +59,34 @@ namespace SmartPos.Desktop.Utils
         public static string Title(string title)
         {
             return $"{Application.ProductName} - {title}";
+        }
+
+        public static void RunOnUiThread(this Control control, UiInvokeRequiredHandler action)
+        {
+            if(control == null)
+                throw new ArgumentNullException(nameof(control));
+
+            if(!control.InvokeRequired)
+                return;
+
+            if(action == null)
+                throw new ArgumentNullException(nameof(action));
+
+            control.Invoke(action);
+        }
+
+        public static async Task RunOnUiThreadAsync(this Control control, UiInvokeRequiredAsyncHandler action)
+        {
+            if(control == null)
+                throw new ArgumentNullException(nameof(control));
+
+            if(!control.InvokeRequired)
+                return;
+
+            if(action == null)
+                throw new ArgumentNullException(nameof(action));
+
+            await Task.Factory.StartNew(() => control.Invoke(action));
         }
     }
 }

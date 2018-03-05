@@ -18,4 +18,8 @@ namespace SmartPos.Ui.Handlers
     public delegate void CloseFormResult(DialogResult result);
 
     public delegate void TextHandler(object sender, string text);
+
+    public delegate void UiInvokeRequiredHandler();
+
+    public delegate Task UiInvokeRequiredAsyncHandler();
 }

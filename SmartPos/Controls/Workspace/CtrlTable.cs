@@ -1,13 +1,17 @@
 ﻿using System.Drawing;
 using System.Windows.Forms;
-using SmartPos.DomainModel.Entities;
+
 using SmartPos.Ui;
 using SmartPos.Ui.Theming;
+using SmartPos.Desktop.Utils;
+using SmartPos.DomainModel.Entities;
 
 namespace SmartPos.Desktop.Controls.Workspace
 {
     public partial class CtrlTable : BaseControl
     {
+        #region Fields
+
         private ITheme _theme;
         private Brush _textBrush;
         private Brush _freeTableBrush;
@@ -15,7 +19,15 @@ namespace SmartPos.Desktop.Controls.Workspace
         private Brush _ocupiedTableBrush;
         private static readonly StringFormat _stringFormat;
 
+        #endregion
+
+        #region Properties
+
         public Table Table { get; }
+
+        #endregion
+
+        #region Constructors
 
         public CtrlTable(Table table)
         {
@@ -25,12 +37,12 @@ namespace SmartPos.Desktop.Controls.Workspace
 
         static CtrlTable()
         {
-            _stringFormat = new StringFormat
-                            {
-                                Alignment = StringAlignment.Center,
-                                LineAlignment = StringAlignment.Center
-                            };
+            _stringFormat = GfxHelper.CreateStringFormat(StringAlignment.Center, StringAlignment.Center);
         }
+        
+        #endregion
+
+        #region Overrides
 
         public override void ApplyTheme(ITheme theme)
         {
@@ -62,5 +74,7 @@ namespace SmartPos.Desktop.Controls.Workspace
             _openTableBrush?.Dispose();
             _ocupiedTableBrush?.Dispose();
         }
+
+        #endregion
     }
 }

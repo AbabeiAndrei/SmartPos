@@ -1,14 +1,17 @@
 ﻿using System;
 using System.Linq;
 using System.Drawing;
+using System.Threading;
 using System.Diagnostics;
 using System.Windows.Forms;
 using System.ComponentModel;
 using System.Threading.Tasks;
+
 using SmartPos.Ui.Utils;
 using SmartPos.Ui.Theming;
 using SmartPos.Ui.Security;
 using SmartPos.Ui.Handlers;
+using SmartPos.Ui.Controls;
 using SmartPos.Ui.Components;
 
 namespace SmartPos.Ui
@@ -43,6 +46,9 @@ namespace SmartPos.Ui
         private Brush[] _loaderBrushes;
         private Brush _lastLoadedBrush;
         private ILoadingToken _loadingState;
+        private bool _showTitle;
+        private bool _showClose;
+        private bool _topPaneVisible;
 
         #endregion
 
@@ -60,25 +66,64 @@ namespace SmartPos.Ui
 
         [DefaultValue(false)]
         [Category("Appearance")]
-        public virtual bool Drawer
+        public virtual bool ShowTitle
         {
-            get => lblTitle?.Visible ?? false;
+            get => _showTitle;
             set
             {
-                if(lblTitle == null || lblTitle.Visible == value)
+                if(lblTitle == null)
                     return;
 
-                if (lblTitle.Visible && !value)
-                    Height -= lblTitle.Height;
-                else
-                    Height += lblTitle.Height;
+                lblTitle.Visible = _showTitle = value;
 
-                if (!lblTitle.Visible && value)
+                ShowTitlePane = ShowTitle || ShowClose;
+            }
+        }
+        
+        [DefaultValue(false)]
+        [Category("Appearance")]
+        public virtual bool ShowClose
+        {
+            get => _showClose;
+            set
+            {
+                if(btnClose == null)
+                    return;
+
+                btnClose.Visible = _showClose = value;
+
+                ShowTitlePane = ShowTitle || ShowClose;
+            }
+        }
+        
+        [DefaultValue(true)]
+        [Category("Appearance")]
+        public bool EnableClose
+        {
+            get => btnClose.Enabled;
+            set => btnClose.Enabled = value;
+        }
+
+
+        protected virtual bool ShowTitlePane
+        {
+            get => _topPaneVisible;
+            set
+            {
+                if(pnlTitle == null)
+                    return;
+
+                if (ShowTitlePane && !value)
+                    Height -= pnlTitle.Height;
+                else if (!ShowTitlePane && value)
+                    Height += pnlTitle.Height;
+
+                if (!ShowTitlePane && value)
                     Paint -= pnlLoading_Paint;
-                else if (lblTitle.Visible && !value)
+                else if (ShowTitlePane && !value)
                     Paint += pnlLoading_Paint;
 
-                lblTitle.Visible = value;
+                pnlTitle.Visible = _topPaneVisible = value;
             }
         }
 
@@ -98,8 +143,8 @@ namespace SmartPos.Ui
 
         protected virtual bool ShowWindowBorder => true;
 
-        protected virtual int MessageLineTop => Drawer
-                                                    ? lblTitle.Bottom
+        protected virtual int MessageLineTop => ShowTitle
+                                                    ? pnlTitle.Bottom
                                                     : 0;
 
         protected bool IsAuthorized { get; private set; }
@@ -127,7 +172,7 @@ namespace SmartPos.Ui
             tmrAnimationTimer.Interval = SHOW_MESSAGE_FPS;
             _loadingState = new LoadingAnimationHandler(this);
 
-            lblTitle.VisibleChanged += (sender, args) => SetLabelMessageLayout();
+            pnlTitle.VisibleChanged += (sender, args) => SetLabelMessageLayout();
         }
 
         static BaseForm()
@@ -147,20 +192,18 @@ namespace SmartPos.Ui
 
             CheckAuthorisation();
 
-            lblTitle.SendToBack();
+            pnlTitle.SendToBack();
         }
 
         protected override void OnPaint(PaintEventArgs e)
         {
-            try
-            {
-                if(ShowWindowBorder && _penBorder != null)
-                    e.Graphics.DrawRectangle(_penBorder, 0, 0, Width - 1, Height - 1);
-            }
-            finally
-            {
-                base.OnPaint(e);
-            }
+            base.OnPaint(e);
+
+            if (UiConfigure.GraphicsSettingResolver != null)
+                UiConfigure.GraphicsSettingResolver(e.Graphics);
+
+            if(ShowWindowBorder && _penBorder != null)
+                e.Graphics.DrawRectangle(_penBorder, 0, 0, Width - 1, Height - 1);
         }
 
         protected override void OnSizeChanged(EventArgs e)
@@ -191,7 +234,7 @@ namespace SmartPos.Ui
             _theme = theme;
 
             _loaderBrushes = _theme.LoadingColors.Select(c => new SolidBrush(c)).Cast<Brush>().ToArray();
-
+            
             Refresh();
         }
 
@@ -237,7 +280,11 @@ namespace SmartPos.Ui
                 return;
             }
             _message.Hiding = true;
-            tmrAnimationTimer.Interval = _message.Duration ?? PAUSE_SHOW_MESSAGE;
+
+            if(_message.Duration == Timeout.Infinite)
+                tmrAnimationTimer.Stop();
+            else
+                tmrAnimationTimer.Interval = _message.Duration ?? PAUSE_SHOW_MESSAGE;
         }
 
         private void lblErrors_MouseEnter(object sender, EventArgs e)
@@ -253,6 +300,9 @@ namespace SmartPos.Ui
 
         private void lblErrors_Click(object sender, EventArgs e)
         {
+            if(_message.Locked)
+                return;
+
             _message.Hiding = true;
             _mouseOverErrorMessage = false;
             tmrAnimationTimer.Interval = SHOW_MESSAGE_FPS / 2;
@@ -264,8 +314,8 @@ namespace SmartPos.Ui
             if(!tmrLoader.Enabled || _loaderBrushes == null)
                 return;
 
-            var width = Drawer
-                            ? lblTitle.Width
+            var width = ShowTitle
+                            ? pnlTitle.Width
                             : Width;
 
             if (_loaderLocation >= width)
@@ -294,6 +344,11 @@ namespace SmartPos.Ui
 
             if(LoadingState.TimeOut != 0 && tmrLoader.Tag is Stopwatch sw && sw.ElapsedMilliseconds >= LoadingState.TimeOut)
                 StopLoading();
+        }
+
+        private async void btnClose_Click(object sender, EventArgs e)
+        {
+            await PerformClose(new BaseControlWrapper((Control)sender));
         }
 
         #endregion
@@ -344,14 +399,21 @@ namespace SmartPos.Ui
 
         public virtual void ShowMessage(string message, MessageType messageType, int? duration = null)
         {
+            ShowMessage(new MessageInfo(message, messageType, duration));
+        }
+
+        public virtual void ShowMessage(MessageInfo message)
+        {
+            
             using (var gfx = CreateGraphics())
             {
-                var height = gfx.MeasureString(message, lblMessage.Font, new Size(lblMessage.Width, Height));
-                _message = new MessageAnimation(message, messageType, (int) height.Height + 10)
-                           {
-                               Duration = duration
-                           };
-                switch (messageType)
+                var height = gfx.MeasureString(message.Message, lblMessage.Font, new Size(lblMessage.Width, Height));
+                _message = new MessageAnimation(message.Message, message.MessageType, (int) height.Height + 10)
+                {
+                    Duration = message.Duration,
+                    Locked = message.Locked
+                };
+                switch (message.MessageType)
                 {
                     case MessageType.Info:
                         lblMessage.BackColor = _theme.InfoBackColor;
@@ -363,7 +425,7 @@ namespace SmartPos.Ui
                         lblMessage.BackColor = _theme.ErrorBackColor;
                         break;
                     default:
-                        throw new ArgumentOutOfRangeException(nameof(messageType), messageType, null);
+                        throw new ArgumentOutOfRangeException(nameof(message.MessageType), message.MessageType, null);
                 }
             }
             lblMessage.Text = _message.Message;
@@ -430,10 +492,10 @@ namespace SmartPos.Ui
         
         protected virtual void InvalidateLoadingArea()
         {
-            if (Drawer)
+            if (ShowTitle)
             {
-                lblTitle.Invalidate(new Rectangle(0, 0, lblTitle.Width, 3));
-                lblTitle.Update();
+                pnlLoader.Invalidate(new Rectangle(0, 0, pnlLoader.Width, 3));
+                pnlLoader.Update();
             }
             else
             {

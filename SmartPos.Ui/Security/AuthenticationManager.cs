@@ -17,5 +17,10 @@ namespace SmartPos.Ui.Security
         }
 
         public static bool IsLoggedIn => User != null;
+
+        public static void Logout()
+        {
+            User = null;
+        }
     }
 }

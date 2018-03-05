@@ -3,13 +3,16 @@
   <Profiles />
   <Settings>
     <Setting Name="ApiUrl" Type="System.String" Scope="User">
-      <Value Profile="(Default)">http://api.smarppos.local/api</Value>
+      <Value Profile="(Default)">http://localhost:8447/api</Value>
     </Setting>
     <Setting Name="ThemeName" Type="System.String" Scope="User">
       <Value Profile="(Default)">Default</Value>
     </Setting>
     <Setting Name="ShowTimeInStatusbar" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="HubUrl" Type="System.String" Scope="User">
+      <Value Profile="(Default)">http://localhost:8447/</Value>
     </Setting>
   </Settings>
 </SettingsFile>

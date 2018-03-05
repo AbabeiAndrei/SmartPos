@@ -1,4 +1,5 @@
-﻿namespace SmartPos.Desktop.Controls
+﻿
+namespace SmartPos.Desktop.Controls
 {
     partial class CtrlNumericKeyboard
     {
@@ -41,7 +42,7 @@
             this.btn0 = new SmartPos.Ui.Controls.SpButton();
             this.btnDecimal = new SmartPos.Ui.Controls.SpButton();
             this.btnConfirm = new SmartPos.Ui.Controls.Specific.SpConfirmButton();
-            this.pnlMain = new System.Windows.Forms.Panel();
+            this.pnlMain = new SmartPos.Ui.Controls.SpPanel();
             this.pnlMain.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -255,6 +256,6 @@
         private Ui.Controls.SpButton btn0;
         private Ui.Controls.SpButton btnDecimal;
         private Ui.Controls.Specific.SpConfirmButton btnConfirm;
-        private System.Windows.Forms.Panel pnlMain;
+        private SmartPos.Ui.Controls.SpPanel pnlMain;
     }
 }

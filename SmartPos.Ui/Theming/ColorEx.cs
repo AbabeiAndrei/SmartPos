@@ -18,5 +18,10 @@ namespace SmartPos.Ui.Theming
 
             return Color.FromArgb(red, blue, green);
         }
+
+        public static Brush CreateBrush(this Color color)
+        {
+            return new SolidBrush(color);
+        }
     }
 }

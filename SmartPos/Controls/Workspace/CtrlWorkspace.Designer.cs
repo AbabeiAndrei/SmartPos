@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.pnlZones = new SmartPos.Ui.Controls.SpFloatinPanel();
+            this.pnlZones = new SmartPos.Ui.Controls.SpFlowPanel();
             this.pnlTables = new SmartPos.Ui.Controls.SpPanel();
             this.SuspendLayout();
             // 
@@ -62,7 +62,7 @@
 
         #endregion
 
-        private Ui.Controls.SpFloatinPanel pnlZones;
+        private Ui.Controls.SpFlowPanel pnlZones;
         private Ui.Controls.SpPanel pnlTables;
     }
 }

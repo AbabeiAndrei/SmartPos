@@ -2,6 +2,8 @@
 using System.Drawing;
 using System.Windows.Forms;
 
+using Microsoft.AspNet.SignalR.Client;
+
 using SmartPos.Ui;
 using SmartPos.Ui.Theming;
 using SmartPos.Ui.Security;
@@ -22,6 +24,9 @@ namespace SmartPos.Desktop.Controls
         #region Fields
 
         private Brush _textBrush;
+        private Brush _redBrush;
+        private Brush _yellowBrush;
+        private Brush _greenBrush;
 
         #endregion
 
@@ -35,16 +40,27 @@ namespace SmartPos.Desktop.Controls
                 _textBrush = new SolidBrush(Color.White);
 
             AuthorizationHandler.AuthorisationChanged += (sender, args) => Refresh();
+            Application.SignalRClient.Connection.StateChanged += _ =>
+            {
+                this.RunOnUiThread(() =>
+                {
+                    Invalidate(new Rectangle(0, 0, Height, Height));
+                    Update();
+                });
+            };
         }
 
         #endregion
 
         #region Overrides
-
+        
         public override void ApplyTheme(ITheme theme)
         {
             base.ApplyTheme(theme);
-            _textBrush = new SolidBrush(ForeColor);
+            _textBrush = ForeColor.CreateBrush();
+            _redBrush = MaterialColors.Red().CreateBrush();
+            _yellowBrush = MaterialColors.Amber().CreateBrush();
+            _greenBrush = MaterialColors.Green().CreateBrush();
         }
 
         protected override void OnPaint(PaintEventArgs e)
@@ -57,13 +73,38 @@ namespace SmartPos.Desktop.Controls
             const int textStart = 3;
             const int nameStartX = 250;
 
-            e.Graphics.DrawString(UiHelper.Title(PosClient.LocationName), Font, _textBrush, 0, textStart);
+            Brush circleBrush;
+
+            switch (Application.SignalRClient.Connection.State)
+            {
+                case ConnectionState.Connected:
+                    circleBrush = _greenBrush;
+                    break;
+                case ConnectionState.Connecting:
+                case ConnectionState.Reconnecting:
+                    circleBrush = _yellowBrush;
+                    break;
+                case ConnectionState.Disconnected:
+                    circleBrush = _redBrush;
+                    break;
+                default:
+                    circleBrush = null;
+                    break;
+            }
+
+            if(circleBrush != null)
+                e.Graphics.FillEllipse(circleBrush, 5f, 7f, Height - 15f, Height - 15f);
+
+            e.Graphics.DrawString(UiHelper.Title(PosClient.LocationName), Font, _textBrush, 25, textStart);
             
             if(AuthenticationManager.IsLoggedIn)
                 e.Graphics.DrawString(AuthenticationManager.User.FullName, Font, _textBrush, nameStartX, textStart);
 
             if(Settings.Default.ShowTimeInStatusbar)
-                e.Graphics.DrawString(DateTime.Now.ToString("F", Application.UiFormat), Font, _textBrush, Width - TIME_WIDTH, textStart);
+                e.Graphics.DrawString(DateTime.Now.ToString("F", Application.UiFormat), 
+                                      Font, _textBrush, 
+                                      new Rectangle(0, textStart, Width, Height), 
+                                      GfxHelper.CreateStringFormat(StringAlignment.Far));
 
             e.Graphics.DrawLine(Pens.White, 0, Height - 1, Width, Height - 1);
         }
@@ -72,6 +113,9 @@ namespace SmartPos.Desktop.Controls
         {
             base.DisposeComponents();
             _textBrush?.Dispose();
+            _redBrush?.Dispose();
+            _yellowBrush?.Dispose();
+            _greenBrush?.Dispose();
         }
 
         #endregion

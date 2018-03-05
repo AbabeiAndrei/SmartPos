@@ -1,9 +1,10 @@
-﻿using System;
-using System.Drawing;
+﻿using System.Drawing;
 using System.Windows.Forms;
-using SmartPos.DomainModel.Entities;
+
 using SmartPos.Ui;
 using SmartPos.Ui.Theming;
+using SmartPos.Desktop.Utils;
+using SmartPos.DomainModel.Entities;
 
 namespace SmartPos.Desktop.Controls.Workspace
 {
@@ -57,11 +58,7 @@ namespace SmartPos.Desktop.Controls.Workspace
 
         static CtrlWorkspaceZone()
         {
-            _stringFormat = new StringFormat
-                            {
-                                Alignment = StringAlignment.Center,
-                                LineAlignment = StringAlignment.Center
-                            };
+            _stringFormat = GfxHelper.CreateStringFormat(StringAlignment.Center, StringAlignment.Center);
         }
 
         #endregion

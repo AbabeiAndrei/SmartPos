@@ -220,31 +220,20 @@ namespace SmartPos.Desktop.Controls
         public override void ApplyTheme(ITheme theme)
         {
             base.ApplyTheme(theme);
-            txtDisplay.ApplyTheme(theme);
-            btn0.ApplyTheme(theme);
-            btn1.ApplyTheme(theme);
-            btn2.ApplyTheme(theme);
-            btn3.ApplyTheme(theme);
-            btn4.ApplyTheme(theme);
-            btn5.ApplyTheme(theme);
-            btn6.ApplyTheme(theme);
-            btn7.ApplyTheme(theme);
-            btn8.ApplyTheme(theme);
-            btn9.ApplyTheme(theme);
-            btnDecimal.ApplyTheme(theme);
-            btnConfirm.ApplyTheme(theme);
         }
 
         protected override void OnParentFormStartLoading(EventArgs e)
         {
-            btnConfirm.Enabled = false;
+            pnlMain.Enabled = false;
             txtDisplay.EnableBackspace = false;
+            base.OnParentFormStartLoading(e);
         }
 
         protected override void OnParentFormEndLoading(LoadingEndEventArgs e)
         {
-            btnConfirm.Enabled = true;
+            pnlMain.Enabled = true;
             txtDisplay.EnableBackspace = true;
+            base.OnParentFormEndLoading(e);
         }
 
         #endregion

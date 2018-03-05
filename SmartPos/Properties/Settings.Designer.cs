@@ -25,7 +25,7 @@ namespace SmartPos.Desktop.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("http://api.smarppos.local/api")]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://localhost:8447/api")]
         public string ApiUrl {
             get {
                 return ((string)(this["ApiUrl"]));
@@ -56,6 +56,18 @@ namespace SmartPos.Desktop.Properties {
             }
             set {
                 this["ShowTimeInStatusbar"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://localhost:8447/")]
+        public string HubUrl {
+            get {
+                return ((string)(this["HubUrl"]));
+            }
+            set {
+                this["HubUrl"] = value;
             }
         }
     }

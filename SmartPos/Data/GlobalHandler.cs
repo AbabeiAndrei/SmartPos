@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using SmartPos.Desktop.Communication;
-using SmartPos.GeneralLibrary.Exceptions;
+
 using SmartPos.Ui;
 using SmartPos.Ui.Handlers;
+using SmartPos.Desktop.Communication;
+using SmartPos.GeneralLibrary.Exceptions;
 
 namespace SmartPos.Desktop.Data
 {

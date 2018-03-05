@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Windows.Forms;
 using System.ComponentModel;
-
+using SmartPos.Ui.Components;
 using SmartPos.Ui.Handlers;
 using SmartPos.Ui.Security;
 using SmartPos.Ui.Theming;
@@ -36,6 +36,10 @@ namespace SmartPos.Ui
         public new BaseForm ParentForm => base.ParentForm as BaseForm;
 
         protected bool IsAuthorized { get; private set; }
+        
+        [Browsable(false)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public new ILoadingToken LoadingState => ParentForm?.LoadingState;
 
         #endregion
 
@@ -96,6 +100,14 @@ namespace SmartPos.Ui
             }
         }
 
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            base.OnPaint(e);
+
+            if (UiConfigure.GraphicsSettingResolver != null)
+                UiConfigure.GraphicsSettingResolver(e.Graphics);
+        }
+
         #endregion
 
         #region Protected methods
@@ -107,12 +119,19 @@ namespace SmartPos.Ui
 
         protected virtual void OnParentFormStartLoading(EventArgs e)
         {
+            if(ParentForm == null)
+                return;
 
+            ParentForm.EnableClose = false;
         }
 
         protected virtual void OnParentFormEndLoading(LoadingEndEventArgs e)
         {
+            
+            if(ParentForm == null)
+                return;
 
+            ParentForm.EnableClose = true;
         }
 
         protected virtual void DisposeComponents()

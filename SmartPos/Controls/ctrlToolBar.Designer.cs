@@ -43,6 +43,7 @@
             this.btnLogout.TabIndex = 0;
             this.btnLogout.Text = "Logout";
             this.btnLogout.UseVisualStyleBackColor = true;
+            this.btnLogout.Click += new System.EventHandler(this.btnLogout_Click);
             // 
             // btnOptions
             // 
@@ -58,14 +59,13 @@
             this.btnOptions.Text = "\r\n";
             this.btnOptions.UseVisualStyleBackColor = true;
             // 
-            // ctrlToolBar
+            // CtrlToolBar
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.Controls.Add(this.btnOptions);
             this.Controls.Add(this.btnLogout);
-            this.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.Name = "ctrlToolBar";
+            this.Name = "CtrlToolBar";
             this.Size = new System.Drawing.Size(1220, 49);
             this.ResumeLayout(false);
 

@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Net;
+using System.Threading;
 using System.Windows.Forms;
 using System.Threading.Tasks;
+
+using Microsoft.AspNet.SignalR.Client;
 
 using SmartPos.Ui;
 using SmartPos.Ui.Utils;
@@ -10,7 +13,7 @@ using SmartPos.Ui.Handlers;
 using SmartPos.Desktop.Utils;
 using SmartPos.Desktop.Controls;
 using SmartPos.Desktop.Communication;
-
+using SmartPos.Ui.Components;
 using AuthenticationManager = SmartPos.Ui.Security.AuthenticationManager;
 
 namespace SmartPos.Desktop
@@ -43,6 +46,7 @@ namespace SmartPos.Desktop
             FormBorderStyle = FormBorderStyle.FixedSingle;
 #endif
             _apiClient = new ApiClient(LoadingState);
+            Click += (s, a) => CheckLogin();
         }
 
         #endregion
@@ -66,15 +70,43 @@ namespace SmartPos.Desktop
 
         #region Overrides
 
+        protected override async void OnLoad(EventArgs e)
+        {
+            base.OnLoad(e);
+            
+            await Application.InitializeCommunication();
+            Application.SignalRClient.Connection.StateChanged += state =>
+            {
+                if(state.NewState == ConnectionState.Disconnected)
+                    this.RunOnUiThread(() =>
+                    {
+                        ShowMessage(new MessageInfo("Disconected from server!", MessageType.Error, Timeout.Infinite, true));
+                        AuthenticationManager.Logout();
+                    });
+            };
+        }
+
         protected override void OnShown(EventArgs e)
         {
             base.OnShown(e);
+
+            CheckLogin(true);
+        }
+
+        #endregion
+
+        #region Private methods
+
+        private void CheckLogin(bool ignoreServerState = false)
+        {
+            if(!ignoreServerState && Application.SignalRClient.IsDisconnected)
+                return;
 
             if (!AuthenticationManager.IsLoggedIn)
                 UiHelper.ShowForm<CtrlNumericKeyboard>(UiHelper.Title("Login"), this)
                         .Configure(control => control.KeyboardLayout = NumericKeyboardLayout.Pin)
                         .OnConfirm(PerformLogin)
-                        .AddDrawer()
+                        .SetTitleBar(true, true)
                         .ApplyTheme(_theme)
                         .Show();
         }

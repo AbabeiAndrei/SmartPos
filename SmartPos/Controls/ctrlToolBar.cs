@@ -1,6 +1,8 @@
 ﻿using SmartPos.Ui;
 using SmartPos.Ui.Theming;
 using SmartPos.Desktop.Security;
+using SmartPos.Ui.Handlers;
+using SmartPos.Ui.Security;
 
 namespace SmartPos.Desktop.Controls
 {
@@ -16,11 +18,14 @@ namespace SmartPos.Desktop.Controls
         {
             base.ApplyTheme(theme);
 
-            btnLogout.ApplyTheme(theme);
-            btnOptions.ApplyTheme(theme);
-
             if (theme != null)
                 BackColor = theme.ToolBarBackground;
+        }
+
+        private void btnLogout_Click(object sender, System.EventArgs e)
+        {
+            AuthenticationManager.Logout();
+            ParentForm.ShowMessage("Logout successful", MessageType.Info, 1000);
         }
     }
 }

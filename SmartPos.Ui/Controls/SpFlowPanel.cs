@@ -8,11 +8,12 @@ using SmartPos.Ui.Theming;
 
 namespace SmartPos.Ui.Controls
 {
-    public class SpFloatinPanel : FlowLayoutPanel, IThemeable
+    public class SpFlowPanel : FlowLayoutPanel, IThemeable
     {
         public void ApplyTheme(ITheme theme)
         {
-
+            foreach (var control in Controls.OfType<IThemeable>())
+                control.ApplyTheme(theme);
         }
     }
 }

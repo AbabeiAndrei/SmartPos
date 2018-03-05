@@ -69,6 +69,7 @@
     <Compile Include="Base\IMetadata.cs" />
     <Compile Include="Base\ISoftDeletable.cs" />
     <Compile Include="Base\MetadataEntity.cs" />
+    <Compile Include="Communication\SignalRHub.cs" />
     <Compile Include="DbContext.cs" />
     <Compile Include="DbSeeder.cs" />
     <Compile Include="Entities\AccessRight.cs" />

@@ -8,20 +8,20 @@ using SmartPos.Desktop.Communication.Controllers.Interfaces;
 
 namespace SmartPos.Desktop.Communication.Controllers
 {
-    public class LayoutController : ILayoutController
+    public class OrderController : IOrderController
     {
         private readonly IApiClient _client;
 
-        public string Controller => "Layout";
+        public string Controller => "Order";
 
-        public LayoutController(IApiClient client)
+        public OrderController(IApiClient client)
         {
             _client = client;
         }
 
-        public async Task<IEnumerable<Zone>> GetAllZones()
+        public async Task<string> OpenTable(string tableId)
         {
-            return await _client.ExecuteAsync<IEnumerable<Zone>>(Controller, Method.GET, null);
+            return await _client.ExecuteAsync<string>(Controller, Method.POST, new {tableId});
         }
     }
 }

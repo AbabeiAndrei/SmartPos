@@ -16,7 +16,7 @@
             if (disposing)
             {
                 components?.Dispose();
-                DisposeComponents();
+                DisposeComponentsImpl();
             }
             base.Dispose(disposing);
         }

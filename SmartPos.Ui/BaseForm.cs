@@ -188,7 +188,7 @@ namespace SmartPos.Ui
         {
             base.OnLoad(e);
 
-            AuthorizationHandler.AuthorisationChanged += (sender, args) => CheckAuthorisation();
+            AuthorizationHandler.AuthorisationChanged += CheckAuthorisation;
 
             CheckAuthorisation();
 
@@ -349,6 +349,11 @@ namespace SmartPos.Ui
         private async void btnClose_Click(object sender, EventArgs e)
         {
             await PerformClose(new BaseControlWrapper((Control)sender));
+        }
+
+        private void CheckAuthorisation(object o, AuthorisationChangedArgs authorisationChangedArgs)
+        {
+            CheckAuthorisation();
         }
 
         #endregion
@@ -558,6 +563,12 @@ namespace SmartPos.Ui
             {
                 Enabled = true;
             }
+        }
+
+        private void DisposeComponentsImpl()
+        {
+            AuthorizationHandler.AuthorisationChanged -= CheckAuthorisation;
+            DisposeComponents();
         }
 
         #endregion

@@ -15,6 +15,7 @@ namespace SmartPos.Desktop.Communication
         private ILoadingToken _loadingToken;
         private IAccountController _account;
         private ILayoutController _layout;
+        private IOrderController _order;
 
         public virtual ILoadingToken LoadingToken
         {
@@ -34,12 +35,19 @@ namespace SmartPos.Desktop.Communication
             protected set => _layout = value;
         }
 
+        public virtual IOrderController Order
+        {
+            get => _order;
+            protected set => _order = value;
+        }
+
         public ApiClient()
         {
             _client = new RestClient(Properties.Settings.Default.ApiUrl);
 
             _account = new AccountController(this);
             _layout = new LayoutController(this);
+            _order = new OrderController(this);
         }
         
         public ApiClient(ILoadingToken loadingToken = null)
@@ -59,7 +67,7 @@ namespace SmartPos.Desktop.Communication
 
                 if (queryStringParameters != null)
                     foreach (var (name, value) in queryStringParameters.GetProperties())
-                        request.AddParameter(name, value);
+                        request.AddQueryParameter(name, value.ToString());
 
                 if (body != null)
                     request.AddBody(body);

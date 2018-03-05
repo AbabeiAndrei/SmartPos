@@ -103,8 +103,13 @@
     <Compile Include="Communication\Controllers\Interfaces\IAccountController.cs" />
     <Compile Include="Communication\Controllers\Interfaces\IController.cs" />
     <Compile Include="Communication\Controllers\Interfaces\ILayoutController.cs" />
+    <Compile Include="Communication\Controllers\Interfaces\IOrderController.cs" />
     <Compile Include="Communication\Controllers\LayoutController.cs" />
+    <Compile Include="Communication\Controllers\OrderController.cs" />
+    <Compile Include="Communication\Handlers\ConnectionChangedHandler.cs" />
+    <Compile Include="Communication\Handlers\SignalRSubscriptionHandler.cs" />
     <Compile Include="Communication\IApiClient.cs" />
+    <Compile Include="Communication\ISignalRClient.cs" />
     <Compile Include="Communication\RequestException.cs" />
     <Compile Include="Communication\SignalRClient.cs" />
     <Compile Include="Controls\CtrlNumericKeyboard.cs">

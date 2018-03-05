@@ -2,6 +2,7 @@
 
 using SmartPos.DomainModel.Base;
 using SmartPos.DomainModel.Metadata;
+using SmartPos.DomainModel.Model;
 
 namespace SmartPos.DomainModel.Entities
 {
@@ -35,5 +36,8 @@ namespace SmartPos.DomainModel.Entities
 
         [Reference]
         public Zone Zone{ get; set; }
+
+        [Ignore]
+        public TableState State { get; set; }
     }
 }

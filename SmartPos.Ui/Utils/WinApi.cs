@@ -31,6 +31,10 @@ namespace SmartPos.Ui.Utils
 
         [DllImport("user32.dll", CharSet = CharSet.Unicode)]
         public static extern IntPtr SendMessage(IntPtr hWnd, int wMsg, IntPtr wParam, string lParam);
+        
+        [DllImport("kernel32.dll", SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool AllocConsole();
 
         public static void SuspendDrawing(Control parent)
         {

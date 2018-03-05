@@ -75,7 +75,7 @@ namespace SmartPos.Desktop
             base.OnLoad(e);
             
             await Application.InitializeCommunication();
-            Application.SignalRClient.Connection.StateChanged += state =>
+            Application.SignalRClient.StateChanged += state =>
             {
                 if(state.NewState == ConnectionState.Disconnected)
                     this.RunOnUiThread(() =>
@@ -155,6 +155,7 @@ namespace SmartPos.Desktop
 
         private async Task InitializePos()
         {
+            Application.SignalRClient.Subscribe<string>("test", s => this.RunOnUiThread(() => ShowMessage(s, MessageType.Info)));
             await ctrlWorkspace.Initialize(_apiClient);
         }
 

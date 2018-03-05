@@ -1,5 +1,8 @@
 ﻿using System;
-using System.Threading.Tasks;
+using System.Diagnostics;
+using System.Runtime.InteropServices;
+
+using SmartPos.Ui.Utils;
 using SmartPos.Ui.Theming;
 
 namespace SmartPos.Desktop
@@ -19,5 +22,6 @@ namespace SmartPos.Desktop
 
             System.Windows.Forms.Application.Run(form);
         }
+        
     }
 }

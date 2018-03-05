@@ -1,6 +1,7 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
-
+using SmartPos.Desktop.Data;
 using SmartPos.Ui;
 using SmartPos.Ui.Theming;
 using SmartPos.Desktop.Utils;
@@ -73,6 +74,19 @@ namespace SmartPos.Desktop.Controls.Workspace
             _freeTableBrush?.Dispose();
             _openTableBrush?.Dispose();
             _ocupiedTableBrush?.Dispose();
+        }
+
+        protected override async void OnClick(EventArgs e)
+        {
+            try
+            {
+                await Application.Api().Order.OpenTable(Table.Id.ToString());
+            }
+            catch (Exception ex)
+            {
+                GlobalHandler.Catch(ex, ParentForm);
+            }
+            base.OnClick(e);
         }
 
         #endregion

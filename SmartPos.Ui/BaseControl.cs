@@ -76,7 +76,7 @@ namespace SmartPos.Ui
         {
             base.OnLoad(e);
 
-            AuthorizationHandler.AuthorisationChanged += (sender, args) => CheckAuthorisation();
+            AuthorizationHandler.AuthorisationChanged += CheckAuthorisation;
 
             CheckAuthorisation();
         }
@@ -109,6 +109,15 @@ namespace SmartPos.Ui
         }
 
         #endregion
+        
+        #region Event handlers
+
+        private void CheckAuthorisation(object sender, AuthorisationChangedArgs authorisationChangedArgs)
+        {
+            CheckAuthorisation();
+        }
+
+        #endregion
 
         #region Protected methods
 
@@ -136,7 +145,6 @@ namespace SmartPos.Ui
 
         protected virtual void DisposeComponents()
         {
-
         }
 
         #endregion
@@ -145,7 +153,7 @@ namespace SmartPos.Ui
 
         private void CheckAuthorisation()
         {
-            if(DesignMode)
+            if(DesignMode || IsDisposed)
                 return;
 
             var type = GetType();
@@ -188,6 +196,12 @@ namespace SmartPos.Ui
         private void OnParentOnOnEndLoadingWrap(object sender, LoadingEndEventArgs e)
         {
             OnParentFormEndLoading(e);
+        }
+
+        private void DisposeComponentsImpl()
+        {
+            AuthorizationHandler.AuthorisationChanged -= CheckAuthorisation;
+            DisposeComponents();
         }
         
         #endregion

@@ -6,6 +6,7 @@ using SmartPos.Ui.Components;
 using SmartPos.GeneralLibrary.Extensions;
 using SmartPos.Desktop.Communication.Controllers;
 using SmartPos.Desktop.Communication.Controllers.Interfaces;
+using SmartPos.Ui.Security;
 
 namespace SmartPos.Desktop.Communication
 {
@@ -71,6 +72,9 @@ namespace SmartPos.Desktop.Communication
 
                 if (body != null)
                     request.AddBody(body);
+
+                if (AuthenticationManager.Identity != null)
+                    request.AddHeader("Authorization", AuthenticationManager.Identity.ConnectionId);
 
                 var response = await _client.ExecuteTaskAsync<T>(request);
 

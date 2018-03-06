@@ -16,6 +16,8 @@ namespace SmartPos.DomainModel.Model
 
     public class TableState
     {
+        public int OcupiedByUserId { get; set; }
+
         public string OcupiedByUser { get; set; }
 
         public TableOcupation State { get; set; }

@@ -1,4 +1,5 @@
 ﻿using System.Web.Http;
+using System.Net.Http.Headers;
 
 namespace Smartpos.Api
 {
@@ -16,6 +17,8 @@ namespace Smartpos.Api
                 "api/{controller}/{id}",
                 new { id = RouteParameter.Optional }
             );
+
+            config.Formatters.JsonFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("text/html") );
         }
     }
 }

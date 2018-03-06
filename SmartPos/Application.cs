@@ -29,6 +29,8 @@ namespace SmartPos.Desktop
 
         public static SignalRClient SignalRClient { get; set; }
 
+        public static BaseForm MainForm { get; private set; }
+
         #endregion
 
         #region Constructors
@@ -42,8 +44,9 @@ namespace SmartPos.Desktop
 
         #region Public methods
 
-        public static void InitializeUi()
+        public static void InitializeUi(BaseForm mainForm)
         {
+            MainForm = mainForm ?? throw new ArgumentNullException(nameof(mainForm));
             UiConfigure.GraphicsSettingResolver = GfxHelper.ApplyDisplaySettings;
         }
 

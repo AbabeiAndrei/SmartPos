@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Diagnostics;
-using System.Runtime.InteropServices;
 
-using SmartPos.Ui.Utils;
 using SmartPos.Ui.Theming;
 
 namespace SmartPos.Desktop
@@ -18,7 +15,7 @@ namespace SmartPos.Desktop
             var form = new MainForm();
             form.ApplyTheme(ThemeManager.GetTheme(Properties.Settings.Default.ThemeName));
 
-            Application.InitializeUi();
+            Application.InitializeUi(form);
 
             System.Windows.Forms.Application.Run(form);
         }

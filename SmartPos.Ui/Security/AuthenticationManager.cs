@@ -1,4 +1,5 @@
 ﻿using SmartPos.DomainModel.Entities;
+using SmartPos.GeneralLibrary;
 
 namespace SmartPos.Ui.Security
 {
@@ -15,6 +16,8 @@ namespace SmartPos.Ui.Security
                 AuthorizationHandler.OnAuthorizationChanged(value);
             }
         }
+
+        public static IIdentity Identity => User;
 
         public static bool IsLoggedIn => User != null;
 

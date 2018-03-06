@@ -22,7 +22,7 @@ namespace SmartPos.DomainModel.Entities
         [Required]
         [StringLength(128)]
         public string FullName { get; set; }
-        
+
         [Required]
         [StringLength(128)]
         public string Email { get; set; }
@@ -48,6 +48,9 @@ namespace SmartPos.DomainModel.Entities
         
         [Reference]
         public IEnumerable<UserAccessRight> Rights { get; set; }
+
+        [Ignore]
+        public string ConnectionId { get; set; }
 
 
     }

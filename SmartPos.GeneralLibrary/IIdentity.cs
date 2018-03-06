@@ -5,5 +5,7 @@
         int Id { get; }
 
         string FullName { get; }
+
+        string ConnectionId { get; set; }
     }
 }

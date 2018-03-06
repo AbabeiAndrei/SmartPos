@@ -7,6 +7,7 @@ using Microsoft.AspNet.SignalR.Client;
 using SmartPos.Desktop.Properties;
 using SmartPos.DomainModel.Communication;
 using SmartPos.Desktop.Communication.Handlers;
+using SmartPos.Desktop.Data;
 using SmartPos.GeneralLibrary;
 using SmartPos.Ui.Security;
 
@@ -39,7 +40,7 @@ namespace SmartPos.Desktop.Communication
         {
             Id = Guid.NewGuid();
             Connection = new HubConnection(Settings.Default.HubUrl);
-            Hub = Connection.CreateHubProxy(SignalRHub.NAME);
+            Hub = Connection.CreateHubProxy(SignalRHub.Name);
 
             Connection.StateChanged += OnConnectionStateChanged;
             AuthorizationHandler.AuthorisationChanged += OnUserAuthorisationChanged;
@@ -49,7 +50,7 @@ namespace SmartPos.Desktop.Communication
         
         #region Event handlers
 
-        private void OnUserAuthorisationChanged(object sender, AuthorisationChangedArgs args)
+        private async void OnUserAuthorisationChanged(object sender, AuthorisationChangedArgs args)
         {
             if(Connection == null)
                 return;
@@ -57,7 +58,21 @@ namespace SmartPos.Desktop.Communication
             if (Connection.Headers.ContainsKey(UserIdentity.AUTHORISATION_HEADER))
                 Connection.Headers.Remove(UserIdentity.AUTHORISATION_HEADER);
 
-            Connection.Headers.Add(UserIdentity.AUTHORISATION_HEADER, args.Identity.Id.GetHashCode().ToString());
+            try
+            {
+                if (args.Identity != null)
+                {
+                    Connection.Headers.Add(UserIdentity.AUTHORISATION_HEADER, args.Identity.Id.GetHashCode().ToString());
+                    var connectionId = await Hub.Invoke<string>(SignalRHub.Events.Account.RegisterClient, args.Identity);
+                    args.Identity.ConnectionId = connectionId;
+                }
+                else
+                    await Hub.Invoke(SignalRHub.Events.Account.RemoveClient);
+            }
+            catch (Exception ex)
+            {
+                GlobalHandler.Catch(ex);
+            }
         }
 
         #endregion

@@ -9,6 +9,11 @@ namespace SmartPos.Desktop.Data
 {
     public static class GlobalHandler
     {
+        public static void Catch(Exception exception)
+        {
+            Catch(exception, Application.MainForm);
+        }
+
         public static void Catch(Exception exception, BaseForm form)
         {
             if (form == null)

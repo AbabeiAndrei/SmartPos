@@ -2,7 +2,7 @@
 {
     public static class UserIdentity
     {
-        public const string AUTHORISATION_HEADER = "user";
+        public const string AUTHORISATION_HEADER = "Authorization";
     }
 
     public static class UserRights

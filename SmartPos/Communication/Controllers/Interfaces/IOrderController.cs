@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+
+using SmartPos.DomainModel.Entities;
 
 namespace SmartPos.Desktop.Communication.Controllers.Interfaces
 {
     public interface IOrderController : IController
     {
-        Task<string> OpenTable(string tableId);
+        Task<Order> OpenTable(string tableId);
     }
 }

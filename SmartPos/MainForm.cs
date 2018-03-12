@@ -93,6 +93,14 @@ namespace SmartPos.Desktop
             CheckLogin(true);
         }
 
+        protected override void SetLoadingPaintHandler(PaintEventHandler handler, bool add)
+        {
+            if(add)
+                ctrlStatusBar.Paint += handler;
+            else 
+                ctrlStatusBar.Paint -= handler;
+        }
+
         #endregion
 
         #region Private methods

@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
-using SmartPos.Desktop.Data;
+
 using SmartPos.Ui;
 using SmartPos.Ui.Theming;
+using SmartPos.Desktop.Data;
 using SmartPos.Desktop.Utils;
 using SmartPos.DomainModel.Entities;
 
@@ -80,7 +81,7 @@ namespace SmartPos.Desktop.Controls.Workspace
         {
             try
             {
-                await Application.Api().Order.OpenTable(Table.Id.ToString());
+                await Application.Api(ParentForm.LoadingState).Order.OpenTable(Table.Id.ToString());
             }
             catch (Exception ex)
             {

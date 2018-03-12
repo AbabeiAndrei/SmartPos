@@ -1,5 +1,4 @@
 ﻿using System.Threading.Tasks;
-using System.Collections.Generic;
 
 using RestSharp;
 
@@ -19,9 +18,9 @@ namespace SmartPos.Desktop.Communication.Controllers
             _client = client;
         }
 
-        public async Task<string> OpenTable(string tableId)
+        public async Task<Order> OpenTable(string tableId)
         {
-            return await _client.ExecuteAsync<string>(Controller, Method.POST, new {tableId});
+            return await _client.ExecuteAsync<Order>(Controller, Method.POST, new {tableId});
         }
     }
 }

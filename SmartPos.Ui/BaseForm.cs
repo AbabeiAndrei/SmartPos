@@ -119,9 +119,9 @@ namespace SmartPos.Ui
                     Height += pnlTitle.Height;
 
                 if (!ShowTitlePane && value)
-                    Paint -= pnlLoading_Paint;
+                    SetLoadingPaintHandler(pnlLoading_Paint, false);
                 else if (ShowTitlePane && !value)
-                    Paint += pnlLoading_Paint;
+                    SetLoadingPaintHandler(pnlLoading_Paint, true);
 
                 pnlTitle.Visible = _topPaneVisible = value;
             }
@@ -316,7 +316,7 @@ namespace SmartPos.Ui
 
             var width = ShowTitle
                             ? pnlTitle.Width
-                            : Width;
+                            : (sender as Control)?.Width ?? Width;
 
             if (_loaderLocation >= width)
             {
@@ -513,6 +513,14 @@ namespace SmartPos.Ui
         {
             lblMessage.Width = ClientSize.Width;
             lblMessage.Top = MessageLineTop;
+        }
+
+        protected virtual void SetLoadingPaintHandler(PaintEventHandler handler, bool add)
+        {
+            if(add)
+                Paint += handler;
+            else
+                Paint -= handler;
         }
 
         #endregion

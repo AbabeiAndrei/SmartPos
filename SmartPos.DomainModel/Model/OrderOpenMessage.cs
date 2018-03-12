@@ -8,7 +8,7 @@ namespace SmartPos.DomainModel.Model
 {
     public class OrderOpenMessage : MessageModel
     {
-        public string TableId { get; set; }
+        public int TableId { get; set; }
 
         public TableState State { get; set; }
 

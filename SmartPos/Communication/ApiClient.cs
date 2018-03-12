@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Threading;
+using System.Threading.Tasks;
 
 using RestSharp;
 
@@ -77,6 +78,8 @@ namespace SmartPos.Desktop.Communication
                     request.AddHeader("Authorization", AuthenticationManager.Identity.ConnectionId);
 
                 var response = await _client.ExecuteTaskAsync<T>(request);
+
+                await Task.Delay(5000);
 
                 if (response.IsSuccessful)
                     return response.Data;

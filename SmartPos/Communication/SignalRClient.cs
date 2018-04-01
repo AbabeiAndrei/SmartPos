@@ -1,15 +1,14 @@
 ﻿using System;
-using System.Linq;
 using System.Threading.Tasks;
 
 using Microsoft.AspNet.SignalR.Client;
 
+using SmartPos.Ui.Security;
+using SmartPos.Desktop.Data;
+using SmartPos.GeneralLibrary;
 using SmartPos.Desktop.Properties;
 using SmartPos.DomainModel.Communication;
 using SmartPos.Desktop.Communication.Handlers;
-using SmartPos.Desktop.Data;
-using SmartPos.GeneralLibrary;
-using SmartPos.Ui.Security;
 
 namespace SmartPos.Desktop.Communication
 {

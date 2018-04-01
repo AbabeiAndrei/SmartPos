@@ -104,8 +104,7 @@ namespace SmartPos.Ui
         {
             base.OnPaint(e);
 
-            if (UiConfigure.GraphicsSettingResolver != null)
-                UiConfigure.GraphicsSettingResolver(e.Graphics);
+            UiConfigure.GraphicsSettingResolver?.Invoke(e.Graphics);
         }
 
         #endregion

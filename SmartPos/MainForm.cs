@@ -14,6 +14,7 @@ using SmartPos.Desktop.Utils;
 using SmartPos.Desktop.Controls;
 using SmartPos.Desktop.Communication;
 using SmartPos.Ui.Components;
+
 using AuthenticationManager = SmartPos.Ui.Security.AuthenticationManager;
 
 namespace SmartPos.Desktop
@@ -158,10 +159,10 @@ namespace SmartPos.Desktop
             
             ShowMessage("Login successful", MessageType.Info, 1000);
             after.Close = true;
-            await InitializePos();
+            InitializePos();
         }
 
-        private async Task InitializePos()
+        private async void InitializePos()
         {
             Application.SignalRClient.Subscribe<string>("test", s => this.RunOnUiThread(() => ShowMessage(s, MessageType.Info)));
             await ctrlWorkspace.Initialize(_apiClient);

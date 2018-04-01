@@ -18,7 +18,7 @@ namespace SmartPos.Desktop.Controls.Workspace
     public partial class CtrlWorkspace : BaseControl
     {
         private ITheme _theme;
-        private IDictionary<int, IList<CtrlTable>> _zones;
+        private readonly IDictionary<int, IList<CtrlTable>> _zones;
 
         public CtrlWorkspace()
         {

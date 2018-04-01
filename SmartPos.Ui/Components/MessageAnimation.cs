@@ -24,6 +24,11 @@ namespace SmartPos.Ui.Components
             Duration = duration;
             Locked = locked;
         }
+
+        public static MessageInfo Create(string message, MessageType messageType, int? duration, bool locked = false)
+        {
+            return new MessageInfo(message, messageType, duration, locked);
+        }
     }
 
     internal class MessageAnimation

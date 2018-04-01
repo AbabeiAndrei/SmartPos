@@ -45,9 +45,11 @@
   <ItemGroup>
     <Compile Include="Exceptions\PosException.cs" />
     <Compile Include="Extensions\CollectionEx.cs" />
+    <Compile Include="Extensions\GenericUtils.cs" />
     <Compile Include="Extensions\ReflexionEx.cs" />
     <Compile Include="Extensions\StringEx.cs" />
     <Compile Include="IIdentity.cs" />
+    <Compile Include="Interfaces\ITree.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UserRights.cs" />
   </ItemGroup>

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Net;
+using System.Linq;
+using System.Drawing;
 using System.Threading;
 using System.Windows.Forms;
 using System.Threading.Tasks;
@@ -10,10 +12,12 @@ using SmartPos.Ui;
 using SmartPos.Ui.Utils;
 using SmartPos.Ui.Theming;
 using SmartPos.Ui.Handlers;
+using SmartPos.Ui.Components;
 using SmartPos.Desktop.Utils;
 using SmartPos.Desktop.Controls;
+using SmartPos.Desktop.Interfaces;
 using SmartPos.Desktop.Communication;
-using SmartPos.Ui.Components;
+using SmartPos.GeneralLibrary.Extensions;
 
 using AuthenticationManager = SmartPos.Ui.Security.AuthenticationManager;
 
@@ -35,7 +39,9 @@ namespace SmartPos.Desktop
 #endif
 
         protected override int MessageLineTop => ctrlStatusBar?.Bottom ?? base.MessageLineTop;
-        
+
+        protected override int LoaderLineTop => ctrlStatusBar.Bottom - LOADIER_HEIGHT;
+
         #endregion
 
         #region Constructors
@@ -48,6 +54,8 @@ namespace SmartPos.Desktop
 #endif
             _apiClient = new ApiClient(LoadingState);
             Click += (s, a) => CheckLogin();
+
+            ctrlToolBar.OptionPressed += (s, e) => LoadingState.Loading = !LoadingState.Loading;
         }
 
         #endregion
@@ -81,7 +89,7 @@ namespace SmartPos.Desktop
                 if(state.NewState == ConnectionState.Disconnected)
                     this.RunOnUiThread(() =>
                     {
-                        ShowMessage(new MessageInfo("Disconected from server!", MessageType.Error, Timeout.Infinite, true));
+                        ShowMessage(MessageInfo.Create("Disconected from server!", MessageType.Error, Timeout.Infinite, true));
                         AuthenticationManager.Logout();
                     });
             };
@@ -102,6 +110,35 @@ namespace SmartPos.Desktop
                 ctrlStatusBar.Paint -= handler;
         }
 
+        protected override void InvalidateLoadingArea()
+        {
+            ctrlStatusBar.Invalidate(new Rectangle(0, LoaderLineTop, ctrlStatusBar.Width, LOADIER_HEIGHT));
+        }
+
+        #endregion
+
+        #region Event handlers
+
+        private void PnlMain_ControlsChanged(object sender, ControlEventArgs e)
+        {
+            var controls = pnlMain.Controls.OfType<BaseControl>()
+                                  .Where(bc => bc.Visible)
+                                  .ToList();
+
+            var accesor = controls.OfType<IStatusBarAccesor>()
+                                  .FirstOrDefault();
+
+            var toolbarControl = controls.OfType<IToolBarCustomizer>()
+                                         .FirstOrDefault();
+
+            ctrlStatusBar.InfoText = accesor?.Value;
+
+            if (toolbarControl != null)
+                ctrlToolBar.Customize(toolbarControl);
+            else
+                ctrlToolBar.ResetCustomize();
+        }
+        
         #endregion
 
         #region Private methods
@@ -112,7 +149,7 @@ namespace SmartPos.Desktop
                 return;
 
             if (!AuthenticationManager.IsLoggedIn)
-                UiHelper.ShowForm<CtrlNumericKeyboard>(UiHelper.Title("Login"), this)
+                UiHelper.ShowForm<CtrlNumericKeyboard>(UiHelper.CreateTitle("Login"), this)
                         .Configure(control => control.KeyboardLayout = NumericKeyboardLayout.Pin)
                         .OnConfirm(PerformLogin)
                         .SetTitleBar(true, true)
@@ -166,6 +203,45 @@ namespace SmartPos.Desktop
         {
             Application.SignalRClient.Subscribe<string>("test", s => this.RunOnUiThread(() => ShowMessage(s, MessageType.Info)));
             await ctrlWorkspace.Initialize(_apiClient);
+        }
+
+        public void SetControlInContainer<TControl>(TControl control)
+            where TControl : BaseControl
+        {
+            control.ApplyTheme(_theme);
+
+            try
+            {
+                pnlMain.SuspendLayout();
+
+                ctrlWorkspace.Visible = false;
+
+                pnlMain.Controls.Add(control);
+
+                control.Dock = DockStyle.Fill;
+
+                control.Visible = true;
+            }
+            finally
+            {
+                pnlMain.ResumeLayout();
+            }
+        }
+
+        public void ShowTablesInContainer()
+        {
+            try
+            {
+                pnlMain.SuspendLayout();
+
+                ctrlWorkspace.Visible = true;
+                
+                pnlMain.Controls.RemoveAll<BaseControl>(control => control.Name != ctrlWorkspace.Name);
+            }
+            finally
+            {
+                pnlMain.ResumeLayout();
+            }
         }
 
         #endregion

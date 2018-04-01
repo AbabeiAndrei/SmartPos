@@ -31,7 +31,8 @@ namespace SmartPos.Ui
         private const int PAUSE_SHOW_MESSAGE = 5000;
         private const int SHOW_MESSAGE_FPS = 10;
         private const int SHOW_MESSAGE_SPEED = 2;
-        private const int LOADING_SPEED = 20;
+        private const int LOADING_SPEED = 15;
+        protected const int LOADIER_HEIGHT = 3;
 
         #endregion
 
@@ -147,6 +148,8 @@ namespace SmartPos.Ui
                                                     ? pnlTitle.Bottom
                                                     : 0;
 
+        protected virtual int LoaderLineTop => 0;
+
         protected bool IsAuthorized { get; private set; }
 
         #endregion
@@ -182,38 +185,6 @@ namespace SmartPos.Ui
 
         #endregion
 
-        #region Overrides
-
-        protected override void OnLoad(EventArgs e)
-        {
-            base.OnLoad(e);
-
-            AuthorizationHandler.AuthorisationChanged += CheckAuthorisation;
-
-            CheckAuthorisation();
-
-            pnlTitle.SendToBack();
-        }
-
-        protected override void OnPaint(PaintEventArgs e)
-        {
-            base.OnPaint(e);
-
-            if (UiConfigure.GraphicsSettingResolver != null)
-                UiConfigure.GraphicsSettingResolver(e.Graphics);
-
-            if(ShowWindowBorder && _penBorder != null)
-                e.Graphics.DrawRectangle(_penBorder, 0, 0, Width - 1, Height - 1);
-        }
-
-        protected override void OnSizeChanged(EventArgs e)
-        {
-            base.OnSizeChanged(e);
-            SetLabelMessageLayout();
-        }
-
-        #endregion
-
         #region Implementation of IThemeable 
 
         public virtual void ApplyTheme(ITheme theme)
@@ -236,6 +207,39 @@ namespace SmartPos.Ui
             _loaderBrushes = _theme.LoadingColors.Select(c => new SolidBrush(c)).Cast<Brush>().ToArray();
             
             Refresh();
+        }
+
+        #endregion
+
+        #region Overrides
+
+        protected override void OnLoad(EventArgs e)
+        {
+            base.OnLoad(e);
+
+            AuthorizationHandler.AuthorisationChanged += CheckAuthorisation;
+
+            CheckAuthorisation();
+
+            pnlTitle.SendToBack();
+            
+            SetLoadingPaintHandler(pnlLoading_Paint, true);
+        }
+
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            base.OnPaint(e);
+
+            UiConfigure.GraphicsSettingResolver?.Invoke(e.Graphics);
+
+            if (ShowWindowBorder && _penBorder != null)
+                e.Graphics.DrawRectangle(_penBorder, 0, 0, Width - 1, Height - 1);
+        }
+
+        protected override void OnSizeChanged(EventArgs e)
+        {
+            base.OnSizeChanged(e);
+            SetLabelMessageLayout();
         }
 
         #endregion
@@ -330,12 +334,12 @@ namespace SmartPos.Ui
             }
 
             if(_lastLoadedBrush != null)
-                e.Graphics.FillRectangle(_lastLoadedBrush, 0, 0, width, 3);
+                e.Graphics.FillRectangle(_lastLoadedBrush, 0, LoaderLineTop, width, LOADIER_HEIGHT);
 
             if (_loaderBrushes[_curentBrush] != null)
-                e.Graphics.FillRectangle(_loaderBrushes[_curentBrush], 0, 0, _loaderLocation, 3);
+                e.Graphics.FillRectangle(_loaderBrushes[_curentBrush], 0, LoaderLineTop, _loaderLocation, LOADIER_HEIGHT);
 
-            _loaderLocation += width / 15;
+            _loaderLocation += width / LOADING_SPEED;
         }
 
         private void tmrLoader_Tick(object sender, EventArgs e)
@@ -499,12 +503,12 @@ namespace SmartPos.Ui
         {
             if (ShowTitle)
             {
-                pnlLoader.Invalidate(new Rectangle(0, 0, pnlLoader.Width, 3));
+                pnlLoader.Invalidate(new Rectangle(0, LoaderLineTop, pnlLoader.Width, LOADIER_HEIGHT));
                 pnlLoader.Update();
             }
             else
             {
-                Invalidate(new Rectangle(0, 0, Width, 3));
+                Invalidate(new Rectangle(0, LoaderLineTop, Width, LOADIER_HEIGHT));
                 Update();
             }
         }

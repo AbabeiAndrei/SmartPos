@@ -26,20 +26,28 @@ namespace SmartPos.Ui
         #endregion
 
         #region Properties
-
+        
         protected static Type AuthorisationType { get; }
-
+        
+        [Browsable(false)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         protected virtual UnauthorizedControlResult UnauthorizedResult => UnauthorizedControlResult.Hide;
         
         [Browsable(false)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public new BaseForm ParentForm => base.ParentForm as BaseForm;
-
+        
+        [Browsable(false)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         protected bool IsAuthorized { get; private set; }
         
         [Browsable(false)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public new ILoadingToken LoadingState => ParentForm?.LoadingState;
+        
+        [Browsable(false)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        protected ITheme Theme { get; private set; }
 
         #endregion
 
@@ -61,8 +69,13 @@ namespace SmartPos.Ui
 
         public virtual void ApplyTheme(ITheme theme)
         {
-            BackColor = theme.ControlBackColor;
-            ForeColor = theme.ControlForeColor;
+            Theme = theme;
+
+            if (theme != null)
+            {
+                BackColor = theme.ControlBackColor;
+                ForeColor = theme.ControlForeColor;
+            }
 
             foreach (var item in Controls.OfType<IThemeable>())
                 item.ApplyTheme(theme);

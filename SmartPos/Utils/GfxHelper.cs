@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using System.Drawing.Text;
 using System.Drawing.Drawing2D;
 using System.Collections.Generic;
@@ -10,6 +11,8 @@ namespace SmartPos.Desktop.Utils
         #region Fields
 
         private static readonly IDictionary<StringAlignment, IDictionary<StringAlignment, StringFormat>> _stringFormatTable;
+        private static readonly IDictionary<int, Brush> _brushTable;
+        private static readonly IDictionary<Tuple<int, float>, Pen> _penTable;
 
         #endregion
 
@@ -18,6 +21,8 @@ namespace SmartPos.Desktop.Utils
         static GfxHelper()
         {
             _stringFormatTable = new Dictionary<StringAlignment, IDictionary<StringAlignment, StringFormat>>();
+            _brushTable = new Dictionary<int, Brush>();
+            _penTable = new Dictionary<Tuple<int, float>, Pen>();
         }
 
         #endregion
@@ -54,7 +59,33 @@ namespace SmartPos.Desktop.Utils
 
             return _stringFormatTable[align][lineAlign];
         }
-        
+
+        public static Brush AsBrush(this Color color, bool fromCache = true)
+        {
+            if(!fromCache)
+                return new SolidBrush(color);
+
+            var argb = color.ToArgb();
+
+            if (!_brushTable.ContainsKey(argb))
+                _brushTable.Add(argb, new SolidBrush(color));
+
+            return _brushTable[argb];
+        }
+
+        public static Pen AsPen(this Color color, float width = 1f, bool fromCache = true)
+        {
+            if(!fromCache)
+                return new Pen(color, width);
+            
+            var tuple = new Tuple<int, float>(color.ToArgb(), width);
+
+            if (!_penTable.ContainsKey(tuple))
+                _penTable.Add(tuple, new Pen(color, width));
+
+            return _penTable[tuple];
+        }
+
         public static void ApplyDisplaySettings(Graphics gfx)
         {
             gfx.CompositingMode = CompositingMode.SourceOver;

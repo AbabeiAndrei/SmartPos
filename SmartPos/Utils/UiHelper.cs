@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
+using SmartPos.Desktop.Controls.Order;
+using SmartPos.DomainModel.Entities;
 using SmartPos.Ui;
 using SmartPos.Ui.Handlers;
 
@@ -56,9 +57,34 @@ namespace SmartPos.Desktop.Utils
             return formBuilder;
         }
 
-        public static string Title(string title)
+        public static void ShowOrder(Order order)
         {
-            return $"{Application.ProductName} - {title}";
+            var orderControl = new CtrlOrder(order);
+
+            ShowControlInFormContainer(orderControl);
+        }
+
+        public static TControl ShowControlInFormContainer<TControl>(TControl control, MainForm form = null)
+            where TControl : BaseControl
+        {
+            form = form ?? (MainForm)Application.MainForm;
+            
+            form.SetControlInContainer(control);
+            
+            return control;
+        }
+
+        public static void ShowTablesInMainForm(MainForm form = null)
+        {
+            form = form ?? (MainForm)Application.MainForm;
+
+
+            form.ShowTablesInContainer();
+        }
+
+        public static string CreateTitle(string baseTitle)
+        {
+            return $"{Application.ProductName} - {baseTitle}";
         }
 
         public static void RunOnUiThread(this Control control, UiInvokeRequiredHandler action)
@@ -73,20 +99,6 @@ namespace SmartPos.Desktop.Utils
                 throw new ArgumentNullException(nameof(action));
 
             control.Invoke(action);
-        }
-
-        public static async Task RunOnUiThreadAsync(this Control control, UiInvokeRequiredAsyncHandler action)
-        {
-            if(control == null)
-                throw new ArgumentNullException(nameof(control));
-
-            if(!control.InvokeRequired)
-                return;
-
-            if(action == null)
-                throw new ArgumentNullException(nameof(action));
-
-            await Task.Factory.StartNew(() => control.Invoke(action));
         }
     }
 }

@@ -41,5 +41,10 @@ namespace SmartPos.DomainModel.Entities
         
         [Default(typeof(bool), "0")]
         public bool Deleted { get; set; }
+
+        [Reference]
+        public Table Table { get; set; }
+
+        public IEnumerable<OrderItem> Items { get; set; }
     }
 }

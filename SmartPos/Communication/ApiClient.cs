@@ -1,5 +1,8 @@
-﻿using System.Threading;
+﻿using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
+
+using Microsoft.AspNet.SignalR.Client;
 
 using RestSharp;
 
@@ -7,6 +10,8 @@ using SmartPos.Ui.Components;
 using SmartPos.GeneralLibrary.Extensions;
 using SmartPos.Desktop.Communication.Controllers;
 using SmartPos.Desktop.Communication.Controllers.Interfaces;
+using SmartPos.Desktop.Data;
+using SmartPos.DomainModel.Base;
 using SmartPos.Ui.Security;
 
 namespace SmartPos.Desktop.Communication
@@ -18,6 +23,7 @@ namespace SmartPos.Desktop.Communication
         private IAccountController _account;
         private ILayoutController _layout;
         private IOrderController _order;
+        private IMenuController _menu;
 
         public virtual ILoadingToken LoadingToken
         {
@@ -43,6 +49,12 @@ namespace SmartPos.Desktop.Communication
             protected set => _order = value;
         }
 
+        public IMenuController Menu
+        {
+            get => _menu;
+            protected set => _menu = value;
+        }
+
         public ApiClient()
         {
             _client = new RestClient(Properties.Settings.Default.ApiUrl);
@@ -50,6 +62,7 @@ namespace SmartPos.Desktop.Communication
             _account = new AccountController(this);
             _layout = new LayoutController(this);
             _order = new OrderController(this);
+            _menu = new MenuController(this);
         }
         
         public ApiClient(ILoadingToken loadingToken = null)
@@ -58,7 +71,7 @@ namespace SmartPos.Desktop.Communication
             _loadingToken = loadingToken;
         }
 
-        public async Task<T> ExecuteAsync<T>(string resource, Method method, object queryStringParameters, object body = null) 
+        public async Task<T> ExecuteAsync<T>(string resource, Method method, object queryStringParameters, object body = null)
         {
             try
             {
@@ -76,15 +89,23 @@ namespace SmartPos.Desktop.Communication
 
                 if (AuthenticationManager.Identity != null)
                     request.AddHeader("Authorization", AuthenticationManager.Identity.ConnectionId);
-
+                
                 var response = await _client.ExecuteTaskAsync<T>(request);
 
-                await Task.Delay(5000);
+                if (!response.IsSuccessful)
+                    throw new RequestException(response.StatusCode, response.ErrorMessage, response.ErrorException);
 
-                if (response.IsSuccessful)
-                    return response.Data;
+                switch (response.Data)
+                {
+                    case IEnumerable<Entity> collectionEntities:
+                        SimpleCache.CheckForUpdates(collectionEntities);
+                        break;
+                    case Entity entity:
+                        SimpleCache.CheckForUpdates(entity);
+                        break;
+                }
 
-                throw new RequestException(response.StatusCode, response.ErrorMessage, response.ErrorException);
+                return response.Data;
             }
             finally
             {

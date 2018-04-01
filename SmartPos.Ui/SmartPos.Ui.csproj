@@ -38,6 +38,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Activities" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
@@ -86,6 +87,9 @@
     <Compile Include="Controls\SpLabel.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Controls\SpListView.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Controls\SpPanel.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -112,6 +116,7 @@
     <Compile Include="Theming\ThemeNameAttribute.cs" />
     <Compile Include="Theming\ThemeNotFoundException.cs" />
     <Compile Include="Theming\Themes\DefaultTheme.cs" />
+    <Compile Include="Threading\AlreadyRunningException.cs" />
     <Compile Include="UiConfigure.cs" />
     <Compile Include="Utils\FormBuilderEx.cs" />
     <Compile Include="Utils\WinApi.cs" />

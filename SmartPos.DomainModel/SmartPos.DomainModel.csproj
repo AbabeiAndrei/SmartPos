@@ -74,10 +74,15 @@
     <Compile Include="DbContext.cs" />
     <Compile Include="DbSeeder.cs" />
     <Compile Include="Entities\AccessRight.cs" />
+    <Compile Include="Entities\MenuCategory.cs" />
     <Compile Include="Entities\Order.cs" />
+    <Compile Include="Entities\OrderItem.cs" />
+    <Compile Include="Entities\Product.cs" />
+    <Compile Include="Metadata\ProductMetadata.cs" />
     <Compile Include="Entities\Table.cs" />
     <Compile Include="Entities\Zone.cs" />
     <Compile Include="Extensions\DbExtensions.cs" />
+    <Compile Include="Interfaces\IEmbededCacheProperties.cs" />
     <Compile Include="Interfaces\IModelBuilder.cs" />
     <Compile Include="Interfaces\ISeeder.cs" />
     <Compile Include="Interfaces\IDbContext.cs" />

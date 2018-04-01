@@ -105,10 +105,12 @@
     <Compile Include="Communication\Controllers\Interfaces\ILayoutController.cs" />
     <Compile Include="Communication\Controllers\Interfaces\IOrderController.cs" />
     <Compile Include="Communication\Controllers\LayoutController.cs" />
+    <Compile Include="Communication\Controllers\MenuController.cs" />
     <Compile Include="Communication\Controllers\OrderController.cs" />
     <Compile Include="Communication\Handlers\ConnectionChangedHandler.cs" />
     <Compile Include="Communication\Handlers\SignalRSubscriptionHandler.cs" />
     <Compile Include="Communication\IApiClient.cs" />
+    <Compile Include="Communication\Controllers\Interfaces\IMenuController.cs" />
     <Compile Include="Communication\ISignalRClient.cs" />
     <Compile Include="Communication\RequestException.cs" />
     <Compile Include="Communication\SignalRClient.cs" />
@@ -129,6 +131,18 @@
     </Compile>
     <Compile Include="Controls\CtrlToolBar.Designer.cs">
       <DependentUpon>CtrlToolBar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Menu\CtrlMenu.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Menu\CtrlMenu.Designer.cs">
+      <DependentUpon>CtrlMenu.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Order\CtrlOrder.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Order\CtrlOrder.Designer.cs">
+      <DependentUpon>CtrlOrder.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\Workspace\CtrlTable.cs">
       <SubType>UserControl</SubType>
@@ -151,6 +165,10 @@
     <Compile Include="Data\Application.cs" />
     <Compile Include="Data\GlobalHandler.cs" />
     <Compile Include="Data\PosClient.cs" />
+    <Compile Include="Data\SimpleCache.cs" />
+    <Compile Include="Interfaces\IToolBarCustomizer.cs" />
+    <Compile Include="Interfaces\IStatusBarAccesor.cs" />
+    <Compile Include="Interfaces\IToolBarButton.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -170,6 +188,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\CtrlToolBar.resx">
       <DependentUpon>CtrlToolBar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Menu\CtrlMenu.resx">
+      <DependentUpon>CtrlMenu.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Order\CtrlOrder.resx">
+      <DependentUpon>CtrlOrder.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\Workspace\CtrlTable.resx">
       <DependentUpon>CtrlTable.cs</DependentUpon>

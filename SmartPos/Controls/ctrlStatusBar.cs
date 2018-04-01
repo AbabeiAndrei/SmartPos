@@ -27,6 +27,21 @@ namespace SmartPos.Desktop.Controls
         private Brush _redBrush;
         private Brush _yellowBrush;
         private Brush _greenBrush;
+        private string _infoText;
+
+        #endregion
+
+        #region Properties
+
+        public string InfoText
+        {
+            get => _infoText;
+            set
+            {
+                _infoText = value;
+                Refresh();
+            }
+        }
 
         #endregion
 
@@ -65,48 +80,58 @@ namespace SmartPos.Desktop.Controls
 
         protected override void OnPaint(PaintEventArgs e)
         {
-            base.OnPaint(e);
-
-            if(_textBrush == null)
-                return;
-
-            const int textStart = 3;
-            const int nameStartX = 250;
-
-            Brush circleBrush;
-
-            switch (Application.SignalRClient.Connection.State)
+            try
             {
-                case ConnectionState.Connected:
-                    circleBrush = _greenBrush;
-                    break;
-                case ConnectionState.Connecting:
-                case ConnectionState.Reconnecting:
-                    circleBrush = _yellowBrush;
-                    break;
-                case ConnectionState.Disconnected:
-                    circleBrush = _redBrush;
-                    break;
-                default:
-                    circleBrush = null;
-                    break;
-            }
+                if(_textBrush == null)
+                    return;
 
-            if(circleBrush != null)
-                e.Graphics.FillEllipse(circleBrush, 5f, 7f, Height - 15f, Height - 15f);
+                const int textStart = 3;
+                const int nameStartX = 250;
 
-            e.Graphics.DrawString(UiHelper.Title(PosClient.LocationName), Font, _textBrush, 25, textStart);
+                Brush circleBrush;
+
+                switch (Application.SignalRClient.Connection.State)
+                {
+                    case ConnectionState.Connected:
+                        circleBrush = _greenBrush;
+                        break;
+                    case ConnectionState.Connecting:
+                    case ConnectionState.Reconnecting:
+                        circleBrush = _yellowBrush;
+                        break;
+                    case ConnectionState.Disconnected:
+                        circleBrush = _redBrush;
+                        break;
+                    default:
+                        circleBrush = null;
+                        break;
+                }
+
+                if(circleBrush != null)
+                    e.Graphics.FillEllipse(circleBrush, 5f, 7f, Height - 15f, Height - 15f);
+
+                e.Graphics.DrawString(UiHelper.CreateTitle(PosClient.LocationName), Font, _textBrush, 25, textStart);
             
-            if(AuthenticationManager.IsLoggedIn)
-                e.Graphics.DrawString(AuthenticationManager.User.FullName, Font, _textBrush, nameStartX, textStart);
+                if(AuthenticationManager.IsLoggedIn)
+                    e.Graphics.DrawString(AuthenticationManager.User.FullName, Font, _textBrush, nameStartX, textStart);
 
-            if(Settings.Default.ShowTimeInStatusbar)
-                e.Graphics.DrawString(DateTime.Now.ToString("F", Application.UiFormat), 
-                                      Font, _textBrush, 
-                                      new Rectangle(0, textStart, Width, Height), 
-                                      GfxHelper.CreateStringFormat(StringAlignment.Far));
+                if(Settings.Default.ShowTimeInStatusbar)
+                    e.Graphics.DrawString(DateTime.Now.ToString("F", Application.UiFormat), 
+                                          Font, _textBrush, 
+                                          new Rectangle(0, textStart, Width, Height), 
+                                          GfxHelper.CreateStringFormat(StringAlignment.Far));
 
-            e.Graphics.DrawLine(Pens.White, 0, Height - 1, Width, Height - 1);
+                if(!string.IsNullOrWhiteSpace(InfoText))
+                    e.Graphics.DrawString(InfoText, Font, _textBrush, 
+                                          new Rectangle(0, textStart, Width - TIME_WIDTH, Height),
+                                          GfxHelper.CreateStringFormat(StringAlignment.Far));
+            
+                e.Graphics.DrawLine(Pens.White, 0, Height - 1, Width, Height - 1);
+            }
+            finally
+            {
+                base.OnPaint(e);
+            }
         }
 
         protected override void DisposeComponents()
@@ -129,5 +154,6 @@ namespace SmartPos.Desktop.Controls
         }
 
         #endregion
+
     }
 }

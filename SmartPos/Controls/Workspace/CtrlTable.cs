@@ -81,7 +81,9 @@ namespace SmartPos.Desktop.Controls.Workspace
         {
             try
             {
-                await Application.Api(ParentForm.LoadingState).Order.OpenTable(Table.Id.ToString());
+                var order = await Application.Api(ParentForm.LoadingState).Order.OpenTable(Table.Id.ToString());
+
+                UiHelper.ShowOrder(order);
             }
             catch (Exception ex)
             {

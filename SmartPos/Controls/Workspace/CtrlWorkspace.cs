@@ -17,20 +17,34 @@ namespace SmartPos.Desktop.Controls.Workspace
     [PosAuthorisation]
     public partial class CtrlWorkspace : BaseControl
     {
+        #region Fields
+
         private ITheme _theme;
         private readonly IDictionary<int, IList<CtrlTable>> _zones;
+        
+        #endregion
+
+        #region Constructors
 
         public CtrlWorkspace()
         {
             InitializeComponent();
             _zones = new Dictionary<int, IList<CtrlTable>>();
         }
+        
+        #endregion
+
+        #region Overriedes of BaseControl
 
         public override void ApplyTheme(ITheme theme)
         {
             base.ApplyTheme(theme);
             _theme = theme;
         }
+
+        #endregion
+
+        #region Public methods
 
         public async Task Initialize(ApiClient client)
         {
@@ -76,6 +90,15 @@ namespace SmartPos.Desktop.Controls.Workspace
             }
         }
 
+        public CtrlTable GetTable(int tableId)
+        {
+            return _zones.SelectMany(z => z.Value).FirstOrDefault(t => t.Table.Id == tableId);
+        }
+
+        #endregion
+
+        #region Private methods
+
         private CtrlWorkspaceZone CreateZoneControl(Zone zone)
         {
             var ws = new CtrlWorkspaceZone(zone);
@@ -87,12 +110,12 @@ namespace SmartPos.Desktop.Controls.Workspace
         private CtrlTable CreateTableControl(Table table)
         {
             var tbl = new CtrlTable(table)
-            {
-                Left = table.Left,
-                Top = table.Top,
-                Width = table.Width,
-                Height = table.Height
-            };
+                      {
+                              Left = table.Left,
+                              Top = table.Top,
+                              Width = table.Width,
+                              Height = table.Height
+                      };
             tbl.ApplyTheme(_theme);
             tbl.Click += WorkspaceZone_Click;
             return tbl;
@@ -112,7 +135,7 @@ namespace SmartPos.Desktop.Controls.Workspace
             {
                 pnlZones.SuspendLayout();
 
-                pnlZones.Controls.OfType<CtrlWorkspaceZone>().Foreach(z => z.Selected = false);
+                pnlZones.Controls.OfType<CtrlWorkspaceZone>().ForEach(z => z.Selected = false);
                 zone.Selected = true;
                 ShowTablesForZone(zone.Zone.Id);
             }
@@ -138,5 +161,7 @@ namespace SmartPos.Desktop.Controls.Workspace
                 pnlTables.ResumeLayout();
             }
         }
+
+        #endregion
     }
 }

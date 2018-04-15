@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace SmartPos.DomainModel.Model
 {
-    public class MessageModel
+    public abstract class MessageModel
     {
+        public abstract string Method { get; }
+
         public string From { get; }
 
         protected MessageModel(string from)

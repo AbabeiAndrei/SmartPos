@@ -12,6 +12,7 @@ namespace SmartPos.DomainModel.Entities
         public string Name { get; set; }
 
         [Required]
+        [CustomField("DECIMAL(10,2)")]
         public decimal UnitPrice { get; set; }
 
         [Required]
@@ -21,8 +22,6 @@ namespace SmartPos.DomainModel.Entities
         #region Overrides of MetadataEntity<ProductMetadata>
 
         /// <inheritdoc />
-        [Required]
-        [Default("")]
         public override string Metadata { get; set; }
 
         #endregion

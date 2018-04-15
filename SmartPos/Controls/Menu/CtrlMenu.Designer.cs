@@ -40,27 +40,27 @@
             this.lblPath.Name = "lblPath";
             this.lblPath.Size = new System.Drawing.Size(861, 28);
             this.lblPath.TabIndex = 0;
-            this.lblPath.Text = "Menu > ";
+            this.lblPath.Text = "/";
             // 
             // flowTop
             // 
             this.flowTop.Dock = System.Windows.Forms.DockStyle.Top;
             this.flowTop.Location = new System.Drawing.Point(0, 28);
             this.flowTop.Name = "flowTop";
-            this.flowTop.Size = new System.Drawing.Size(861, 65);
+            this.flowTop.Size = new System.Drawing.Size(861, 35);
             this.flowTop.TabIndex = 1;
             // 
             // flowItems
             // 
             this.flowItems.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.flowItems.Location = new System.Drawing.Point(0, 93);
+            this.flowItems.Location = new System.Drawing.Point(0, 63);
             this.flowItems.Name = "flowItems";
-            this.flowItems.Size = new System.Drawing.Size(861, 190);
+            this.flowItems.Size = new System.Drawing.Size(861, 220);
             this.flowItems.TabIndex = 2;
             // 
             // CtrlMenu
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 28F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.flowItems);
             this.Controls.Add(this.flowTop);

@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using SmartPos.Desktop.Controls.Order;
-using SmartPos.DomainModel.Entities;
+
 using SmartPos.Ui;
 using SmartPos.Ui.Handlers;
+using SmartPos.DomainModel.Entities;
+using SmartPos.Desktop.Controls.Form;
+using SmartPos.Desktop.Controls.Order;
 
 namespace SmartPos.Desktop.Utils
 {
@@ -33,7 +35,7 @@ namespace SmartPos.Desktop.Utils
         }
 
         public static IFormBuilder<TForm, TControl> ShowForm<TControl, TForm>(string title = null, 
-                                                                    IWin32Window parent = null)
+                                                                              IWin32Window parent = null)
             where TControl : BaseControl, new()
             where TForm : BaseForm, new()
         {
@@ -41,8 +43,8 @@ namespace SmartPos.Desktop.Utils
         }
 
         public static IFormBuilder<TForm, TControl> ShowForm<TControl, TForm>(TControl control,
-                                                                    string title = null, 
-                                                                    IWin32Window parent = null)
+                                                                              string title = null, 
+                                                                              IWin32Window parent = null)
             where TControl : BaseControl
             where TForm : BaseForm, new()
         {
@@ -60,6 +62,17 @@ namespace SmartPos.Desktop.Utils
         public static void ShowOrder(Order order)
         {
             var orderControl = new CtrlOrder(order);
+
+            orderControl.OrderSent += (sender, args) =>
+            {
+                if (Application.MainForm is MainForm form)
+                {
+                    form.ShowMessage("Comanda trimisa", MessageType.Info);
+                    form.SetOrderToTable(args.Order);
+                }
+
+                return Task.CompletedTask;
+            };
 
             ShowControlInFormContainer(orderControl);
         }
@@ -80,6 +93,29 @@ namespace SmartPos.Desktop.Utils
 
 
             form.ShowTablesInContainer();
+        }
+        
+        public static DialogResult ShowConfirmation(string message,  MessageType type, string title = null, BaseForm parent = null)
+        {
+            if (string.IsNullOrEmpty(message))
+                throw new ArgumentNullException(nameof(message));
+
+            if (string.IsNullOrEmpty(title))
+                title = "Intrebare";
+
+            parent = parent ?? Application.MainForm;
+
+            var form = new ConfirmationForm(message)
+            {
+                Location = parent.Location,
+                Size = parent.Size,
+                Title = title
+            };
+
+            form.ApplyTheme(Application.UiTheme);
+            form.MessageType = type;
+
+            return form.ShowDialog(parent);
         }
 
         public static string CreateTitle(string baseTitle)

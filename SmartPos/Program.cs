@@ -13,9 +13,12 @@ namespace SmartPos.Desktop
             System.Windows.Forms.Application.SetCompatibleTextRenderingDefault(false);
 
             var form = new MainForm();
-            form.ApplyTheme(ThemeManager.GetTheme(Properties.Settings.Default.ThemeName));
+
+            var theme = ThemeManager.GetTheme(Properties.Settings.Default.ThemeName);
+            form.ApplyTheme(theme);
 
             Application.InitializeUi(form);
+            Application.UiTheme = theme;
 
             System.Windows.Forms.Application.Run(form);
         }

@@ -8,6 +8,7 @@ using SmartPos.Ui.Components;
 using SmartPos.Desktop.Utils;
 using SmartPos.DomainModel.Entities;
 using SmartPos.Desktop.Communication;
+using SmartPos.Ui.Theming;
 
 namespace SmartPos.Desktop
 {
@@ -30,6 +31,8 @@ namespace SmartPos.Desktop
         public static SignalRClient SignalRClient { get; set; }
 
         public static BaseForm MainForm { get; private set; }
+
+        public static ITheme UiTheme { get; set; }
 
         #endregion
 

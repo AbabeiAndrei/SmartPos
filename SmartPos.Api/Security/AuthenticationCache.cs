@@ -3,6 +3,8 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+
+using SmartPos.DomainModel.Entities;
 using SmartPos.GeneralLibrary;
 
 namespace Smartpos.Api.Security
@@ -14,6 +16,13 @@ namespace Smartpos.Api.Security
         static AuthenticationCache()
         {
             Map = new ConcurrentDictionary<string, IIdentity>();
+        }
+
+        public static IIdentity GetUser(string connectionId)
+        {
+            return Map.ContainsKey(connectionId)
+                           ? Map[connectionId]
+                           : null;
         }
     }
 }

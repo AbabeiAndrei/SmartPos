@@ -20,7 +20,13 @@ namespace SmartPos.Desktop.Communication.Controllers
 
         public async Task<Order> OpenTable(string tableId)
         {
-            return await _client.ExecuteAsync<Order>(Controller, Method.POST, new {tableId});
+            return await _client.ExecuteAsync<Order>(Controller, Method.PUT, new {tableId});
+        }
+
+        /// <inheritdoc />
+        public async Task<Order> SendOrder(Order order)
+        {
+            return await _client.ExecuteAsync<Order>(Controller, Method.POST, null, order);
         }
     }
 }

@@ -14,8 +14,9 @@ namespace SmartPos.DomainModel.Entities
     public enum OrderItemState : short
     {
         Active = 0,
-        Storno = 1,
-        Void = 2
+        Added = 1,
+        Storno = 2,
+        Void = 3
     }
 
     public class OrderItem : Entity, ISoftDeletable
@@ -33,6 +34,7 @@ namespace SmartPos.DomainModel.Entities
         public string Name { get; set; }
 
         [Required]
+        [CustomField("DECIMAL(10,2)")]
         public decimal UnitPrice { get; set; }
 
         [Required]
@@ -57,5 +59,13 @@ namespace SmartPos.DomainModel.Entities
         public bool Deleted { get; set; }
 
         #endregion
+    }
+
+    public static class OrderItemUtils
+    {
+        public static bool IsValidForOrder(this OrderItemState state)
+        {
+            return state == OrderItemState.Active || state == OrderItemState.Added;
+        }
     }
 }

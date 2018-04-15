@@ -52,6 +52,9 @@
     <Reference Include="ServiceStack.OrmLite.MySql, Version=5.0.0.0, Culture=neutral, PublicKeyToken=02c12cbda47e6587, processorArchitecture=MSIL">
       <HintPath>..\packages\ServiceStack.OrmLite.MySql.5.0.2\lib\net45\ServiceStack.OrmLite.MySql.dll</HintPath>
     </Reference>
+    <Reference Include="ServiceStack.OrmLite.SqlServer, Version=5.0.0.0, Culture=neutral, PublicKeyToken=02c12cbda47e6587, processorArchitecture=MSIL">
+      <HintPath>..\packages\ServiceStack.OrmLite.SqlServer.5.0.2\lib\net45\ServiceStack.OrmLite.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="ServiceStack.Text, Version=5.0.0.0, Culture=neutral, PublicKeyToken=02c12cbda47e6587, processorArchitecture=MSIL">
       <HintPath>..\packages\ServiceStack.Text.5.0.2\lib\net45\ServiceStack.Text.dll</HintPath>
     </Reference>
@@ -69,7 +72,11 @@
     <Compile Include="Base\IMetadata.cs" />
     <Compile Include="Base\ISoftDeletable.cs" />
     <Compile Include="Base\MetadataEntity.cs" />
+    <Compile Include="Business\Exceptions\EntityIsNewException.cs" />
+    <Compile Include="Business\Exceptions\EntityNotNewException.cs" />
+    <Compile Include="Business\ICrudRepositotry.cs" />
     <Compile Include="Business\NumberGenerationFactory.cs" />
+    <Compile Include="Business\OrderRepository.cs" />
     <Compile Include="Communication\SignalRHub.cs" />
     <Compile Include="DbContext.cs" />
     <Compile Include="DbSeeder.cs" />
@@ -78,6 +85,7 @@
     <Compile Include="Entities\Order.cs" />
     <Compile Include="Entities\OrderItem.cs" />
     <Compile Include="Entities\Product.cs" />
+    <Compile Include="Extensions\EntityExtensions.cs" />
     <Compile Include="Metadata\ProductMetadata.cs" />
     <Compile Include="Entities\Table.cs" />
     <Compile Include="Entities\Zone.cs" />
@@ -92,6 +100,7 @@
     <Compile Include="Entities\UserAccessRight.cs" />
     <Compile Include="Metadata\ZoneMetadata.cs" />
     <Compile Include="Model\MessageModel.cs" />
+    <Compile Include="Model\OrderCreatedMessage.cs" />
     <Compile Include="Model\OrderOpenMessage.cs" />
     <Compile Include="Model\TableState.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

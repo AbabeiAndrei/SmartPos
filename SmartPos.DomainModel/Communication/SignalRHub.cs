@@ -17,6 +17,7 @@ namespace SmartPos.DomainModel.Communication
             public static class Order
             {
                 public const string RegisterTable = nameof(RegisterTable);
+                public const string Created = nameof(Created);
             }
         }
     }

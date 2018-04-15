@@ -12,6 +12,8 @@ namespace SmartPos.Ui.Theming.Themes
         public Color ControlForeColor { get; }
         public Color ButtonBackColor { get; }
         public Color ButtonForeColor { get; }
+        public Color SelectedButtonBackColor { get; }
+        public Color SelectedButtonForeColor { get; }
         public int ButtonBorderSize { get; }
         public Color ButtonBorderColor { get; }
         public Color ButtonDownBackColor { get; }
@@ -31,6 +33,10 @@ namespace SmartPos.Ui.Theming.Themes
         public Color FreeTableColor { get; }
         public Color OpenedTableColor { get; }
         public Color OcupiedTableColor { get; }
+        
+        public Color StornoOrderItemBackColor { get; }
+        
+        public Color FormTransparentBackColor { get; }
 
         public DefaultTheme()
         {
@@ -43,6 +49,9 @@ namespace SmartPos.Ui.Theming.Themes
 
             ButtonBackColor = MaterialColors.Grey(ColorDepth.C900);
             ButtonForeColor = MaterialColors.White;
+            SelectedButtonBackColor = MaterialColors.Grey();
+            SelectedButtonForeColor = ButtonForeColor;
+
             ButtonBorderSize = 1;
             ButtonBorderColor = MaterialColors.Grey(ColorDepth.C400);
             ButtonDownBackColor = MaterialColors.Grey();
@@ -65,6 +74,10 @@ namespace SmartPos.Ui.Theming.Themes
             FreeTableColor = MaterialColors.Green();
             OpenedTableColor = MaterialColors.Amber();
             OcupiedTableColor = MaterialColors.Red();
+
+            StornoOrderItemBackColor = MaterialColors.Red(ColorDepth.C200);
+
+            FormTransparentBackColor = MaterialColors.Grey(ColorDepth.C200);
 
             LoadingColors = new[]
                             {

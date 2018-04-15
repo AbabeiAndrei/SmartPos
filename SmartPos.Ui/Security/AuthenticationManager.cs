@@ -1,5 +1,5 @@
-﻿using SmartPos.DomainModel.Entities;
-using SmartPos.GeneralLibrary;
+﻿using SmartPos.GeneralLibrary;
+using SmartPos.DomainModel.Entities;
 
 namespace SmartPos.Ui.Security
 {

@@ -86,6 +86,11 @@ namespace SmartPos.Desktop.Utils
             return _penTable[tuple];
         }
 
+        public static Color Opacity(this Color color, int alpha)
+        {
+            return Color.FromArgb(alpha, color);
+        }
+
         public static void ApplyDisplaySettings(Graphics gfx)
         {
             gfx.CompositingMode = CompositingMode.SourceOver;

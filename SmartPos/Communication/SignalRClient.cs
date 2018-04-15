@@ -118,11 +118,6 @@ namespace SmartPos.Desktop.Communication
 
             return Hub.On<TModel>(method, res => handler(res));
         }
-
-        //public virtual Task<IDisposable> SubscribeAsync<TModel>(string method, SignalRSubscriptionAsyncHandler<TModel> handler)
-        //{
-        //    return Task.CompletedTask;
-        //}
         
         public virtual void Dispose()
         {

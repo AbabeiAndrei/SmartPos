@@ -40,7 +40,6 @@ namespace SmartPos.Ui
 
         private Pen _penBorder;
         private MessageAnimation _message;
-        private ITheme _theme;
         private bool _mouseOverErrorMessage;
         private int _loaderLocation;
         private int _curentBrush;
@@ -104,8 +103,9 @@ namespace SmartPos.Ui
             get => btnClose.Enabled;
             set => btnClose.Enabled = value;
         }
-
-
+        
+        [Browsable(false)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         protected virtual bool ShowTitlePane
         {
             get => _topPaneVisible;
@@ -135,22 +135,40 @@ namespace SmartPos.Ui
             get => _loadingState;
             set => _loadingState = value;
         }
-
+        
+        [Browsable(false)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         protected virtual object Entity => null;
-
+        
+        [Browsable(false)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         protected static Type AuthorisationType { get; }
-
+        
+        [Browsable(false)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         protected virtual UnauthorizedFormResult UnauthorizedResult => UnauthorizedFormResult.Exception;
-
+        
+        [Browsable(false)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         protected virtual bool ShowWindowBorder => true;
-
+        
+        [Browsable(false)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         protected virtual int MessageLineTop => ShowTitle
                                                     ? pnlTitle.Bottom
                                                     : 0;
-
+        
+        [Browsable(false)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         protected virtual int LoaderLineTop => 0;
-
+        
+        [Browsable(false)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         protected bool IsAuthorized { get; private set; }
+        
+        [Browsable(false)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        protected ITheme Theme { get; private set; }
 
         #endregion
 
@@ -202,9 +220,9 @@ namespace SmartPos.Ui
             if(ShowWindowBorder)
                 Padding = new Padding(1);
 
-            _theme = theme;
+            Theme = theme;
 
-            _loaderBrushes = _theme.LoadingColors.Select(c => new SolidBrush(c)).Cast<Brush>().ToArray();
+            _loaderBrushes = Theme.LoadingColors.Select(c => new SolidBrush(c)).Cast<Brush>().ToArray();
             
             Refresh();
         }
@@ -425,13 +443,13 @@ namespace SmartPos.Ui
                 switch (message.MessageType)
                 {
                     case MessageType.Info:
-                        lblMessage.BackColor = _theme.InfoBackColor;
+                        lblMessage.BackColor = Theme.InfoBackColor;
                         break;
                     case MessageType.Warning:
-                        lblMessage.BackColor = _theme.WarningBackColor;
+                        lblMessage.BackColor = Theme.WarningBackColor;
                         break;
                     case MessageType.Error:
-                        lblMessage.BackColor = _theme.ErrorBackColor;
+                        lblMessage.BackColor = Theme.ErrorBackColor;
                         break;
                     default:
                         throw new ArgumentOutOfRangeException(nameof(message.MessageType), message.MessageType, null);

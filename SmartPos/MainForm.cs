@@ -17,6 +17,9 @@ using SmartPos.Desktop.Utils;
 using SmartPos.Desktop.Controls;
 using SmartPos.Desktop.Interfaces;
 using SmartPos.Desktop.Communication;
+using SmartPos.DomainModel.Communication;
+using SmartPos.DomainModel.Entities;
+using SmartPos.DomainModel.Model;
 using SmartPos.GeneralLibrary.Extensions;
 
 using AuthenticationManager = SmartPos.Ui.Security.AuthenticationManager;
@@ -138,6 +141,16 @@ namespace SmartPos.Desktop
             else
                 ctrlToolBar.ResetCustomize();
         }
+
+        private void OnOrderCreated(OrderCreatedMessage model)
+        {
+            this.RunOnUiThread(() => SetOrderToTable(model.Order));
+        }
+
+        private void OnRegisterTable(OrderOpenMessage model)
+        {
+
+        }
         
         #endregion
 
@@ -157,9 +170,6 @@ namespace SmartPos.Desktop
                         .Show();
         }
 
-        #endregion
-
-        #region Public methods
 
         private async Task PerformLogin(IFormSender sender, IContinuityDelegate after)
         {
@@ -167,14 +177,20 @@ namespace SmartPos.Desktop
 
             if (string.IsNullOrEmpty(pin))
             {
+#if DEBUG
+                pin = "1234";
+#else
                 after.PresentMessage("Pin is empty", MessageType.Error);
                 return;
+#endif
             }
 
             try
             {
                 var loaderToken = sender.Form.LoadingState;
                 var apiClient = Application.Api(loaderToken);
+
+
                 var user = await apiClient.Account.Login(pin);
                 AuthenticationManager.User = user;
             }
@@ -201,9 +217,14 @@ namespace SmartPos.Desktop
 
         private async void InitializePos()
         {
-            Application.SignalRClient.Subscribe<string>("test", s => this.RunOnUiThread(() => ShowMessage(s, MessageType.Info)));
+            Application.SignalRClient.Subscribe<OrderOpenMessage>(SignalRHub.Events.Order.RegisterTable, OnRegisterTable);
+            Application.SignalRClient.Subscribe<OrderCreatedMessage>(SignalRHub.Events.Order.Created, OnOrderCreated);
             await ctrlWorkspace.Initialize(_apiClient);
         }
+
+        #endregion
+
+        #region Public methods
 
         public void SetControlInContainer<TControl>(TControl control)
             where TControl : BaseControl
@@ -242,6 +263,16 @@ namespace SmartPos.Desktop
             {
                 pnlMain.ResumeLayout();
             }
+        }
+
+        public void SetOrderToTable(Order order)
+        {
+            var ctrlTable = ctrlWorkspace.GetTable(order.TableId);
+
+            if (ctrlTable == null)
+                return;
+
+            ctrlTable.Order = order;
         }
 
         #endregion

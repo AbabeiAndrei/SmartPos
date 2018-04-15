@@ -97,6 +97,9 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="FormBuilder.cs" />
+    <Compile Include="Forms\TransparentForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Handlers\ContinuityDelegate.cs" />
     <Compile Include="Handlers\LoadingEndEventArgs.cs" />
     <Compile Include="Handlers\UiHandlers.cs" />
@@ -119,6 +122,7 @@
     <Compile Include="Threading\AlreadyRunningException.cs" />
     <Compile Include="UiConfigure.cs" />
     <Compile Include="Utils\FormBuilderEx.cs" />
+    <Compile Include="Utils\UiUtils.cs" />
     <Compile Include="Utils\WinApi.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -11,6 +11,7 @@ namespace SmartPos.GeneralLibrary.Interfaces
         ITree<T> Parent { get; }
         T Value { get; set; }
         IEnumerable<ITree<T>> Childrens { get; }
+        IEnumerable<T> Path { get; }
     }
 
     public static class TreeCollection
@@ -73,6 +74,23 @@ namespace SmartPos.GeneralLibrary.Interfaces
 
         /// <inheritdoc />
         public IEnumerable<ITree<T>> Childrens { get; set; }
+
+        /// <inheritdoc />
+        public IEnumerable<T> Path => GetTreePath(this).Reverse();
+
+        #endregion
+
+        #region Private methods
+
+        private static IEnumerable<T> GetTreePath(ITree<T> tree)
+        {
+            while (tree != null)
+            {
+                yield return tree.Value;
+
+                tree = tree.Parent;
+            }
+        }
 
         #endregion
     }

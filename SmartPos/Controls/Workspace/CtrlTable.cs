@@ -19,6 +19,7 @@ namespace SmartPos.Desktop.Controls.Workspace
         private Brush _freeTableBrush;
         private Brush _openTableBrush;
         private Brush _ocupiedTableBrush;
+        private DomainModel.Entities.Order _order;
         private static readonly StringFormat _stringFormat;
 
         #endregion
@@ -26,6 +27,17 @@ namespace SmartPos.Desktop.Controls.Workspace
         #region Properties
 
         public Table Table { get; }
+
+        public DomainModel.Entities.Order Order
+        {
+            get => _order;
+            set
+            {
+                _order = value;
+
+                Refresh();
+            }
+        }
 
         #endregion
 
@@ -61,8 +73,24 @@ namespace SmartPos.Desktop.Controls.Workspace
             base.OnPaint(e);
 
             var rect = new Rectangle(0, 0, Width, Height);
+
+            Brush brush;
             
-            e.Graphics.FillRectangle(_freeTableBrush, rect);
+            // ReSharper disable once SwitchStatementMissingSomeCases
+            switch (Order?.State)
+            {
+                case OrderState.Opened:
+                    brush = _openTableBrush;
+                    break;
+                case OrderState.Active:
+                    brush = _ocupiedTableBrush;
+                    break;
+                default:
+                    brush = _freeTableBrush;
+                    break;
+            }
+
+            e.Graphics.FillRectangle(brush, rect);
 
             if(Table != null)
                 e.Graphics.DrawString(Table.Name, Font, _textBrush, rect, _stringFormat);

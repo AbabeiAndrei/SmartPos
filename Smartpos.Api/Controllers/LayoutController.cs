@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
+﻿using System.Linq;
 using System.Web.Http;
-using System.Web.Razor.Generator;
+
 using SmartPos.DomainModel;
 using SmartPos.DomainModel.Entities;
 using SmartPos.DomainModel.Extensions;

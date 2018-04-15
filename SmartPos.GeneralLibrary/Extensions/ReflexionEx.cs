@@ -26,5 +26,13 @@ namespace SmartPos.GeneralLibrary.Extensions
             foreach (var property in properties)
                 yield return (property.Name, property.GetValue(obj));
         }
+
+        public static bool Implements<TInterface>(this Type type)
+        {
+            if (type == null)
+                throw new ArgumentNullException(nameof(type));
+
+            return type.IsSubclassOf(typeof(TInterface));
+        }
     }
 }

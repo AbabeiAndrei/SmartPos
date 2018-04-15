@@ -13,6 +13,8 @@ namespace SmartPos.Ui.Theming
 
         Color ButtonBackColor { get; }
         Color ButtonForeColor { get; }
+        Color SelectedButtonBackColor { get; }
+        Color SelectedButtonForeColor { get; }
 
         int ButtonBorderSize { get; }
         Color ButtonBorderColor { get; }
@@ -36,5 +38,8 @@ namespace SmartPos.Ui.Theming
         Color FreeTableColor { get; }
         Color OpenedTableColor { get; }
         Color OcupiedTableColor { get; }
+
+        Color StornoOrderItemBackColor { get; }
+        Color FormTransparentBackColor { get; }
     }
 }

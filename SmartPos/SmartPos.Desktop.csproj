@@ -108,6 +108,14 @@
     <Compile Include="Communication\Controllers\MenuController.cs" />
     <Compile Include="Communication\Controllers\OrderController.cs" />
     <Compile Include="Communication\Handlers\ConnectionChangedHandler.cs" />
+    <Compile Include="Controls\Form\ConfirmationForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controls\Form\ConfirmationForm.Designer.cs">
+      <DependentUpon>ConfirmationForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Handlers\OrderSentEventHandler.cs" />
+    <Compile Include="Handlers\ProductItemHandler.cs" />
     <Compile Include="Communication\Handlers\SignalRSubscriptionHandler.cs" />
     <Compile Include="Communication\IApiClient.cs" />
     <Compile Include="Communication\Controllers\Interfaces\IMenuController.cs" />
@@ -188,6 +196,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\CtrlToolBar.resx">
       <DependentUpon>CtrlToolBar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Form\ConfirmationForm.resx">
+      <DependentUpon>ConfirmationForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\Menu\CtrlMenu.resx">
       <DependentUpon>CtrlMenu.cs</DependentUpon>

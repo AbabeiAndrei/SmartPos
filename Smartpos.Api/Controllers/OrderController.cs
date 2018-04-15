@@ -1,65 +1,78 @@
 ﻿using System;
-using System.Linq;
-using System.Net.Http.Headers;
 using System.Web.Http;
-using Microsoft.AspNet.SignalR;
-using Microsoft.AspNet.SignalR.Hubs;
+using System.Net.Http.Headers;
 
-using Smartpos.Api.Communication;
-using Smartpos.Api.Security;
 using SmartPos.DomainModel;
-using SmartPos.DomainModel.Business;
-using SmartPos.DomainModel.Communication;
-using SmartPos.DomainModel.Entities;
+using Smartpos.Api.Security;
+using Smartpos.Api.Extensions;
 using SmartPos.DomainModel.Model;
-using SmartPos.GeneralLibrary;
+using Smartpos.Api.Communication;
+
+using SmartPos.DomainModel.Business;
+using SmartPos.DomainModel.Entities;
+using SmartPos.DomainModel.Extensions;
+using SmartPos.DomainModel.Interfaces;
 
 namespace Smartpos.Api.Controllers
 {
     public class OrderController : ApiController
     {
-        private readonly DbContext _dbContext;
+        #region Fields
+
+        private readonly IDbContext _dbContext;
+        private readonly ICrudRepositotry<Order> _orderRepository;
+        private readonly CommunicationHub _hub;
+        
+        #endregion
+
+        #region Constructors
 
         public OrderController()
-            : this(new DbContext())
+                : this(new DbContext())
         {
         }
 
-        private OrderController(DbContext dbContext)
+        private OrderController(IDbContext dbContext)
         {
             _dbContext = dbContext;
+            _orderRepository = new OrderRepository(dbContext);
+            _hub = new CommunicationHub();
         }
+
+        #endregion
+
+        #region Public methods
 
         public IHttpActionResult Get()
         {
             return Ok(true);
         }
         
-        public IHttpActionResult Post([FromUri] int tableId)
+        [HttpPut]
+        public IHttpActionResult OpenTable([FromUri] int tableId)
         {
-            var connectionId = Request.Headers.Authorization.Scheme;
+            var connectionId = Request.GetConnectionId();
 
             if (string.IsNullOrEmpty(connectionId))
                 return Unauthorized(Request.Headers.Authorization);
+            
+            var user = AuthenticationCache.GetUser(connectionId);
 
-            if (!AuthenticationCache.Map.ContainsKey(connectionId))
+            if (user == null)
                 return Unauthorized(AuthenticationHeaderValue.Parse(connectionId));
 
-            var user = AuthenticationCache.Map[connectionId];
-            
-            var hub = GlobalHost.ConnectionManager.GetHubContext<PosTransferHub>();
-            IClientProxy proxy = hub.Clients.AllExcept(connectionId);
-            proxy.Invoke(SignalRHub.Events.Order.RegisterTable,
-                         new OrderOpenMessage(connectionId)
-                         {
-                             TableId = tableId,
-                             State = new TableState
-                             {
-                                OcupiedByUserId = user.Id,
-                                OcupiedByUser = user.FullName,
-                                State = TableOcupation.Opened
-                             }
-                         });
+            var message = new OrderOpenMessage(connectionId)
+            {
+                    TableId = tableId,
+                    State = new TableState
+                    {
+                        OcupiedByUserId = user.Id,
+                        OcupiedByUser = user.FullName,
+                        State = TableOcupation.Opened
+                    }
+            };
+
+            _hub.SendAll(message);
 
             var order = new Order
             {
@@ -72,5 +85,35 @@ namespace Smartpos.Api.Controllers
 
             return Ok(order);
         }
+
+        [HttpPost]
+        public IHttpActionResult SaveOrder([FromBody] Order order)
+        {
+            var connectionId = Request.GetConnectionId();
+
+            if (string.IsNullOrEmpty(connectionId))
+                return Unauthorized(Request.Headers.Authorization);
+            
+            var user = AuthenticationCache.GetUser(connectionId);
+
+            if (user == null || order.UserId != user.Id)
+                return Unauthorized(AuthenticationHeaderValue.Parse(connectionId));
+
+            if (order.Id == 0)
+                _orderRepository.Add(order);
+            else
+                _orderRepository.Save(order);
+
+            var message = new OrderCreatedMessage(connectionId)
+            {
+                Order = order
+            };
+            
+            _hub.SendAll(message);
+
+            return Ok(order);
+        }
+
+        #endregion
     }
 }

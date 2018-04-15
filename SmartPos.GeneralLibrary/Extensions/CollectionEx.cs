@@ -35,7 +35,7 @@ namespace SmartPos.GeneralLibrary.Extensions
                 yield return source.Current;
         }
 
-        public static void Foreach<T>(this IEnumerable<T> source, Action<T> action)
+        public static void ForEach<T>(this IEnumerable<T> source, Action<T> action)
         {
             if (source == null)
                 throw new ArgumentNullException(nameof(source));

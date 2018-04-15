@@ -1,10 +1,12 @@
-﻿using System.Web.Http;
+﻿using System.Linq;
+using System.Web.Http;
 using System.Collections.Generic;
 
 using SmartPos.DomainModel;
 using SmartPos.DomainModel.Entities;
 using SmartPos.DomainModel.Extensions;
 using SmartPos.DomainModel.Interfaces;
+using SmartPos.GeneralLibrary.Extensions;
 
 namespace Smartpos.Api.Controllers
 {
@@ -47,7 +49,12 @@ namespace Smartpos.Api.Controllers
 
         public IEnumerable<MenuCategory> Get()
         {
-            return _context.Select<MenuCategory>();
+            var categories = _context.Select<MenuCategory>().ToList();
+
+            foreach (var category in categories)
+                category.Products = _context.Where<Product>(p => p.CategoryId == category.Id).ToList();
+
+            return categories;
         }
 
         #endregion

@@ -57,7 +57,7 @@
             this.pnlOrder.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlOrder.Location = new System.Drawing.Point(0, 0);
             this.pnlOrder.Name = "pnlOrder";
-            this.pnlOrder.Size = new System.Drawing.Size(939, 418);
+            this.pnlOrder.Size = new System.Drawing.Size(939, 378);
             this.pnlOrder.TabIndex = 0;
             // 
             // lvItems
@@ -75,7 +75,7 @@
             this.lvItems.Location = new System.Drawing.Point(0, 0);
             this.lvItems.MultiSelect = false;
             this.lvItems.Name = "lvItems";
-            this.lvItems.Size = new System.Drawing.Size(713, 418);
+            this.lvItems.Size = new System.Drawing.Size(713, 378);
             this.lvItems.TabIndex = 1;
             this.lvItems.UseCompatibleStateImageBehavior = false;
             this.lvItems.View = System.Windows.Forms.View.Details;
@@ -110,7 +110,7 @@
             this.pnlOrderActions.Dock = System.Windows.Forms.DockStyle.Right;
             this.pnlOrderActions.Location = new System.Drawing.Point(713, 0);
             this.pnlOrderActions.Name = "pnlOrderActions";
-            this.pnlOrderActions.Size = new System.Drawing.Size(226, 418);
+            this.pnlOrderActions.Size = new System.Drawing.Size(226, 378);
             this.pnlOrderActions.TabIndex = 0;
             // 
             // pnlInfo
@@ -123,7 +123,7 @@
             this.pnlInfo.Controls.Add(this.lblTotal);
             this.pnlInfo.Location = new System.Drawing.Point(3, 4);
             this.pnlInfo.Name = "pnlInfo";
-            this.pnlInfo.Size = new System.Drawing.Size(218, 137);
+            this.pnlInfo.Size = new System.Drawing.Size(218, 97);
             this.pnlInfo.TabIndex = 8;
             // 
             // lblItems
@@ -131,7 +131,7 @@
             this.lblItems.AutoSize = true;
             this.lblItems.Location = new System.Drawing.Point(4, 0);
             this.lblItems.Name = "lblItems";
-            this.lblItems.Size = new System.Drawing.Size(100, 28);
+            this.lblItems.Size = new System.Drawing.Size(80, 21);
             this.lblItems.TabIndex = 8;
             this.lblItems.Text = "2 produse";
             // 
@@ -140,99 +140,121 @@
             this.lblTotal.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.lblTotal.AutoSize = true;
             this.lblTotal.Font = new System.Drawing.Font("Segoe UI", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTotal.Location = new System.Drawing.Point(2, 97);
+            this.lblTotal.Location = new System.Drawing.Point(2, 57);
             this.lblTotal.Name = "lblTotal";
-            this.lblTotal.Size = new System.Drawing.Size(205, 38);
+            this.lblTotal.Size = new System.Drawing.Size(162, 30);
             this.lblTotal.TabIndex = 7;
             this.lblTotal.Text = "Total : 50.00 LEI";
             // 
             // btnProfoma
             // 
             this.btnProfoma.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnProfoma.Location = new System.Drawing.Point(114, 355);
+            this.btnProfoma.Location = new System.Drawing.Point(114, 315);
             this.btnProfoma.Name = "btnProfoma";
+            this.btnProfoma.SelectedBackColor = System.Drawing.Color.Empty;
+            this.btnProfoma.SelectedForeColor = System.Drawing.Color.Empty;
             this.btnProfoma.Size = new System.Drawing.Size(107, 55);
             this.btnProfoma.TabIndex = 6;
             this.btnProfoma.Text = "Nota info";
             this.btnProfoma.UseVisualStyleBackColor = true;
+            this.btnProfoma.Click += new System.EventHandler(this.btnProfoma_Click);
             // 
             // btnInvoice
             // 
             this.btnInvoice.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnInvoice.Location = new System.Drawing.Point(3, 355);
+            this.btnInvoice.Location = new System.Drawing.Point(3, 315);
             this.btnInvoice.Name = "btnInvoice";
+            this.btnInvoice.SelectedBackColor = System.Drawing.Color.Empty;
+            this.btnInvoice.SelectedForeColor = System.Drawing.Color.Empty;
             this.btnInvoice.Size = new System.Drawing.Size(105, 55);
             this.btnInvoice.TabIndex = 5;
             this.btnInvoice.Text = "Factura";
             this.btnInvoice.UseVisualStyleBackColor = true;
+            this.btnInvoice.Click += new System.EventHandler(this.btnInvoice_Click);
             // 
             // btnPay
             // 
             this.btnPay.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnPay.Location = new System.Drawing.Point(3, 282);
+            this.btnPay.Location = new System.Drawing.Point(3, 242);
             this.btnPay.Name = "btnPay";
+            this.btnPay.SelectedBackColor = System.Drawing.Color.Empty;
+            this.btnPay.SelectedForeColor = System.Drawing.Color.Empty;
             this.btnPay.Size = new System.Drawing.Size(218, 67);
             this.btnPay.TabIndex = 4;
             this.btnPay.Text = "Plateste";
             this.btnPay.UseVisualStyleBackColor = true;
+            this.btnPay.Click += new System.EventHandler(this.btnPay_Click);
             // 
             // btnEdit
             // 
             this.btnEdit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnEdit.Location = new System.Drawing.Point(114, 214);
+            this.btnEdit.Location = new System.Drawing.Point(114, 174);
             this.btnEdit.Name = "btnEdit";
+            this.btnEdit.SelectedBackColor = System.Drawing.Color.Empty;
+            this.btnEdit.SelectedForeColor = System.Drawing.Color.Empty;
             this.btnEdit.Size = new System.Drawing.Size(107, 61);
             this.btnEdit.TabIndex = 3;
-            this.btnEdit.Text = "Spec";
+            this.btnEdit.Text = "Split";
             this.btnEdit.UseVisualStyleBackColor = true;
+            this.btnEdit.Click += new System.EventHandler(this.btnEdit_Click);
             // 
             // btnRemove
             // 
             this.btnRemove.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnRemove.Location = new System.Drawing.Point(114, 147);
+            this.btnRemove.Location = new System.Drawing.Point(114, 107);
             this.btnRemove.Name = "btnRemove";
+            this.btnRemove.SelectedBackColor = System.Drawing.Color.Empty;
+            this.btnRemove.SelectedForeColor = System.Drawing.Color.Empty;
             this.btnRemove.Size = new System.Drawing.Size(107, 61);
             this.btnRemove.TabIndex = 2;
             this.btnRemove.Text = "Sterge";
             this.btnRemove.UseVisualStyleBackColor = true;
+            this.btnRemove.Click += new System.EventHandler(this.BtnRemove_Click);
             // 
             // btnMinus
             // 
             this.btnMinus.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnMinus.Location = new System.Drawing.Point(3, 214);
+            this.btnMinus.Location = new System.Drawing.Point(3, 174);
             this.btnMinus.Name = "btnMinus";
+            this.btnMinus.SelectedBackColor = System.Drawing.Color.Empty;
+            this.btnMinus.SelectedForeColor = System.Drawing.Color.Empty;
             this.btnMinus.Size = new System.Drawing.Size(105, 61);
             this.btnMinus.TabIndex = 1;
             this.btnMinus.Text = "-";
             this.btnMinus.UseVisualStyleBackColor = true;
+            this.btnMinus.Click += new System.EventHandler(this.btnMinus_Click);
             // 
             // btnPlus
             // 
             this.btnPlus.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnPlus.Location = new System.Drawing.Point(3, 147);
+            this.btnPlus.Location = new System.Drawing.Point(3, 107);
             this.btnPlus.Name = "btnPlus";
+            this.btnPlus.SelectedBackColor = System.Drawing.Color.Empty;
+            this.btnPlus.SelectedForeColor = System.Drawing.Color.Empty;
             this.btnPlus.Size = new System.Drawing.Size(105, 61);
             this.btnPlus.TabIndex = 0;
             this.btnPlus.Text = "+";
             this.btnPlus.UseVisualStyleBackColor = true;
+            this.btnPlus.Click += new System.EventHandler(this.BtnPlus_Click);
             // 
             // ctrlMenu
             // 
             this.ctrlMenu.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.ctrlMenu.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ctrlMenu.Location = new System.Drawing.Point(0, 418);
+            this.ctrlMenu.Location = new System.Drawing.Point(0, 378);
             this.ctrlMenu.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.ctrlMenu.Name = "ctrlMenu";
-            this.ctrlMenu.Size = new System.Drawing.Size(939, 196);
+            this.ctrlMenu.Size = new System.Drawing.Size(939, 236);
             this.ctrlMenu.TabIndex = 1;
+            this.ctrlMenu.ProductClick += new SmartPos.Desktop.Handlers.ProductItemHandler(this.CtrlMenu_ProductClick);
             // 
             // CtrlOrder
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 28F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.pnlOrder);
             this.Controls.Add(this.ctrlMenu);

@@ -1,18 +1,17 @@
-﻿using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using System.Collections.Generic;
 
-using Microsoft.AspNet.SignalR.Client;
+using Newtonsoft.Json;
 
 using RestSharp;
 
+using SmartPos.Ui.Security;
+using SmartPos.Desktop.Data;
 using SmartPos.Ui.Components;
+using SmartPos.DomainModel.Base;
 using SmartPos.GeneralLibrary.Extensions;
 using SmartPos.Desktop.Communication.Controllers;
 using SmartPos.Desktop.Communication.Controllers.Interfaces;
-using SmartPos.Desktop.Data;
-using SmartPos.DomainModel.Base;
-using SmartPos.Ui.Security;
 
 namespace SmartPos.Desktop.Communication
 {
@@ -24,6 +23,7 @@ namespace SmartPos.Desktop.Communication
         private ILayoutController _layout;
         private IOrderController _order;
         private IMenuController _menu;
+        private bool _enableCache;
 
         public virtual ILoadingToken LoadingToken
         {
@@ -49,7 +49,7 @@ namespace SmartPos.Desktop.Communication
             protected set => _order = value;
         }
 
-        public IMenuController Menu
+        public virtual IMenuController Menu
         {
             get => _menu;
             protected set => _menu = value;
@@ -63,22 +63,34 @@ namespace SmartPos.Desktop.Communication
             _layout = new LayoutController(this);
             _order = new OrderController(this);
             _menu = new MenuController(this);
+
+            _enableCache = true;
         }
         
-        public ApiClient(ILoadingToken loadingToken = null)
+        public ApiClient(ILoadingToken loadingToken)
             : this()
         {
             _loadingToken = loadingToken;
         }
 
-        public async Task<T> ExecuteAsync<T>(string resource, Method method, object queryStringParameters, object body = null)
+        /// <inheritdoc />
+        public virtual bool EnableCache
+        {
+            get => _enableCache;
+            set => _enableCache = value;
+        }
+
+        public virtual async Task<T> ExecuteAsync<T>(string resource, Method method, object queryStringParameters, object body = null)
         {
             try
             {
                 if (LoadingToken != null)
                     LoadingToken.Loading = true;
 
-                var request = new RestRequest(resource, method);
+                var request = new RestRequest(resource, method)
+                {
+                    RequestFormat = DataFormat.Json
+                };
 
                 if (queryStringParameters != null)
                     foreach (var (name, value) in queryStringParameters.GetProperties())
@@ -89,11 +101,15 @@ namespace SmartPos.Desktop.Communication
 
                 if (AuthenticationManager.Identity != null)
                     request.AddHeader("Authorization", AuthenticationManager.Identity.ConnectionId);
-                
+
+
                 var response = await _client.ExecuteTaskAsync<T>(request);
 
                 if (!response.IsSuccessful)
                     throw new RequestException(response.StatusCode, response.ErrorMessage, response.ErrorException);
+
+                if (!EnableCache)
+                    return response.Data;
 
                 switch (response.Data)
                 {

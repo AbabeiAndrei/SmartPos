@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using Microsoft.AspNet.SignalR;
+﻿using Microsoft.AspNet.SignalR;
 using Microsoft.AspNet.SignalR.Hubs;
 using Smartpos.Api.Security;
 using SmartPos.DomainModel.Communication;
@@ -11,11 +10,6 @@ namespace Smartpos.Api.Communication
     [HubName(SignalRHub.Name)]
     public class PosTransferHub : Hub
     {
-        public override Task OnConnected()
-        {
-            return base.OnConnected();
-        }
-
         [HubMethodName(SignalRHub.Events.Account.RegisterClient)]
         public string RegisterClient(User user)
         {

@@ -1,4 +1,6 @@
-﻿using ServiceStack.DataAnnotations;
+﻿using System.Collections.Generic;
+
+using ServiceStack.DataAnnotations;
 
 using SmartPos.DomainModel.Base;
 
@@ -20,5 +22,11 @@ namespace SmartPos.DomainModel.Entities
         public bool Deleted { get; set; }
 
         #endregion
+        
+        [Ignore]
+        public IEnumerable<MenuCategory> Items { get; set; }
+
+        [Ignore]
+        public IEnumerable<Product> Products { get; set; }
     }
 }

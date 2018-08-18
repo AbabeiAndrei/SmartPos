@@ -1,24 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Diagnostics;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Windows.Forms.VisualStyles;
-using SmartPos.Desktop.Controls;
-using SmartPos.Desktop.Utils;
-using SmartPos.DomainModel;
+
 using SmartPos.Ui;
-using SmartPos.Ui.Handlers;
-using SmartPos.Ui.Security;
-using SmartPos.Ui.Theming;
 using SmartPos.Ui.Utils;
-using SmartPos.Utils;
+using SmartPos.Ui.Theming;
+using SmartPos.Ui.Security;
+using SmartPos.Ui.Handlers;
+using SmartPos.Desktop.Utils;
+using SmartPos.Desktop.Controls;
 
 namespace SmartPos.Desktop
 {

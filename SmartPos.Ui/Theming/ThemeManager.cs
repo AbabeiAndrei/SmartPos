@@ -2,27 +2,25 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SmartPos.Ui.Theming
 {
     public static class ThemeManager
     {
         private const string NAMESPACE_THEMES = "SmartPos.Ui.Theming.Themes";
-        private static readonly IEnumerable<Type> _themeTypes;
+        private static readonly IEnumerable<Type> ThemeTypes;
 
         static ThemeManager()
         {
-            _themeTypes = Assembly.GetExecutingAssembly()
+            ThemeTypes = Assembly.GetExecutingAssembly()
                                   .GetTypes()
                                   .Where(t => t.IsClass && t.Namespace == NAMESPACE_THEMES);
         }
 
         public static ITheme GetTheme(string themeName)
         {
-            var themeType = _themeTypes.FirstOrDefault(t => ThemeHaveName(t, themeName)) ?? 
-                        _themeTypes.FirstOrDefault(t => ThemeHaveName(t, themeName, false));
+            var themeType = ThemeTypes.FirstOrDefault(t => ThemeHaveName(t, themeName)) ?? 
+                            ThemeTypes.FirstOrDefault(t => ThemeHaveName(t, themeName, false));
 
             if (themeType == null)
                 throw new ThemeNotFoundException(themeName);

@@ -1,14 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel;
 using System.Windows.Forms;
-using SmartPos.Ui.Handlers;
-using SmartPos.Utils;
 
-namespace SmartPos.Ui
+namespace SmartPos.Ui.Handlers
 {
     public enum MessageType
     {

@@ -1,21 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Runtime.InteropServices;
 
 namespace SmartPos.Ui.Utils
 {
     public static class WinApi
     {
-        public const int WM_SETREDRAW = 11;
+        public const int WmSetredraw = 11;
 
-        public const int EM_SETMARGINS = 0xD3;
-        public const int EM_SETCUEBANNER = 0x1501;
-        public const int WM_NCLBUTTONDOWN = 0xA1;
-        public const int HT_CAPTION = 0x2;
+        public const int EmSetmargins = 0xD3;
+        public const int EmSetcuebanner = 0x1501;
+        public const int WmNclbuttondown = 0xA1;
+        public const int HtCaption = 0x2;
 
         [DllImport("user32.dll")]
         public static extern int SendMessage(IntPtr hWnd, int wMsg, IntPtr wParam, IntPtr lParam);
@@ -34,12 +30,12 @@ namespace SmartPos.Ui.Utils
 
         public static void SuspendDrawing(Control parent)
         {
-            SendMessage(parent.Handle, WM_SETREDRAW, false, 0);
+            SendMessage(parent.Handle, WmSetredraw, false, 0);
         }
 
         public static void ResumeDrawing(Control parent)
         {
-            SendMessage(parent.Handle, WM_SETREDRAW, true, 0);
+            SendMessage(parent.Handle, WmSetredraw, true, 0);
             parent.Refresh();
         }
     }

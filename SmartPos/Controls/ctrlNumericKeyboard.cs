@@ -1,13 +1,14 @@
 ﻿using System;
-using System.ComponentModel;
-using System.Drawing;
 using System.Linq;
+using System.Drawing;
 using System.Windows.Forms;
-using SmartPos.Desktop.Security;
-using SmartPos.GeneralLibrary.Extensions;
+using System.ComponentModel;
+
 using SmartPos.Ui;
-using SmartPos.Ui.Controls;
 using SmartPos.Ui.Theming;
+using SmartPos.Ui.Handlers;
+using SmartPos.Ui.Controls;
+using SmartPos.GeneralLibrary.Extensions;
 
 namespace SmartPos.Desktop.Controls
 {
@@ -40,10 +41,7 @@ namespace SmartPos.Desktop.Controls
         [Description("Gets or sets layout of the numeric keyboard")]
         public virtual NumericKeyboardLayout KeyboardLayout
         {
-            get
-            {
-                return _keyboardLayout;
-            }
+            get => _keyboardLayout;
             set
             {
                 var invokeEvent = _keyboardLayout != value;
@@ -63,10 +61,7 @@ namespace SmartPos.Desktop.Controls
         [Description("Gets or sets whether the display is visible or not")]
         public virtual bool ShowDisplay
         {
-            get
-            {
-                return txtDisplay.Visible;
-            }
+            get => txtDisplay.Visible;
             set
             {
                 var invokeEvent = ShowDisplay != value;
@@ -95,10 +90,7 @@ namespace SmartPos.Desktop.Controls
         [Description("Gets or sets if the keys presed will be shown in display")]
         public virtual bool EchoInDisplay
         {
-            get
-            {
-                return ShowDisplay && _echoInDisplay;
-            }
+            get => ShowDisplay && _echoInDisplay;
             set
             {
                 var invokeEvent = _echoInDisplay != value;
@@ -120,24 +112,15 @@ namespace SmartPos.Desktop.Controls
         [Description("Gets or sets the text from dispaly")]
         public override string Text
         {
-            get
-            {
-                return txtDisplay.Text;
-            }
-            set
-            {
-                txtDisplay.Text = value;
-            }
+            get => txtDisplay.Text;
+            set => txtDisplay.Text = value;
         }
 
         [Category("Appearance")]
         [Description("Gets or sets the font of the buttons")]
         public Font ButtonsFont
         {
-            get
-            {
-                return _buttonsFont;
-            }
+            get => _buttonsFont;
             set
             {
                 _buttonsFont = value;
@@ -358,13 +341,11 @@ namespace SmartPos.Desktop.Controls
             switch (_keyboardLayout)
             {
                 case NumericKeyboardLayout.Numeric:
-                    int valInt;
-                    if (!txtDisplay.IsEmpty && int.TryParse(txtDisplay.Text, out valInt))
+                    if (!txtDisplay.IsEmpty && int.TryParse(txtDisplay.Text, out var valInt))
                         return valInt;
                     return 0;
                 case NumericKeyboardLayout.Decimal:
-                    decimal valDec;
-                    if (!txtDisplay.IsEmpty && decimal.TryParse(txtDisplay.Text, out valDec))
+                    if (!txtDisplay.IsEmpty && decimal.TryParse(txtDisplay.Text, out var valDec))
                         return valDec;
                     return decimal.Zero;
                 case NumericKeyboardLayout.Pin:

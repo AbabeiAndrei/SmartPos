@@ -1,12 +1,10 @@
-﻿using SmartPos.Ui;
-
-namespace SmartPos.Utils
+﻿namespace SmartPos.Ui
 {
-    public interface IFormResult
-    {
-        object Result { get; }
-        BaseForm Form { get; }
-    }
+public interface IFormResult
+{
+    object Result { get; }
+    BaseForm Form { get; }
+}
 
     public class FormResult : IFormResult
     {

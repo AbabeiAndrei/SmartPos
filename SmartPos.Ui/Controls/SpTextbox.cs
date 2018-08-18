@@ -27,10 +27,7 @@ namespace SmartPos.Ui.Controls
         [Description("Gets or sets whether the clear button is visible or not")]
         public virtual bool ShowClear
         {
-            get
-            {
-                return _clearButton.Visible;
-            }
+            get => _clearButton.Visible;
             set
             {
                 var invokeEvent = _clearButton.Visible != value;
@@ -42,10 +39,7 @@ namespace SmartPos.Ui.Controls
 
         public override Font Font
         {
-            get
-            {
-                return base.Font;
-            }
+            get => base.Font;
             set
             {
                 base.Font = value;
@@ -62,10 +56,7 @@ namespace SmartPos.Ui.Controls
         [Description("Gets or sets whether the palceholder of the text")]
         public virtual string Placeholder
         {
-            get
-            {
-                return _placeholder;
-            }
+            get => _placeholder;
             set
             {
                 var invokeEvent = _placeholder != value;
@@ -92,10 +83,7 @@ namespace SmartPos.Ui.Controls
         [Description("Gets or sets text of ClearButton")]
         public virtual string ClearButtonText
         {
-            get
-            {
-                return _clearButton.Text;
-            }
+            get => _clearButton.Text;
             set
             {
                 var invokeEvemt = _clearButton.Text != value;
@@ -109,14 +97,8 @@ namespace SmartPos.Ui.Controls
         [Description("Gets or sets font of ClearButton")]
         public Font ClearButtonFont
         {
-            get
-            {
-                return _clearButton.Font;
-            }
-            set
-            {
-                _clearButton.Font = value;
-            }
+            get => _clearButton.Font;
+            set => _clearButton.Font = value;
         }
 
         #endregion
@@ -176,7 +158,7 @@ namespace SmartPos.Ui.Controls
         {
             try
             {
-                WinApi.SendMessage(Handle, WinApi.EM_SETMARGINS, (IntPtr)2, (IntPtr)(_clearButton.Height << 16));
+                WinApi.SendMessage(Handle, WinApi.EmSetmargins, (IntPtr)2, (IntPtr)(_clearButton.Height << 16));
             }
             finally
             {
@@ -230,7 +212,7 @@ namespace SmartPos.Ui.Controls
         private void UpdatePlaceHolder()
         {
             if (IsHandleCreated && Placeholder != null)
-                WinApi.SendMessage(Handle, WinApi.EM_SETCUEBANNER, (IntPtr) 1, Placeholder);
+                WinApi.SendMessage(Handle, WinApi.EmSetcuebanner, (IntPtr) 1, Placeholder);
         }
 
         #endregion

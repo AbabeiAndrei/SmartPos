@@ -1,17 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Drawing;
 using System.Windows.Forms;
-using SmartPos.Ui.Handlers;
-using SmartPos.Ui.Security;
-using SmartPos.Ui.Theming;
+using System.ComponentModel;
+
 using SmartPos.Ui.Utils;
-using SmartPos.Utils;
+using SmartPos.Ui.Theming;
+using SmartPos.Ui.Security;
+using SmartPos.Ui.Handlers;
 
 namespace SmartPos.Ui
 {
@@ -46,10 +42,7 @@ namespace SmartPos.Ui
 
         public override string Text
         {
-            get
-            {
-                return lblTitle?.Text ?? string.Empty;
-            }
+            get => lblTitle?.Text ?? string.Empty;
             set
             {
                 if (lblTitle != null)
@@ -63,10 +56,7 @@ namespace SmartPos.Ui
 
         public bool Drawer
         {
-            get
-            {
-                return lblTitle?.Visible ?? false;
-            }
+            get => lblTitle?.Visible ?? false;
             set
             {
                 if(lblTitle == null || lblTitle.Visible == value)
@@ -171,7 +161,7 @@ namespace SmartPos.Ui
                 return;
 
             WinApi.ReleaseCapture();
-            WinApi.SendMessage(Handle, WinApi.WM_NCLBUTTONDOWN, WinApi.HT_CAPTION, 0);
+            WinApi.SendMessage(Handle, WinApi.WmNclbuttondown, WinApi.HtCaption, 0);
         }
 
         private void tmrAnimationTimer_Tick(object sender, EventArgs e)

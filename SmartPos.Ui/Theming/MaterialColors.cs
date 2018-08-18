@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Concurrent;
+﻿using System.Drawing;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 using SmartPos.GeneralLibrary.Extensions;
 
 namespace SmartPos.Ui.Theming
@@ -51,10 +47,11 @@ namespace SmartPos.Ui.Theming
             Orange = 14,
             DeepOrange = 15,
             Brown = 16,
-            Grey = 17
+            Grey = 17,
+            GreyBlue = 18
         }
 
-        private static readonly IReadOnlyDictionary<MaterialColor, IReadOnlyDictionary<ColorDepth, Color>> _table;
+        private static readonly IReadOnlyDictionary<MaterialColor, IReadOnlyDictionary<ColorDepth, Color>> Table;
 
         public static Color Black => Color.Black;
         public static Color White => Color.White;
@@ -199,7 +196,7 @@ namespace SmartPos.Ui.Theming
                             #endregion
                         };
 
-            _table = new ReadOnlyDictionary<MaterialColor, IReadOnlyDictionary<ColorDepth, Color>>(table);
+            Table = new ReadOnlyDictionary<MaterialColor, IReadOnlyDictionary<ColorDepth, Color>>(table);
         }
 
         public static Color Red(ColorDepth depth = ColorDepth.Default)
@@ -292,12 +289,17 @@ namespace SmartPos.Ui.Theming
             return GetColorImpl(MaterialColor.Grey, depth);
         }
 
+        public static Color GreyBlue(ColorDepth depth = ColorDepth.Default)
+        {
+            return GetColorImpl(MaterialColor.GreyBlue, depth);
+        }
+
         private static Color GetColorImpl(MaterialColor color, ColorDepth depth)
         {
-            if (!_table.ContainsKey(color))
+            if (!Table.ContainsKey(color))
                 return Default;
 
-            var colorRange = _table[color];
+            var colorRange = Table[color];
 
             return colorRange.ContainsKey(depth)
                        ? colorRange[depth]

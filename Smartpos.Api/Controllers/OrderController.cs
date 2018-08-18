@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Web.Http;
 using System.Net.Http.Headers;
 
@@ -43,11 +44,28 @@ namespace Smartpos.Api.Controllers
 
         #region Public methods
 
-        public IHttpActionResult Get()
+        [HttpGet]
+        public IHttpActionResult GetAllActiveOrders()
         {
-            return Ok(true);
+            var orders = _dbContext.Where<Order>(o => o.State == OrderState.Active).ToList();
+
+            foreach (var order in orders)
+            {
+                order.Table = _dbContext.FirstOrDefault<Table>(t => t.Id == order.TableId);
+                order.Table.State = GetTableState(order);
+            }
+            return Ok(orders);
         }
-        
+
+        private TableState GetTableState(Order order)
+        {
+            return new TableState(TableOcupation.Ocupied)
+            {
+                OcupiedByUser = _dbContext.FirstOrDefault<User>(u => u.Id == order.UserId)?.FullName,
+                OcupiedByUserId = order.UserId
+            };
+        }
+
         [HttpPut]
         public IHttpActionResult OpenTable([FromUri] int tableId)
         {
@@ -74,14 +92,23 @@ namespace Smartpos.Api.Controllers
 
             _hub.SendAll(message);
 
-            var order = new Order
-            {
-                State = OrderState.Opened,
-                Created = DateTime.Now,
-                Number = NumberGenerationFactory.GenerateNumber(_dbContext),
-                TableId = tableId,
-                UserId = user.Id
-            };
+            var order = _dbContext.FirstOrDefault<Order>(o => o.TableId == tableId && o.State == OrderState.Active) ??
+                        new Order
+                        {
+                            State = OrderState.Opened,
+                            Created = DateTime.Now,
+                            Number = NumberGenerationFactory.GenerateNumber(_dbContext),
+                            TableId = tableId,
+                            UserId = user.Id
+                        };
+
+            order.Table = _dbContext.FirstOrDefault<Table>(table => table.Id == tableId);
+
+            if (order.CustomerId.HasValue)
+                order.Customer = _dbContext.FirstOrDefault<Customer>(c => c.Id == order.CustomerId.Value);
+
+            if (order.Id != 0)
+                order.Items = _dbContext.Where<OrderItem>(oi => oi.OrderId == order.Id);
 
             return Ok(order);
         }
@@ -104,6 +131,8 @@ namespace Smartpos.Api.Controllers
             else
                 _orderRepository.Save(order);
 
+            order.Table = _dbContext.FirstOrDefault<Table>(t => t.Id == order.TableId);
+
             var message = new OrderCreatedMessage(connectionId)
             {
                 Order = order
@@ -112,6 +141,12 @@ namespace Smartpos.Api.Controllers
             _hub.SendAll(message);
 
             return Ok(order);
+        }
+
+        [HttpPatch]
+        public IHttpActionResult PayOrder([FromBody] Order order)
+        {
+            return Ok();
         }
 
         #endregion

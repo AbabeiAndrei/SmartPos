@@ -2,7 +2,7 @@
 
 using SmartPos.Ui.Forms;
 using SmartPos.Ui.Theming;
-using SmartPos.Ui.Handlers;
+using SmartPos.Ui.Components;
 
 namespace SmartPos.Desktop.Controls.Form
 {

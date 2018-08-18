@@ -37,7 +37,6 @@
             this.pnlInfo = new SmartPos.Ui.Controls.SpPanel();
             this.lblItems = new SmartPos.Ui.Controls.SpLabel();
             this.lblTotal = new SmartPos.Ui.Controls.SpLabel();
-            this.btnProfoma = new SmartPos.Ui.Controls.SpButton();
             this.btnInvoice = new SmartPos.Ui.Controls.SpButton();
             this.btnPay = new SmartPos.Ui.Controls.SpButton();
             this.btnEdit = new SmartPos.Ui.Controls.SpButton();
@@ -45,6 +44,7 @@
             this.btnMinus = new SmartPos.Ui.Controls.SpButton();
             this.btnPlus = new SmartPos.Ui.Controls.SpButton();
             this.ctrlMenu = new SmartPos.Desktop.Controls.Menu.CtrlMenu();
+            this.btnCustomer = new SmartPos.Ui.Controls.SpButton();
             this.pnlOrder.SuspendLayout();
             this.pnlOrderActions.SuspendLayout();
             this.pnlInfo.SuspendLayout();
@@ -99,8 +99,8 @@
             // 
             // pnlOrderActions
             // 
+            this.pnlOrderActions.Controls.Add(this.btnCustomer);
             this.pnlOrderActions.Controls.Add(this.pnlInfo);
-            this.pnlOrderActions.Controls.Add(this.btnProfoma);
             this.pnlOrderActions.Controls.Add(this.btnInvoice);
             this.pnlOrderActions.Controls.Add(this.btnPay);
             this.pnlOrderActions.Controls.Add(this.btnEdit);
@@ -145,19 +145,6 @@
             this.lblTotal.Size = new System.Drawing.Size(162, 30);
             this.lblTotal.TabIndex = 7;
             this.lblTotal.Text = "Total : 50.00 LEI";
-            // 
-            // btnProfoma
-            // 
-            this.btnProfoma.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnProfoma.Location = new System.Drawing.Point(114, 315);
-            this.btnProfoma.Name = "btnProfoma";
-            this.btnProfoma.SelectedBackColor = System.Drawing.Color.Empty;
-            this.btnProfoma.SelectedForeColor = System.Drawing.Color.Empty;
-            this.btnProfoma.Size = new System.Drawing.Size(107, 55);
-            this.btnProfoma.TabIndex = 6;
-            this.btnProfoma.Text = "Nota info";
-            this.btnProfoma.UseVisualStyleBackColor = true;
-            this.btnProfoma.Click += new System.EventHandler(this.btnProfoma_Click);
             // 
             // btnInvoice
             // 
@@ -225,6 +212,7 @@
             this.btnMinus.TabIndex = 1;
             this.btnMinus.Text = "-";
             this.btnMinus.UseVisualStyleBackColor = true;
+            this.btnMinus.LongPress += new System.EventHandler(this.btnMinus_LongPress);
             this.btnMinus.Click += new System.EventHandler(this.btnMinus_Click);
             // 
             // btnPlus
@@ -239,6 +227,7 @@
             this.btnPlus.TabIndex = 0;
             this.btnPlus.Text = "+";
             this.btnPlus.UseVisualStyleBackColor = true;
+            this.btnPlus.LongPress += new System.EventHandler(this.btnPlus_LongPress);
             this.btnPlus.Click += new System.EventHandler(this.BtnPlus_Click);
             // 
             // ctrlMenu
@@ -251,6 +240,19 @@
             this.ctrlMenu.Size = new System.Drawing.Size(939, 236);
             this.ctrlMenu.TabIndex = 1;
             this.ctrlMenu.ProductClick += new SmartPos.Desktop.Handlers.ProductItemHandler(this.CtrlMenu_ProductClick);
+            // 
+            // btnCustomer
+            // 
+            this.btnCustomer.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnCustomer.Location = new System.Drawing.Point(114, 315);
+            this.btnCustomer.Name = "btnCustomer";
+            this.btnCustomer.SelectedBackColor = System.Drawing.Color.Empty;
+            this.btnCustomer.SelectedForeColor = System.Drawing.Color.Empty;
+            this.btnCustomer.Size = new System.Drawing.Size(107, 55);
+            this.btnCustomer.TabIndex = 9;
+            this.btnCustomer.Text = "Client";
+            this.btnCustomer.UseVisualStyleBackColor = true;
+            this.btnCustomer.Click += new System.EventHandler(this.btnCustomer_Click);
             // 
             // CtrlOrder
             // 
@@ -278,7 +280,6 @@
         private Ui.Controls.SpButton btnMinus;
         private Ui.Controls.SpButton btnPay;
         private Ui.Controls.SpButton btnEdit;
-        private Ui.Controls.SpButton btnProfoma;
         private Ui.Controls.SpButton btnInvoice;
         private Ui.Controls.SpListView lvItems;
         private System.Windows.Forms.ColumnHeader chName;
@@ -287,5 +288,6 @@
         private Ui.Controls.SpPanel pnlInfo;
         private Ui.Controls.SpLabel lblTotal;
         private Ui.Controls.SpLabel lblItems;
+        private Ui.Controls.SpButton btnCustomer;
     }
 }

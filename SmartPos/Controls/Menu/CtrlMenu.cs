@@ -8,6 +8,7 @@ using System.Collections.Generic;
 
 using SmartPos.Ui;
 using SmartPos.Ui.Utils;
+using SmartPos.Ui.Theming;
 using SmartPos.Ui.Handlers;
 using SmartPos.Ui.Controls;
 using SmartPos.Desktop.Data;
@@ -15,13 +16,19 @@ using SmartPos.Desktop.Handlers;
 using SmartPos.DomainModel.Entities;
 using SmartPos.GeneralLibrary.Extensions;
 using SmartPos.GeneralLibrary.Interfaces;
-using SmartPos.Ui.Theming;
+using SmartPos.Ui.Components;
 
 namespace SmartPos.Desktop.Controls.Menu
 {
     [DefaultEvent(nameof(ProductClick))]
     public partial class CtrlMenu : BaseControl
     {
+        #region Fields
+
+        private static readonly Size menuButtonSize;
+
+        #endregion
+
         #region Events
 
         [Category("Action")]
@@ -34,6 +41,11 @@ namespace SmartPos.Desktop.Controls.Menu
         public CtrlMenu()
         {
             InitializeComponent();
+        }
+
+        static CtrlMenu()
+        {
+            menuButtonSize = new Size(100, 65);
         }
 
         #endregion
@@ -100,7 +112,7 @@ namespace SmartPos.Desktop.Controls.Menu
 
             if (!(button.Tag is ITree<MenuCategory> category))
             {
-                ParentForm.ShowMessage("Categorie invalida. Redeschideti masa", MessageType.Error);
+                ParentForm.PresentMessage("Categorie invalida. Redeschideti masa", MessageType.Error);
                 return;
             }
 
@@ -114,7 +126,7 @@ namespace SmartPos.Desktop.Controls.Menu
 
             if (!(button.Tag is ITree<MenuCategory> category))
             {
-                ParentForm.ShowMessage("Categorie invalida. Redeschideti masa", MessageType.Error);
+                ParentForm.PresentMessage("Categorie invalida. Redeschideti masa", MessageType.Error);
                 return;
             }
 
@@ -128,7 +140,7 @@ namespace SmartPos.Desktop.Controls.Menu
 
             if (!(button.Tag is Product product))
             {
-                ParentForm.ShowMessage("Produs invalid. Redeschideti masa", MessageType.Error);
+                ParentForm.PresentMessage("Produs invalid. Redeschideti masa", MessageType.Error);
                 return;
             }
 
@@ -162,10 +174,10 @@ namespace SmartPos.Desktop.Controls.Menu
         {
             var button = new SpButton
                          {
-                                 Text = arg.Value.Name,
-                                 Tag = arg,
-                                 Size = new Size(100, flowTop.Height - 5),
-                                 Selectable = true
+                             Text = arg.Value.Name,
+                             Tag = arg,
+                             Size = new Size(100, flowTop.Height - 5),
+                             Selectable = true
                          };
 
             button.ApplyTheme(Theme);
@@ -181,7 +193,7 @@ namespace SmartPos.Desktop.Controls.Menu
             {
                 Text = arg.Value.Name,
                 Tag = arg,
-                Size = new Size(100, 45),
+                Size = menuButtonSize,
                 Font = new Font(Font.FontFamily, 10f)
             };
 
@@ -198,7 +210,7 @@ namespace SmartPos.Desktop.Controls.Menu
             {
                 Text = arg.Name,
                 Tag = arg,
-                Size = new Size(100, 45),
+                Size = menuButtonSize,
                 Font = new Font(Font.FontFamily, 10f)
             };
 

@@ -2,11 +2,13 @@
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+using SmartPos.Desktop.Controls;
 using SmartPos.Ui;
 using SmartPos.Ui.Handlers;
 using SmartPos.DomainModel.Entities;
 using SmartPos.Desktop.Controls.Form;
 using SmartPos.Desktop.Controls.Order;
+using SmartPos.Ui.Components;
 
 namespace SmartPos.Desktop.Utils
 {
@@ -67,7 +69,7 @@ namespace SmartPos.Desktop.Utils
             {
                 if (Application.MainForm is MainForm form)
                 {
-                    form.ShowMessage("Comanda trimisa", MessageType.Info);
+                    form.PresentMessage("Comanda trimisa", MessageType.Info);
                     form.SetOrderToTable(args.Order);
                 }
 
@@ -87,12 +89,11 @@ namespace SmartPos.Desktop.Utils
             return control;
         }
 
-        public static void ShowTablesInMainForm(MainForm form = null)
+        public static async Task ShowTablesInMainForm(MainForm form = null)
         {
             form = form ?? (MainForm)Application.MainForm;
 
-
-            form.ShowTablesInContainer();
+            await form.ShowTablesInContainer();
         }
         
         public static DialogResult ShowConfirmation(string message,  MessageType type, string title = null, BaseForm parent = null)

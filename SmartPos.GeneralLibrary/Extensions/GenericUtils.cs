@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace SmartPos.GeneralLibrary.Extensions
 {
@@ -17,5 +13,7 @@ namespace SmartPos.GeneralLibrary.Extensions
         {
             return unitPrice * (decimal) quantity;
         }
+
+        public static T As<T>(this object obj) where T : class => obj as T;
     }
 }

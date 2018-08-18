@@ -10,6 +10,7 @@ using SmartPos.Desktop.Data;
 using SmartPos.Desktop.Security;
 using SmartPos.DomainModel.Entities;
 using SmartPos.Desktop.Communication;
+using SmartPos.DomainModel.Model;
 using SmartPos.GeneralLibrary.Extensions;
 
 namespace SmartPos.Desktop.Controls.Workspace
@@ -51,6 +52,10 @@ namespace SmartPos.Desktop.Controls.Workspace
             try
             {
                 SuspendLayout();
+                foreach (Control ctrl in pnlZones.Controls)
+                    ctrl.Dispose();
+
+                pnlZones.Controls.Clear();
 
                 if(_zones != null)
                 {
@@ -87,6 +92,18 @@ namespace SmartPos.Desktop.Controls.Workspace
             finally
             {
                 ResumeLayout();
+            }
+        }
+
+        public async Task UpdateTables(ApiClient client)
+        {
+            var orders = (await client.Order.GetAllActiveOrders()).ToList();
+
+            foreach (var table in _zones.Values.SelectMany(tbls => tbls).Where(t => t.Table != null))
+            {
+                var order = orders.FirstOrDefault(o => o.TableId == table.Table.Id);
+                table.Table.State = order?.Table?.State ?? TableState.Free;
+                table.Order = order;
             }
         }
 

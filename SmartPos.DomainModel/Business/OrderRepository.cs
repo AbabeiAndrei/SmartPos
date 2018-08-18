@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 using SmartPos.DomainModel.Business.Exceptions;
 using SmartPos.DomainModel.Entities;
@@ -31,13 +32,16 @@ namespace SmartPos.DomainModel.Business
             if (entity.Id != 0)
                 throw new EntityNotNewException();
 
-            _context.Insert(entity);
-
             entity.State = OrderState.Active;
+            entity.Created = DateTime.Now;
+
+            _context.Insert(entity);
 
             foreach (var item in entity.Items)
             {
-                item.OrderId = item.Id;
+                item.OrderId = entity.Id;
+                item.CretedBy = entity.UserId;
+                item.CreatedAt = DateTime.Now;
 
                 _context.Insert(item);
             }
@@ -51,14 +55,26 @@ namespace SmartPos.DomainModel.Business
             _context.Update(entity);
 
             foreach (var item in entity.Items)
-                _context.Update(item);
+                if (item.Id == 0)
+                {
+                    item.OrderId = entity.Id;
+                    item.CretedBy = entity.UserId;
+                    item.CreatedAt = DateTime.Now;
+
+                    _context.Insert(item);
+                }
+                else 
+                    _context.Update(item);
+
+            if (entity.Items.Count(i => !i.Deleted) == 0)
+                Delete(entity);
         }
         
         public void Delete(Order entity)
         {
-            _context.Delete(entity);
-
             entity.State = OrderState.Closed;
+
+            _context.Delete(entity);
 
             foreach (var item in entity.Items)
                 _context.Delete(item);

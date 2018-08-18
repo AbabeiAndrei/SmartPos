@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using ServiceStack.DataAnnotations;
 using ServiceStack.OrmLite;
 using SmartPos.DomainModel.Base;
+using SmartPos.DomainModel.Business.Invoicing;
 using SmartPos.DomainModel.Metadata;
 
 namespace SmartPos.DomainModel.Entities
@@ -36,6 +37,9 @@ namespace SmartPos.DomainModel.Entities
         [Required]
         [Default(OrmLiteVariables.SystemUtc)]
         public DateTime Created { get; set; }
+        
+        [References(typeof(Customer))]
+        public int? CustomerId { get; set; } 
 
         public override string Metadata { get; set; }
         
@@ -45,6 +49,10 @@ namespace SmartPos.DomainModel.Entities
         [Reference]
         public Table Table { get; set; }
 
+        [Ignore]
         public IEnumerable<OrderItem> Items { get; set; }
+        
+        [Ignore]
+        public Customer Customer { get; set; }
     }
 }

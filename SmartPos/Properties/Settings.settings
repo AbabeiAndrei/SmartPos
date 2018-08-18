@@ -3,7 +3,7 @@
   <Profiles />
   <Settings>
     <Setting Name="ApiUrl" Type="System.String" Scope="User">
-      <Value Profile="(Default)">http://api.smarppos.local/api</Value>
+      <Value Profile="(Default)">http://localhost:8447/api</Value>
     </Setting>
     <Setting Name="ThemeName" Type="System.String" Scope="User">
       <Value Profile="(Default)">Default</Value>
@@ -12,7 +12,10 @@
       <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="HubUrl" Type="System.String" Scope="User">
-      <Value Profile="(Default)">http://api.smarppos.local/</Value>
+      <Value Profile="(Default)">http://localhost:8447/</Value>
+    </Setting>
+    <Setting Name="LastInvoiceNumber" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">0</Value>
     </Setting>
   </Settings>
 </SettingsFile>

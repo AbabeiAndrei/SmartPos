@@ -23,6 +23,7 @@ namespace SmartPos.Desktop.Communication
         private ILayoutController _layout;
         private IOrderController _order;
         private IMenuController _menu;
+        private ICustomerController _customer;
         private bool _enableCache;
 
         public virtual ILoadingToken LoadingToken
@@ -55,6 +56,12 @@ namespace SmartPos.Desktop.Communication
             protected set => _menu = value;
         }
 
+        public virtual ICustomerController Customer
+        {
+            get => _customer;
+            protected set => _customer = value;
+        }
+
         public ApiClient()
         {
             _client = new RestClient(Properties.Settings.Default.ApiUrl);
@@ -63,6 +70,7 @@ namespace SmartPos.Desktop.Communication
             _layout = new LayoutController(this);
             _order = new OrderController(this);
             _menu = new MenuController(this);
+            _customer = new CustomerController(this);
 
             _enableCache = true;
         }
@@ -101,8 +109,7 @@ namespace SmartPos.Desktop.Communication
 
                 if (AuthenticationManager.Identity != null)
                     request.AddHeader("Authorization", AuthenticationManager.Identity.ConnectionId);
-
-
+                
                 var response = await _client.ExecuteTaskAsync<T>(request);
 
                 if (!response.IsSuccessful)

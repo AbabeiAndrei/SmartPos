@@ -92,7 +92,7 @@ namespace SmartPos.Desktop
                 if(state.NewState == ConnectionState.Disconnected)
                     this.RunOnUiThread(() =>
                     {
-                        ShowMessage(MessageInfo.Create("Disconected from server!", MessageType.Error, Timeout.Infinite, true));
+                        PresentMessage(MessageInfo.Create("Disconected from server!", MessageType.Error, Timeout.Infinite, true));
                         AuthenticationManager.Logout();
                     });
             };
@@ -134,7 +134,7 @@ namespace SmartPos.Desktop
             var toolbarControl = controls.OfType<IToolBarCustomizer>()
                                          .FirstOrDefault();
 
-            ctrlStatusBar.InfoText = accesor?.Value;
+            SetStatusBarInfoText(accesor);
 
             if (toolbarControl != null)
                 ctrlToolBar.Customize(toolbarControl);
@@ -150,6 +150,11 @@ namespace SmartPos.Desktop
         private void OnRegisterTable(OrderOpenMessage model)
         {
 
+        }
+
+        private void pnlMain_Click(object sender, EventArgs e)
+        {
+            CheckLogin();
         }
         
         #endregion
@@ -169,8 +174,7 @@ namespace SmartPos.Desktop
                         .ApplyTheme(_theme)
                         .Show();
         }
-
-
+        
         private async Task PerformLogin(IFormSender sender, IContinuityDelegate after)
         {
             var pin = sender.Result?.ToString() ?? string.Empty;
@@ -210,7 +214,7 @@ namespace SmartPos.Desktop
                 sender.Control.Text = string.Empty;
             }
             
-            ShowMessage("Login successful", MessageType.Info, 1000);
+            PresentMessage("Login successful", MessageType.Info, 1000);
             after.Close = true;
             InitializePos();
         }
@@ -249,11 +253,14 @@ namespace SmartPos.Desktop
             }
         }
 
-        public void ShowTablesInContainer()
+        public async Task ShowTablesInContainer(bool refreshTableData = true)
         {
             try
             {
                 pnlMain.SuspendLayout();
+
+                if (refreshTableData)
+                    await ctrlWorkspace.UpdateTables(_apiClient);
 
                 ctrlWorkspace.Visible = true;
                 
@@ -273,6 +280,11 @@ namespace SmartPos.Desktop
                 return;
 
             ctrlTable.Order = order;
+        }
+
+        public void SetStatusBarInfoText(IStatusBarAccesor accesor)
+        {
+            ctrlStatusBar.InfoText = accesor?.Value;
         }
 
         #endregion

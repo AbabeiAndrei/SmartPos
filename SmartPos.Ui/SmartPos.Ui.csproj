@@ -101,6 +101,7 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Handlers\ContinuityDelegate.cs" />
+    <Compile Include="Components\IMessagePresenter.cs" />
     <Compile Include="Handlers\LoadingEndEventArgs.cs" />
     <Compile Include="Handlers\UiHandlers.cs" />
     <Compile Include="IFormSender.cs" />

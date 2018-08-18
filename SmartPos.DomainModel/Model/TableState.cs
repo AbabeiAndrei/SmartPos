@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SmartPos.DomainModel.Model
+﻿namespace SmartPos.DomainModel.Model
 {
     public enum TableOcupation : short
     {
@@ -16,10 +10,29 @@ namespace SmartPos.DomainModel.Model
 
     public class TableState
     {
+        #region Properties
+
         public int OcupiedByUserId { get; set; }
 
         public string OcupiedByUser { get; set; }
 
         public TableOcupation State { get; set; }
+
+        public static TableState Free => new TableState(TableOcupation.Free);
+
+        #endregion
+
+        #region Constructors
+
+        public TableState()
+        {
+        }
+
+        public TableState(TableOcupation state)
+        {
+            State = state;
+        }
+
+        #endregion
     }
 }

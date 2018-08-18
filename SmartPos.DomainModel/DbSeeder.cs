@@ -39,6 +39,7 @@ namespace SmartPos.DomainModel
             _connection.CreateTableIfNotExists<UserAccessRight>();
             _connection.CreateTableIfNotExists<Zone>();
             _connection.CreateTableIfNotExists<Table>();
+            _connection.CreateTableIfNotExists<Customer>();
             _connection.CreateTableIfNotExists<MenuCategory>();
             _connection.CreateTableIfNotExists<Product>();
             _connection.CreateTableIfNotExists<Order>();

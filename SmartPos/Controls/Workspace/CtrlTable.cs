@@ -7,6 +7,7 @@ using SmartPos.Ui.Theming;
 using SmartPos.Desktop.Data;
 using SmartPos.Desktop.Utils;
 using SmartPos.DomainModel.Entities;
+using SmartPos.DomainModel.Model;
 
 namespace SmartPos.Desktop.Controls.Workspace
 {
@@ -20,7 +21,8 @@ namespace SmartPos.Desktop.Controls.Workspace
         private Brush _openTableBrush;
         private Brush _ocupiedTableBrush;
         private DomainModel.Entities.Order _order;
-        private static readonly StringFormat _stringFormat;
+        private static readonly StringFormat StringFormat;
+        private static readonly Font FontOcupiedUser;
 
         #endregion
 
@@ -51,7 +53,8 @@ namespace SmartPos.Desktop.Controls.Workspace
 
         static CtrlTable()
         {
-            _stringFormat = GfxHelper.CreateStringFormat(StringAlignment.Center, StringAlignment.Center);
+            StringFormat = GfxHelper.CreateStringFormat(StringAlignment.Center, StringAlignment.Center);
+            FontOcupiedUser = new Font(DefaultFont.FontFamily, 8f);
         }
         
         #endregion
@@ -77,12 +80,12 @@ namespace SmartPos.Desktop.Controls.Workspace
             Brush brush;
             
             // ReSharper disable once SwitchStatementMissingSomeCases
-            switch (Order?.State)
+            switch (Table?.State?.State)
             {
-                case OrderState.Opened:
+                case TableOcupation.Opened:
                     brush = _openTableBrush;
                     break;
-                case OrderState.Active:
+                case TableOcupation.Ocupied:
                     brush = _ocupiedTableBrush;
                     break;
                 default:
@@ -92,8 +95,13 @@ namespace SmartPos.Desktop.Controls.Workspace
 
             e.Graphics.FillRectangle(brush, rect);
 
-            if(Table != null)
-                e.Graphics.DrawString(Table.Name, Font, _textBrush, rect, _stringFormat);
+            if (Table != null)
+            {
+                e.Graphics.DrawString(Table.Name, Font, _textBrush, rect, StringFormat);
+                if(Table.State != null)
+                    e.Graphics.DrawString(Table.State.OcupiedByUser, FontOcupiedUser, _textBrush, 
+                                          new Rectangle(0, Height - 30, Width, 30), StringFormat);
+            }
         }
 
         protected override void DisposeComponents()

@@ -41,6 +41,7 @@ namespace SmartPos.Desktop
             // 
             this.ctrlStatusBar.Dock = System.Windows.Forms.DockStyle.Top;
             this.ctrlStatusBar.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ctrlStatusBar.InfoText = null;
             this.ctrlStatusBar.Location = new System.Drawing.Point(0, 49);
             this.ctrlStatusBar.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.ctrlStatusBar.Name = "ctrlStatusBar";
@@ -74,12 +75,13 @@ namespace SmartPos.Desktop
             this.pnlMain.Name = "pnlMain";
             this.pnlMain.Size = new System.Drawing.Size(1166, 530);
             this.pnlMain.TabIndex = 4;
+            this.pnlMain.Click += new System.EventHandler(this.pnlMain_Click);
             this.pnlMain.ControlAdded += new System.Windows.Forms.ControlEventHandler(this.PnlMain_ControlsChanged);
             this.pnlMain.ControlRemoved += new System.Windows.Forms.ControlEventHandler(this.PnlMain_ControlsChanged);
             // 
             // MainForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 28F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1166, 659);
             this.Controls.Add(this.pnlMain);

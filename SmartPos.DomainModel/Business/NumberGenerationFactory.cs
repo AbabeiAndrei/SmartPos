@@ -11,13 +11,13 @@ namespace SmartPos.DomainModel.Business
     public static class NumberGenerationFactory
     {
         private static int _lastNumber = -1;
-        private static readonly object _lock = new object();
+        private static readonly object Lock = new object();
 
         public static int GenerateNumber(IDbContext context)
         {
-            lock (_lock)
+            lock (Lock)
             {
-                if (_lastNumber < 0)
+                if (_lastNumber <= 0)
                     _lastNumber = context.Connection.ExecuteNonQuery("SELECT MAX(Number) FROM `order`");
 
                 return ++_lastNumber;

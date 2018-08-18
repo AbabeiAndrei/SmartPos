@@ -1,15 +1,14 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 
-using SmartPos.Desktop.Interfaces;
 using SmartPos.Ui;
 using SmartPos.Ui.Theming;
-using SmartPos.Desktop.Security;
 using SmartPos.Ui.Controls;
-using SmartPos.Ui.Handlers;
 using SmartPos.Ui.Security;
+using SmartPos.Ui.Components;
+using SmartPos.Desktop.Security;
+using SmartPos.Desktop.Interfaces;
 
 namespace SmartPos.Desktop.Controls
 {
@@ -132,7 +131,7 @@ namespace SmartPos.Desktop.Controls
         private void btnLogout_Click(object sender, EventArgs e)
         {
             AuthenticationManager.Logout();
-            ParentForm.ShowMessage("Logout successful", MessageType.Info, 1000);
+            ParentForm.PresentMessage("Logout successful", MessageType.Info, 1000);
         }
 
         private void btnOptions_Click(object sender, EventArgs e)

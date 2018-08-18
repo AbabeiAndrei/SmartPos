@@ -13,6 +13,22 @@
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <TargetFrameworkProfile />
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <PublishUrl>C:\Users\andrei.ababei\Desktop\SmartPos\Release\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>1</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -38,7 +54,25 @@
   <PropertyGroup>
     <StartupObject>SmartPos.Desktop.Program</StartupObject>
   </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>BC5CEE727C955BD3EBB29B8BFEB97299D17A4F99</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestKeyFile>SmartPos.Desktop_TemporaryKey.pfx</ManifestKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>true</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>true</SignManifests>
+  </PropertyGroup>
   <ItemGroup>
+    <Reference Include="HtmlRenderer, Version=1.5.0.5, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\HtmlRenderer.Core.1.5.0.5\lib\net45\HtmlRenderer.dll</HintPath>
+    </Reference>
+    <Reference Include="HtmlRenderer.PdfSharp, Version=1.5.0.6, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\HtmlRenderer.PdfSharp.1.5.0.6\lib\net45\HtmlRenderer.PdfSharp.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.AspNet.SignalR.Client, Version=2.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.SignalR.Client.2.2.2\lib\net45\Microsoft.AspNet.SignalR.Client.dll</HintPath>
     </Reference>
@@ -73,6 +107,12 @@
     <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
     </Reference>
+    <Reference Include="PdfSharp, Version=1.32.3057.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\PDFsharp.1.32.3057.0\lib\net20\PdfSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="PdfSharp.Charting, Version=1.32.3057.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\PDFsharp.1.32.3057.0\lib\net20\PdfSharp.Charting.dll</HintPath>
+    </Reference>
     <Reference Include="RestSharp, Version=106.2.1.0, Culture=neutral, PublicKeyToken=598062e77f915f75, processorArchitecture=MSIL">
       <HintPath>..\packages\RestSharp.106.2.1\lib\net452\RestSharp.dll</HintPath>
     </Reference>
@@ -100,8 +140,10 @@
     <Compile Include="Application.cs" />
     <Compile Include="Communication\ApiClient.cs" />
     <Compile Include="Communication\Controllers\AccountController.cs" />
+    <Compile Include="Communication\Controllers\CustomerController.cs" />
     <Compile Include="Communication\Controllers\Interfaces\IAccountController.cs" />
     <Compile Include="Communication\Controllers\Interfaces\IController.cs" />
+    <Compile Include="Communication\Controllers\Interfaces\ICustomerController.cs" />
     <Compile Include="Communication\Controllers\Interfaces\ILayoutController.cs" />
     <Compile Include="Communication\Controllers\Interfaces\IOrderController.cs" />
     <Compile Include="Communication\Controllers\LayoutController.cs" />
@@ -114,6 +156,13 @@
     <Compile Include="Controls\Form\ConfirmationForm.Designer.cs">
       <DependentUpon>ConfirmationForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Order\CtrlCustomerSelector.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Order\CtrlCustomerSelector.Designer.cs">
+      <DependentUpon>CtrlCustomerSelector.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Data\FinancialHandler.cs" />
     <Compile Include="Handlers\OrderSentEventHandler.cs" />
     <Compile Include="Handlers\ProductItemHandler.cs" />
     <Compile Include="Communication\Handlers\SignalRSubscriptionHandler.cs" />
@@ -203,6 +252,9 @@
     <EmbeddedResource Include="Controls\Menu\CtrlMenu.resx">
       <DependentUpon>CtrlMenu.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Order\CtrlCustomerSelector.resx">
+      <DependentUpon>CtrlCustomerSelector.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\Order\CtrlOrder.resx">
       <DependentUpon>CtrlOrder.cs</DependentUpon>
     </EmbeddedResource>
@@ -238,6 +290,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="SmartPos.Desktop_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -258,6 +311,18 @@
       <Project>{643D01D7-0EBD-405D-814E-35ED2BA7B6A0}</Project>
       <Name>SmartPos.Ui</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.7.1">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.7.1 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

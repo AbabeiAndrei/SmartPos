@@ -24,7 +24,7 @@ namespace SmartPos.Ui
         Exception = 3
     }
 
-    public partial class BaseForm : Form, IThemeable
+    public partial class BaseForm : Form, IThemeable, IMessagePresenter
     {
         #region Constants
 
@@ -400,7 +400,7 @@ namespace SmartPos.Ui
             }
 
             if (!string.IsNullOrEmpty(cont.Message))
-                ShowMessage(cont.Message, cont.MessageType, cont.Duration);
+                PresentMessage(cont.Message, cont.MessageType, cont.Duration);
 
             if (cont.Close)
                 Close();
@@ -424,12 +424,17 @@ namespace SmartPos.Ui
             Close();
         }
 
-        public virtual void ShowMessage(string message, MessageType messageType, int? duration = null)
+        public virtual void PresentMessage(string message, MessageType messageType, int? duration = null)
         {
-            ShowMessage(new MessageInfo(message, messageType, duration));
+            PresentMessage(new MessageInfo(message, messageType, duration));
         }
 
-        public virtual void ShowMessage(MessageInfo message)
+        public virtual void PresentMessage(string message, MessageType messageType, MessageDurationLength duration)
+        {
+            PresentMessage(new MessageInfo(message, messageType, duration == MessageDurationLength.Infinite ? (int?)duration : null));
+        }
+
+        public virtual void PresentMessage(MessageInfo message)
         {
             
             using (var gfx = CreateGraphics())

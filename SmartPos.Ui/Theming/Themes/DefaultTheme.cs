@@ -2,7 +2,7 @@
 
 namespace SmartPos.Ui.Theming.Themes
 {
-    [ThemeName("Default")]
+    [ThemeName("Material")]
     public class DefaultTheme : ITheme
     {
         public Color WindowBackColor { get; }

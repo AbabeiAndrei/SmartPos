@@ -7,27 +7,27 @@ using SmartPos.DomainModel.Interfaces;
 
 namespace SmartPos.DomainModel
 {
-    public class DbContext : IDbContext
+public class DbContext : IDbContext
+{
+    public static string DefaultConnectionString { get; set; }
+    public static IOrmLiteDialectProvider DialectProvider { get; set; }
+
+    public IDbConnection Connection { get; }
+
+    public DbContext()
+        : this(DefaultConnectionString)
     {
-        public static string DefaultConnectionString { get; set; }
-        public static IOrmLiteDialectProvider DialectProvider { get; set; }
-
-        public IDbConnection Connection { get; }
-
-        public DbContext()
-            : this(DefaultConnectionString)
-        {
-        }
-        
-        public DbContext(string connectionString)
-        {
-            var factory = new OrmLiteConnectionFactory(connectionString, DialectProvider ?? new MySqlDialectProvider());
-            Connection = factory.Open();
-        }
-
-        public void Dispose()
-        {
-            Connection.Dispose();
-        }
     }
+    
+    public DbContext(string connectionString)
+    {
+        var factory = new OrmLiteConnectionFactory(connectionString, DialectProvider ?? new MySqlDialectProvider());
+        Connection = factory.Open();
+    }
+
+    public void Dispose()
+    {
+        Connection.Dispose();
+    }
+}
 }
